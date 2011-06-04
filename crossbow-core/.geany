@@ -1,0 +1,47 @@
+
+[indentation]
+indent_width=2
+indent_type=0
+indent_hard_tab_width=8
+detect_indent=false
+indent_mode=2
+
+[project]
+name=crossbow-core
+base_path=/home/vilius/work/trading/crossbow/crossbow-core
+description=Open source Scala library for trading strategy developers (core packages)
+
+[long line marker]
+long_line_behaviour=1
+long_line_column=100
+
+[files]
+current_page=0
+FILE_NAME_0=1743;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/indicators/Rsi.scala;0;2
+
+[build-menu]
+NF_00_LB=Deploy
+NF_00_CM=bash '/opt/bin/deploy-crossbow.sh'
+NF_00_WD=
+NF_01_LB=
+NF_01_CM=
+NF_01_WD=
+NF_02_LB=
+NF_02_CM=
+NF_02_WD=
+EX_00_LB=_Run
+EX_00_CM=echo 'run-only "lt.norma.crossbow.core.%e"' | sbt | process-sbt-output
+EX_00_WD=%p
+ScalaFT_00_LB=_Compile
+ScalaFT_00_CM=sbt test-compile | process-sbt-output
+ScalaFT_00_WD=%p
+ScalaFT_01_LB=_Test
+ScalaFT_01_CM=sbt test | process-sbt-output
+ScalaFT_01_WD=%p
+filetypes=Scala;
+EX_01_LB=
+EX_01_CM=
+EX_01_WD=
+ScalaFT_02_LB=Package
+ScalaFT_02_CM=sbt package ; sbt doc
+ScalaFT_02_WD=%p
