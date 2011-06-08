@@ -39,8 +39,12 @@ class Change(period: Int, indicator: Indicator[Double] with History) extends Ind
     case _ => calculateValue(period)
   }
 
-  private def calculateValue(n: Int): Option[Double] = (indicator.take(n), indicator()) match {
-    case (bars @ List(Some(previous), _*), Some(value)) if(bars.size == n) => Some(value - previous)
-    case _ => None
+  private def calculateValue(n: Int): Option[Double] = {
+    (indicator.history.take(n), indicator()) match {
+      case (bars @ List(Some(previous), _*), Some(value)) if(bars.size == n) =>
+        Some(value - previous)
+      case _ =>
+        None
+    }
   }
 }

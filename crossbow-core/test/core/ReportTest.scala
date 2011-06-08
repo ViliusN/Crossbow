@@ -61,11 +61,11 @@ class CsvHistoryReportTest extends FunSuite {
     }
 
     id.set(123.123)
-    id.update()
+    id.history.update()
     ii.set(999)
-    ii.update()
+    ii.history.update()
     ic.set("first")
-    ic.update()
+    ic.history.update()
     expect("Custom Indicator,Int Indicator,Custom Indicator,Double Indicator\n"+
            "~~~first~~~,999,~~~first~~~,123.123") {
       val out = new StringWriter
@@ -73,15 +73,15 @@ class CsvHistoryReportTest extends FunSuite {
       out.toString
     }
 
-    id.update()
-    ii.update()
+    id.history.update()
+    ii.history.update()
     intercept[Exception] {
       CsvReport.History.generate(new BufferedWriter(new StringWriter), ic, ii)
     }
     intercept[Exception] {
       CsvReport.History.generate(new BufferedWriter(new StringWriter), id, ic)
     }
-    ic.update()
+    ic.history.update()
     expect("Int Indicator,Double Indicator\n"+
            "999,123.123\n"+
            "999,123.123") {
@@ -93,9 +93,9 @@ class CsvHistoryReportTest extends FunSuite {
     ii.unset()
     ic.unset()
     id.unset()
-    id.update()
-    ii.update()
-    ic.update()
+    id.history.update()
+    ii.history.update()
+    ic.history.update()
     expect("Int Indicator,Custom Indicator,Double Indicator\n"+
            "999,~~~first~~~,123.123\n"+
            "999,~~~first~~~,123.123\n"+
@@ -108,9 +108,9 @@ class CsvHistoryReportTest extends FunSuite {
     id.set(0.123)
     ii.set(55)
     ic.set("second")
-    id.update()
-    ii.update()
-    ic.update()
+    id.history.update()
+    ii.history.update()
+    ic.history.update()
     expect("Int Indicator,Custom Indicator,Double Indicator\n"+
            "999,~~~first~~~,123.123\n"+
            "999,~~~first~~~,123.123\n"+

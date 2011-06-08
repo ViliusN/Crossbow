@@ -17,22 +17,32 @@
 
 package lt.norma.crossbow.core
 
+// TODO update docs
 /** Mixin this trait to create indicators capable of collecting history of their values. History is
   * updated by calling `update` method. To actually collect history, marker trait `History` must be
   * extended as well. */
+final class IndicatorHistory[Value](optionalValue: () => Option[Value],
+    valueToString: Option[Value] => String) {
+  private var reversedValues = List[Option[Value]]()
+
+  def update() { reversedValues = optionalValue() :: reversedValues }
+  def values = reversedValues.reverse
+  def size = reversedValues.size
+  def isEmpty = reversedValues.isEmpty
+  def last = if(reversedValues.isEmpty) None else reversedValues.head
+  def lastSet = reversedValues.find(_.isDefined).map(_.get)
+  def take(n: Int) = reversedValues take(n) reverse
+  def valuesToStrings: List[String] = values map { valueToString }
+}
+
 trait HistoryHolder[Value] {
-  // TODO convert to class HistoryContainer, take optionalValue: => Value as parameter
-  private var reversedHistory = List[Option[Value]]()
-
+  def name: String
   def optionalValue: Option[Value]
+  def valueToString(valueToConvert: Option[Value]): String
 
-  def update() { reversedHistory = optionalValue :: reversedHistory }
-  def history = reversedHistory.reverse
-  def last = if(reversedHistory.isEmpty) None else reversedHistory.head
-  def lastSet = reversedHistory.find(_.isDefined).map(_.get)
-  def take(n: Int) = reversedHistory take(n) reverse
-  def valueToString(v: Option[Value]): String
-  def historyStrings: List[String] = history map { valueToString }
+  def hasHistory = this.isInstanceOf[History]
+  lazy val history = if(hasHistory) new IndicatorHistory(optionalValue _, valueToString _)
+    else throw new Exception("Indicator "+name+" does not support history")
 }
 
 /** Mixin this trait to mart particular instance of indicator to collect history. To be able to
@@ -49,6 +59,4 @@ trait HistoryHolder[Value] {
   * // the declaration of indicator's class:
   * class MyIndicator extends Indicator[Double] with History { ... }
   * }}} */
-trait History {
-  def update()
-}
+trait History

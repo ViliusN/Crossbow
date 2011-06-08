@@ -55,7 +55,7 @@ object CsvReport {
           // Write header line
           withHistory map { _.name } mkString(delimiter) foreach { l => writer.write(l) }
           // Write data lines
-          (withHistory map { _.historyStrings } transpose) foreach { row =>
+          (withHistory map { _.history.valuesToStrings } transpose) foreach { row =>
             writer.write("\n")
             writer.write(row.mkString(delimiter))
           }

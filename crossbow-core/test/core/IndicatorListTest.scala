@@ -69,7 +69,7 @@ class IndicatorListTest  extends FunSuite {
     val ih = new HistoryIndicator with History
     val i = new HistoryIndicator
     val l = new IndicatorList(ih, i)
-    expect(Nil) { ih.history }
+    expect(Nil) { ih.history.values }
     expect(None) { i.lastData }
     expect(None) { ih.lastData }
     expect(None) { i.optionalValue }
@@ -77,14 +77,14 @@ class IndicatorListTest  extends FunSuite {
 
     val bc1 = BarClose(new DateTime(1000))
     l.send(bc1)
-    expect(List(None)) { ih.history }
+    expect(List(None)) { ih.history.values }
     expect(Some(bc1)) { i.lastData }
     expect(Some(bc1)) { ih.lastData }
     expect(None) { i.optionalValue }
     expect(None) { ih.optionalValue }
 
     l.send(DummyData(8))
-    expect(List(None)) { ih.history }
+    expect(List(None)) { ih.history.values }
     expect(Some(bc1)) { i.lastData }
     expect(Some(bc1)) { ih.lastData }
     expect(Some(8)) { i.optionalValue }
@@ -92,7 +92,7 @@ class IndicatorListTest  extends FunSuite {
 
     val bc2 = BarClose(new DateTime(2000))
     l.send(bc2)
-    expect(List(None, Some(8))) { ih.history }
+    expect(List(None, Some(8))) { ih.history.values }
     expect(Some(bc2)) { i.lastData }
     expect(Some(bc2)) { ih.lastData }
     expect(Some(8)) { i.optionalValue }

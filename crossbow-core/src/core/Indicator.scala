@@ -20,11 +20,6 @@ package lt.norma.crossbow.core
 /** Extend this trait to create custom indicators. */
 trait Indicator[Value] extends BasicDataListener with Dependant[Indicator[_]]
     with HistoryHolder[Value] with Name {
-  // TODO hold history as val in trait History
-  // TODO:
-  // lazy val history = if(hasHistory) new HistoryContainer(otionalValue _)
-  //   else throw new Exception("Indicator "+name+" does not support history")
-  // def hasHistory = this isInstanceOf[History]
   import Indicator._
 
   implicit def valueToOptional(v: Value): Option[Value] = Some(v)

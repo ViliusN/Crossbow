@@ -46,7 +46,7 @@ class IndicatorList(indicators: Indicator[_]*) extends DataListener {
 
   private def updateHistory(barClose: BarClose) {
     deepList foreach {
-      case h: History => h.update()
+      case ih: History => ih.history.update()
       case _ =>
     }
   }

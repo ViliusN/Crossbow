@@ -40,14 +40,14 @@ class ChangeTest extends FunSuite {
     expect(None) { i() }
 
     i1.set(1)
-    i1.update()
+    i1.history.update()
     i1.set(2)
-    i1.update()
+    i1.history.update()
     i.send(new Data { })
     expect(None) { i() }
 
     i1.set(3)
-    i1.update()
+    i1.history.update()
     i.send(new Data { })
     expect(Some(2)) { i() }
 
@@ -55,7 +55,7 @@ class ChangeTest extends FunSuite {
     i.send(new Data { })
     expect(Some(3)) { i() }
 
-    i1.update()
+    i1.history.update()
     i.send(new Data { })
     expect(Some(2)) { i() }
 
@@ -63,14 +63,14 @@ class ChangeTest extends FunSuite {
     i.send(new Data { })
     expect(None) { i() }
 
-    i1.update()
+    i1.history.update()
     i1.set(8)
     i.send(new Data { })
     expect(Some(5)) { i() }
-    i1.update()
+    i1.history.update()
     i.send(new Data { })
     expect(Some(4)) { i() }
-    i1.update()
+    i1.history.update()
     i.send(new Data { })
     expect(None) { i() }
   }
@@ -90,7 +90,7 @@ class ChangeTest extends FunSuite {
     i.send(new Data { })
     expect(None) { i() }
 
-    i1.update()
+    i1.history.update()
     i.send(new Data { })
     expect(Some(0)) { i() }
 
@@ -98,7 +98,7 @@ class ChangeTest extends FunSuite {
     i.send(new Data { })
     expect(Some(2)) { i() }
 
-    i1.update()
+    i1.history.update()
     i.send(new Data { })
     expect(Some(0)) { i() }
 

@@ -35,7 +35,7 @@ class Rsi(period: Int, indicator: Indicator[Double] with History) extends Indica
     def name = "RSI_UP("+indicator.name+")"
     def dependencies = Set(indicator)
     def calculate = {
-      case BarClose(_) => (indicator(), indicator.lastSet) match {
+      case BarClose(_) => (indicator(), indicator.history.lastSet) match {
         case (Some(v), Some(l)) if(v > l) => v - l
         case (Some(v), Some(l)) => 0.0
         case _ => None
@@ -46,7 +46,7 @@ class Rsi(period: Int, indicator: Indicator[Double] with History) extends Indica
     def name = "RSI_DOWN("+indicator.name+")"
     def dependencies = Set(indicator)
     def calculate = {
-      case BarClose(_) => (indicator(), indicator.lastSet) match {
+      case BarClose(_) => (indicator(), indicator.history.lastSet) match {
         case (Some(v), Some(l)) if(v < l) => l - v
         case (Some(v), Some(l)) => 0.0
         case _ => None
