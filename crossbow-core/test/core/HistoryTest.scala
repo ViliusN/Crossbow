@@ -55,6 +55,37 @@ class HistoryTest extends FunSuite {
     expect(5) { ih.last.get }
   }
 
+  test("lastSet method") {
+    val ih = new Dummy with History
+    expect(None) { ih.lastSet }
+
+    updateHistory(ih)
+    expect(None) { ih.lastSet }
+
+    ih.set(5)
+    updateHistory(ih)
+    expect(Some(5)) { ih.lastSet }
+    ih.set(6)
+    updateHistory(ih)
+    expect(Some(6)) { ih.lastSet }
+
+    ih.unset()
+    updateHistory(ih)
+    expect(Some(6)) { ih.lastSet }
+    updateHistory(ih)
+    expect(Some(6)) { ih.lastSet }
+    updateHistory(ih)
+    expect(Some(6)) { ih.lastSet }
+
+    ih.set(7)
+    updateHistory(ih)
+    expect(Some(7)) { ih.lastSet }
+
+    ih.unset()
+    updateHistory(ih)
+    expect(Some(7)) { ih.lastSet }
+  }
+
   test("History of custom types") {
     class A(val d: Double) { def d2 = d * 2 }
     class DummyA extends Indicator[A] with HistoryHolder[A] {

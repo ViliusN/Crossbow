@@ -30,20 +30,111 @@ class RsiTest extends FunSuite {
   }
 
   test("RSI indicator") {
-/* TODO
-    val i1 = new I("A")
+    val i1 = new I("A") with History
     val i = new Rsi(5, i1)
     val l = new IndicatorList(i)
     val e = 0.000005
 
-    expect("EMA(5; A)") { i.name }
+    expect("RSI(5; A)") { i.name }
     expect(2) { i.dependencies.size }
     expect(None) { i() }
 
-    i1.set(0.5)
     l.send(new BarClose(new DateTime))
     expect(None) { i() }
-*/
+    l.send(new BarClose(new DateTime))
+    expect(None) { i() }
+    l.send(new BarClose(new DateTime))
+    expect(None) { i() }
+    l.send(new BarClose(new DateTime))
+    expect(None) { i() }
+
+    i1.set(80)
+    l.send(new BarClose(new DateTime))
+    expect(None) { i() }
+    i1.set(90)
+    l.send(new BarClose(new DateTime))
+    expect(None) { i() }
+    i1.set(80)
+    l.send(new BarClose(new DateTime))
+    expect(None) { i() }
+    i1.set(110)
+    l.send(new BarClose(new DateTime))
+    expect(None) { i() }
+    i1.set(90)
+    l.send(new BarClose(new DateTime))
+    expect(None) { i() }
+
+    i1.set(90)
+    l.send(new BarClose(new DateTime))
+    approx(54.16667, e) { i.value }
+    i1.set(90)
+    l.send(new BarClose(new DateTime))
+    approx(54.16667, e) { i.value }
+    i1.set(110)
+    l.send(new BarClose(new DateTime))
+    approx(79.77011, e) { i.value }
+    i1.set(120)
+    l.send(new BarClose(new DateTime))
+    approx(85.74322, e) { i.value }
+    i1.set(130)
+    l.send(new BarClose(new DateTime))
+    approx(90.11930, e) { i.value }
+    i1.set(145.01)
+    l.send(new BarClose(new DateTime))
+    approx(94.15721, e) { i.value }
+
+    i1.unset()
+    l.send(new BarClose(new DateTime))
+    expect(None) { i() }
+
+    i1.set(100)
+    l.send(new BarClose(new DateTime))
+    approx(33.17520, e) { i.value }
+    i1.set(110)
+    l.send(new BarClose(new DateTime))
+    approx(45.03813, e) { i.value }
+
+    i1.unset()
+    l.send(new BarClose(new DateTime))
+    expect(None) { i() }
+    l.send(new BarClose(new DateTime))
+    expect(None) { i() }
+    l.send(new BarClose(new DateTime))
+    expect(None) { i() }
+
+    i1.set(90)
+    l.send(new BarClose(new DateTime))
+    approx(29.38735, e) { i.value }
+    i1.set(80)
+    l.send(new BarClose(new DateTime))
+    approx(23.31172, e) { i.value }
+    i1.set(60)
+    l.send(new BarClose(new DateTime))
+    approx(14.38792, e) { i.value }
+    i1.set(70)
+    l.send(new BarClose(new DateTime))
+    approx(33.48464, e) { i.value }
+    i1.set(170)
+    l.send(new BarClose(new DateTime))
+    approx(84.69474, e) { i.value }
+    i1.set(92)
+    l.send(new BarClose(new DateTime))
+    approx(44.55785, e) { i.value }
+    i1.set(80)
+    l.send(new BarClose(new DateTime))
+    approx(40.16530, e) { i.value }
+    i1.set(75)
+    l.send(new BarClose(new DateTime))
+    approx(37.83422, e) { i.value }
+    i1.set(80)
+    l.send(new BarClose(new DateTime))
+    approx(42.81270, e) { i.value }
+    i1.set(110)
+    l.send(new BarClose(new DateTime))
+    approx(66.76617, e) { i.value }
+    i1.set(115)
+    l.send(new BarClose(new DateTime))
+    approx(69.91637, e) { i.value }
   }
 
   test("RSI indicator - invalid period") {

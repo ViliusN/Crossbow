@@ -31,23 +31,22 @@ class Rsi(period: Int, indicator: Indicator[Double] with History) extends Indica
   if(period < 1)
     throw new IllegalArgumentException("Period of "+name+" indicator cannot be less than 1")
 
-  private val counter = new CountHistory(indicator)
-  private val upEma = new EmaContinuous(period, new Indicator[Double] {
+  private val upEma = new Ema(period, new Indicator[Double] {
     def name = "RSI_UP("+indicator.name+")"
     def dependencies = Set(indicator)
     def calculate = {
-      case BarClose(_) => (indicator(), indicator.last) match {
+      case BarClose(_) => (indicator(), indicator.lastSet) match {
         case (Some(v), Some(l)) if(v > l) => v - l
         case (Some(v), Some(l)) => 0.0
         case _ => None
       }
     }
   })
-  private val downEma = new EmaContinuous(period, new Indicator[Double] {
+  private val downEma = new Ema(period, new Indicator[Double] {
     def name = "RSI_DOWN("+indicator.name+")"
     def dependencies = Set(indicator)
     def calculate = {
-      case BarClose(_) => (indicator(), indicator.last) match {
+      case BarClose(_) => (indicator(), indicator.lastSet) match {
         case (Some(v), Some(l)) if(v < l) => l - v
         case (Some(v), Some(l)) => 0.0
         case _ => None
@@ -55,14 +54,13 @@ class Rsi(period: Int, indicator: Indicator[Double] with History) extends Indica
     }
   })
 
-  def dependencies = Set(upEma, downEma, counter)
+  def dependencies = Set(upEma, downEma)
 
   def calculate = {
-    case BarClose(_) if(counter.value >= period) => (upEma(), downEma()) match {
+    case BarClose(_) => (upEma(), downEma()) match {
       case (Some(up), Some(0.0)) => 100.0
       case (Some(up), Some(down)) => 100.0 - 100.0 / (1.0 + up / down)
       case _ => None
     }
-    case BarClose(_) => None
   }
 }

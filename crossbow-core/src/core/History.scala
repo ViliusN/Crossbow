@@ -29,6 +29,7 @@ trait HistoryHolder[Value] {
   def update() { reversedHistory = optionalValue :: reversedHistory }
   def history = reversedHistory.reverse
   def last = if(reversedHistory.isEmpty) None else reversedHistory.head
+  def lastSet = reversedHistory.find(_.isDefined).map(_.get)
   def take(n: Int) = reversedHistory take(n) reverse
   def valueToString(v: Option[Value]): String
   def historyStrings: List[String] = history map { valueToString }
