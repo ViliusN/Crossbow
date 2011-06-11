@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Vilius Normantas <code@norma.lt>
+ * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
  * This file is part of Crossbow library.
  *
@@ -17,10 +17,7 @@
 
 package lt.norma.crossbow.core
 
-// TODO update docs
-/** Mixin this trait to create indicators capable of collecting history of their values. History is
-  * updated by calling `update` method. To actually collect history, marker trait `History` must be
-  * extended as well. */
+/** Holds history of indicator's values */
 final class IndicatorHistory[Value](optionalValue: () => Option[Value],
     valueToString: Option[Value] => String) {
   private var reversedValues = List[Option[Value]]()
@@ -35,6 +32,8 @@ final class IndicatorHistory[Value](optionalValue: () => Option[Value],
   def valuesToStrings: List[String] = values map { valueToString }
 }
 
+/** Extend this trait to create indicators capable of collecting history of their values. To
+  * actually collect history, marker trait `History` must be extended as well. */
 trait HistoryHolder[Value] {
   def name: String
   def optionalValue: Option[Value]
@@ -45,8 +44,7 @@ trait HistoryHolder[Value] {
     else throw new Exception("Indicator "+name+" does not support history")
 }
 
-/** Mixin this trait to mart particular instance of indicator to collect history. To be able to
-  * collect historical values, the indicator must also mixin `HistoryHolder` trait.
+/** Mixin this trait to enable particular instance of indicator to collect history.
   *
   * Examples: {{{
   * // This indicator does not collect historical values
@@ -55,8 +53,8 @@ trait HistoryHolder[Value] {
   * // This indicator collects historical values
   * val i2 = new MyIndicator with History
   *
-  * // If the indicator uses historical values internally, History can included in extends clause at
-  * // the declaration of indicator's class:
+  * // If the indicator uses historical values internally, `History` can be included in extends
+  * // clause of the indicator's class:
   * class MyIndicator extends Indicator[Double] with History { ... }
   * }}} */
 trait History

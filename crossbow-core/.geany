@@ -17,7 +17,7 @@ long_line_column=100
 
 [files]
 current_page=0
-FILE_NAME_0=1743;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/indicators/Rsi.scala;0;2
+FILE_NAME_0=222;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/test/indicators/AskTest.scala;0;2
 
 [build-menu]
 NF_00_LB=Deploy

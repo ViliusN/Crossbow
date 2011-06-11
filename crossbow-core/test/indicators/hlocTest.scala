@@ -1,5 +1,5 @@
 /*
- * Copyright 2011 Vilius Normantas <code@norma.lt>
+ * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
  * This file is part of Crossbow library.
  *
