@@ -7,22 +7,22 @@ detect_indent=false
 indent_mode=2
 
 [project]
-name=crossbow-core
-base_path=/home/vilius/work/trading/crossbow/crossbow-core
-description=Open source library for trading strategy developers (core packages)
+name=crossbow-demo
+base_path=/home/vilius/work/trading/crossbow/crossbow-demo
+description=Open source library for trading strategy developers (demonstration code)
 
 [long line marker]
 long_line_behaviour=1
 long_line_column=100
 
 [files]
-current_page=0
-FILE_NAME_0=833;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/test/core/IndicatorTest.scala;0;2
-FILE_NAME_1=0;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/core/Indicator.scala;0;2
+current_page=1
+FILE_NAME_0=805;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-demo/src/IndicatorDemo.scala;0;2
+FILE_NAME_1=981;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-demo/test/IndicatorDemoTest.scala;0;2
 
 [build-menu]
-NF_00_LB=Deploy
-NF_00_CM=bash '/opt/bin/deploy-crossbow.sh'
+NF_00_LB=
+NF_00_CM=
 NF_00_WD=
 NF_01_LB=
 NF_01_CM=
@@ -31,7 +31,7 @@ NF_02_LB=
 NF_02_CM=
 NF_02_WD=
 EX_00_LB=_Run
-EX_00_CM=echo 'run-only "lt.norma.crossbow.core.%e"' | sbt | process-sbt-output
+EX_00_CM=echo 'run-only "lt.norma.crossbow.demo.%e"' | sbt | process-sbt-output
 EX_00_WD=%p
 ScalaFT_00_LB=_Compile
 ScalaFT_00_CM=sbt test-compile | process-sbt-output
