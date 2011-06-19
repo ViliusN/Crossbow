@@ -28,6 +28,5 @@ class BarCloseTime extends Indicator[DateTime] {
     case BarClose(time) => time
   }
   def formatter = Settings.dateTimeFormatter
-  override def valueToString(valueToConvert: Option[DateTime]): String =
-    valueToConvert map { formatter.print } getOrElse(Indicator.notAvailableString)
+  override def valueToString(valueToConvert: DateTime): String = formatter.print(valueToConvert)
 }

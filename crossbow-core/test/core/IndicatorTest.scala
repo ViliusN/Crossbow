@@ -103,26 +103,49 @@ class IndicatorTest extends FunSuite {
     }
 
     val i = new MyIndicator
+    expect("123") { i.valueToString(Some(123)) }
+    expect("N/A") { i.valueToString(None) }
     expect("N/A") { i.valueToString }
     expect("N/A") { i.valueToString(i.optionalValue) }
     i.set(8)
     expect("8") { i.valueToString }
     expect("8") { i.valueToString(i.optionalValue) }
+    expect("N/A") { i.valueToString(123.0) }
+    expect("N/A") { i.valueToString(new Object) }
+  }
 
+  test("Value to string conversion - string values") {
+    class MyIndicator extends Indicator[String] {
+      def name = "M"
+      def dependencies = Set.empty
+      def calculate = Empty
+    }
+    val i = new MyIndicator
+    expect("") { i.valueToString("") }
+    expect("123") { i.valueToString("123") }
+    expect("N/A") { i.valueToString(8) }
+    expect("N/A") { i.valueToString(new Object) }
+  }
+
+  test("Value to string conversion - custom format") {
     class MyIndicatorCustomFormat extends Indicator[Int] {
       def name = "M"
       def dependencies = Empty
       def calculate = Empty
-      override def valueToString(v: Option[Int]): String =
-        v map { "["+_.toString+"]" } getOrElse("no val.")
+      override def valueToString(v: Int): String = "["+v+"]"
+      override def valueNotSetString = "no val."
     }
 
-    val ic = new MyIndicatorCustomFormat
-    expect("no val.") { ic.valueToString:String }
-    expect("no val.") { ic.valueToString(ic.optionalValue) }
-    ic.set(123)
-    expect("[123]") { ic.valueToString:String }
-    expect("[123]") { ic.valueToString(ic.optionalValue) }
+    val i = new MyIndicatorCustomFormat
+    expect("[555]") { i.valueToString(Some(555)) }
+    expect("no val.") { i.valueToString(None) }
+    expect("no val.") { i.valueToString() }
+    expect("no val.") { i.valueToString(i.optionalValue) }
+    i.set(123)
+    expect("[123]") { i.valueToString() }
+    expect("[123]") { i.valueToString(i.optionalValue) }
+    expect("no val.") { i.valueToString(123.0) }
+    expect("no val.") { i.valueToString(new Object) }
   }
 
   test("Empty dependencies") {

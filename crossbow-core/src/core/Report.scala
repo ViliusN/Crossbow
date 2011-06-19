@@ -45,7 +45,7 @@ object CsvReport {
     * match an exception is thrown. */
   object History extends Report {
     def generate(writer: BufferedWriter, indicators: Indicator[_]*) {
-      val withHistory = indicators filter { case _: History => true case _ => false }
+      val withHistory = indicators filter { _.hasHistory }
       if(withHistory.size > 0) {
         val firstSize = withHistory.head.history.size
         if(withHistory exists { _.history.size != firstSize }) {
@@ -55,7 +55,9 @@ object CsvReport {
           // Write header line
           withHistory map { _.name } mkString(delimiter) foreach { l => writer.write(l) }
           // Write data lines
-          (withHistory map { _.history.valuesToStrings } transpose) foreach { row =>
+          val valueGrid =
+            withHistory map { i => i.history.values map { v => i.valueToString(v) } } transpose;
+          valueGrid foreach { row =>
             writer.write("\n")
             writer.write(row.mkString(delimiter))
           }

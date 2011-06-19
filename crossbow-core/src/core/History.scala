@@ -17,19 +17,28 @@
 
 package lt.norma.crossbow.core
 
+import annotation.tailrec
+
 /** Holds history of indicator's values */
 final class IndicatorHistory[Value](optionalValue: () => Option[Value],
     valueToString: Option[Value] => String) {
   private var reversedValues = List[Option[Value]]()
 
   def update() { reversedValues = optionalValue() :: reversedValues }
-  def values = reversedValues.reverse
+  def values: List[Option[Value]] = reversedValues.reverse
   def size = reversedValues.size
   def isEmpty = reversedValues.isEmpty
   def last = if(reversedValues.isEmpty) None else reversedValues.head
   def lastSet = reversedValues.find(_.isDefined).map(_.get)
-  def take(n: Int) = reversedValues take(n) reverse
   def valuesToStrings: List[String] = values map { valueToString }
+
+  /** Returns up to `n` latest historical values. */
+  def take(n: Int): List[Option[Value]] = reversedValues.take(n).reverse
+
+  /** Returns up to `n` latest historical values, where value is not `None`. */
+  def takeSet(n: Int): List[Option[Value]] = {
+    reversedValues.iterator.filter(_.isDefined).take(n).toList.reverse
+  }
 }
 
 /** Extend this trait to create indicators capable of collecting history of their values. To

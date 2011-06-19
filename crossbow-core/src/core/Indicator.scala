@@ -17,8 +17,19 @@
 
 package lt.norma.crossbow.core
 
-/** Extend this trait to create custom indicators. */
-trait Indicator[Value] extends BasicDataListener with Dependant[Indicator[_]]
+/** Extend this class to create custom indicators.
+  *
+  * Examples: {{{
+  * // This indicator does not update it's value and has no dependencies, but can hold a value if
+  * // it is set from outside via `set`/`unset` methods. This is useful as a replacement for mutable
+  * // variables inside other indicators.
+  * class EmptyIndicator extends Indicator[Int] {
+  *   def name = "Holds mutable value"
+  *   def dependencies = Empty
+  *   def calculate = Empty
+  * }
+  * }}}*/
+abstract class Indicator[Value : Manifest] extends BasicDataListener with Dependant[Indicator[_]]
     with HistoryHolder[Value] with Name {
   import Indicator._
 
@@ -28,6 +39,8 @@ trait Indicator[Value] extends BasicDataListener with Dependant[Indicator[_]]
   }
 
   private var _value: Option[Value] = None
+  private var _manifest = manifest[Value]
+  private var _optionManifest = manifest[Option[Value]]
 
   /** Attempts to obtain value of the indicator. If the value is not set, returns the result of
     *  `default` method, which throws `ValueNotSetException` unless overridden. */
@@ -46,30 +59,61 @@ trait Indicator[Value] extends BasicDataListener with Dependant[Indicator[_]]
     * indicator is not set. Unless overridden, `default` method throws `ValueNotSetException`. */
   def default: Value = { throw ValueNotSetException() }
 
+  private def manOf[T: Manifest](v: Option[T]): Manifest[T] = manifest[T]
+
+  /** Sets value of the indicator. */
   def set(newValue: Option[Value]) { _value = newValue }
-  def set(newValue: Value) { _value = Some(newValue) }
+
+  /** Sets value of the indicator. */
+  def set(newValue: Value) { set(Some(newValue)) }
+
+  /** Unsets value of the indicator. */
   def unset() { _value = None }
+
+  /** Checks if indicator's value is set. */
   def isSet = _value.isDefined
 
   /** Converts the specified value to string. Override this method if custom formatting is
     * needed. */
-  def valueToString(valueToConvert: Option[Value]): String =
-    valueToConvert map { _.toString } getOrElse(notAvailableString)
+  def valueToString(valueToConvert: Value): String = {
+    valueToConvert.toString
+  }
+
+  /** Converts the specified value to string. Override this method if custom formatting is
+    * needed. */
+  final def valueToString(valueToConvert: Option[Value]): String = {
+    valueToConvert map { v => valueToString(v) } getOrElse(valueNotSetString)
+  }
+
+  /** Converts the specified value to string if it's type matches the type of indicator's
+    * value. Otherwise returns the returns result of `notAvailableString`. */
+  final def valueToString[T : Manifest](valueToConvert: T): String = {
+    if(manifest[T].erasure == _manifest.erasure) {
+      valueToString(valueToConvert.asInstanceOf[Value])
+    } else if(manifest[T].erasure == _optionManifest.erasure) {
+      valueToString(valueToConvert.asInstanceOf[Option[Value]])
+    } else {
+      valueNotSetString
+    }
+  }
 
   /** Converts current value to string. */
   final def valueToString(): String = valueToString(_value)
+
+  def valueNotSetString = "N/A"
 
   final def receive = {
     case data if(calculate.isDefinedAt(data)) => set(calculate(data))
   }
 
+  /** Override this method to update indicator's value on data update. Use object `Empty` when there
+    * is no need to calculate value on data updates, for example when indicator's value is assigned
+    * externally via `set` method. */
   protected def calculate: PartialFunction[Data, Option[Value]]
 }
 
 object Indicator {
   case class ValueNotSetException() extends Exception("Indicator's value has not been set")
-
-  val notAvailableString = "N/A"
 }
 
 trait Name {

@@ -36,8 +36,8 @@ class CsvHistoryReportTest extends FunSuite {
       override def name = "Custom Indicator"
       def dependencies = Empty
       def calculate = Empty
-      override def valueToString(v: Option[String]): String =
-        v map { "~~~"+_+"~~~" } getOrElse("###")
+      override def valueToString(v: String): String = "~~~"+v+"~~~"
+      override def valueNotSetString = "###"
     }
     val id = new IndDouble with History
     val ii = new IndInt with History
@@ -139,8 +139,8 @@ class CsvValuesReportTest extends FunSuite {
       override def name = "Custom Indicator"
       def dependencies = Empty
       def calculate = Empty
-      override def valueToString(v: Option[String]): String =
-        v map { "~~~"+_+"~~~" } getOrElse("###")
+      override def valueToString(v: String): String = "~~~"+v+"~~~"
+      override def valueNotSetString = "###"
     }
 
     val id = new IndDouble
