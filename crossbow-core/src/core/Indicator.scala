@@ -59,8 +59,6 @@ abstract class Indicator[Value : Manifest] extends BasicDataListener with Depend
     * indicator is not set. Unless overridden, `default` method throws `ValueNotSetException`. */
   def default: Value = { throw ValueNotSetException() }
 
-  private def manOf[T: Manifest](v: Option[T]): Manifest[T] = manifest[T]
-
   /** Sets value of the indicator. */
   def set(newValue: Option[Value]) { _value = newValue }
 
@@ -110,6 +108,8 @@ abstract class Indicator[Value : Manifest] extends BasicDataListener with Depend
     * is no need to calculate value on data updates, for example when indicator's value is assigned
     * externally via `set` method. */
   protected def calculate: PartialFunction[Data, Option[Value]]
+
+  override def toString = name+": "+valueToString()
 }
 
 object Indicator {

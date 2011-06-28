@@ -16,9 +16,9 @@ long_line_behaviour=1
 long_line_column=100
 
 [files]
-current_page=0
-FILE_NAME_0=833;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/test/core/IndicatorTest.scala;0;2
-FILE_NAME_1=0;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/core/Indicator.scala;0;2
+current_page=1
+FILE_NAME_0=772;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/test/core/IndicatorTest.scala;0;2
+FILE_NAME_1=0;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/indicators/Ema.scala;0;2
 
 [build-menu]
 NF_00_LB=Deploy

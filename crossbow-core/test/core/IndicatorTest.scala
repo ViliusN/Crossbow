@@ -148,6 +148,18 @@ class IndicatorTest extends FunSuite {
     expect("no val.") { i.valueToString(new Object) }
   }
 
+  test("Indicator to string") {
+    class MyIndicator extends Indicator[Int] {
+      def name = "M"
+      def dependencies = Set.empty
+      def calculate = Empty
+    }
+    val i = new MyIndicator
+    expect("M: N/A") { i.toString }
+    i.set(123)
+    expect("M: 123") { i.toString }
+  }
+
   test("Empty dependencies") {
     class MyIndicator extends Indicator[Int] {
       def name = "M"
