@@ -158,6 +158,72 @@ class Indicator5Test extends FunSuite {
   approx(50, e) { i.value }
 }
 
+class Indicator2HistoryTest extends FunSuite {
+  val ih = new Indicator2 with History
+  val i = new Indicator2
+  val list = new IndicatorList(i, ih)
+  val e = 0.005
+
+  intercept[Exception] { i.history }
+  assert { !i.hasHistory }
+  assert { ih.hasHistory }
+
+  assert { ih.history.isEmpty }
+  val s = Stock("MSFT", Exchange.nasdaq, "USD")
+  list.send(Trade(s, 2, 10000, new DateTime))
+  list.send(Trade(s, 3, 10000, new DateTime))
+  list.send(Trade(s, 4, 10000, new DateTime))
+  assert { ih.history.isEmpty }
+  list.send(BarClose(new DateTime))
+  expect(1) { ih.history.size }
+  approx(16, e) { ih.history.last.get }
+
+  list.send(Trade(s, 5, 10000, new DateTime))
+  list.send(BarClose(new DateTime))
+  approx(25, e) { ih.history.last.get }
+  list.send(Trade(s, 6, 10000, new DateTime))
+  list.send(BarClose(new DateTime))
+  approx(36, e) { ih.history.last.get }
+  ih.unset()
+  list.send(BarClose(new DateTime))
+  expect(None) { ih.history.last }
+  approx(36, e) { ih.history.lastSet.get }
+  list.send(Trade(s, 7, 10000, new DateTime))
+  list.send(BarClose(new DateTime))
+  approx(49, e) { ih.history.last.get }
+  expect(5) { ih.history.size }
+
+  expect(List(Some(36), None, Some(49))) { ih.history.take(3) }
+  expect(List(Some(16), Some(25), Some(36), None, Some(49))) { ih.history.take(20) }
+  expect(List(Some(25), Some(36), Some(49))) { ih.history.takeSet(3) }
+  expect(List(Some(16), Some(25), Some(36), None, Some(49))) { ih.history.values }
+}
+
+class IndicatorToStringTest extends FunSuite {
+  val i1 = new Indicator1 { override def name = "I1" }
+  expect("N/A") { i1.valueToString }
+
+  i1.set(0.5)
+  expect("0.5") { i1.valueToString }
+  expect("I1: 0.5") { i1.toString }
+
+  expect("123.0") { i1.valueToString(123.0) }
+  expect("N/A") { i1.valueToString("sss") }
+
+  val i2 = new Indicator1 {
+    override def name = "I2"
+    override def valueToString(v: Double) = "["+v+"]"
+    override def valueNotSetString = "[not available]"
+    override def toString = "my value is "+valueToString()
+  }
+  expect("[not available]") { i2.valueToString }
+  expect("my value is [not available]") { i2.toString }
+  i2.set(456)
+  expect("[456.0]") { i2.valueToString }
+  expect("my value is [456.0]") { i2.toString }
+  expect("[123.45]") { i2.valueToString(123.45) }
+}
+
 object TestUtils {
   import org.scalatest.TestFailedException
 
