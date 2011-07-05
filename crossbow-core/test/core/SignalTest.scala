@@ -50,4 +50,15 @@ class SignalTest  extends FunSuite {
     assert { !s.isLong }
     assert { !s.isShort }
   }
+  test("Conversion to string") {
+    val s1 = new Signal { def name = "S1"; def dependencies = Empty; def calculate = Empty }
+    expect("Flat") { s1.valueToString }
+    expect("S1: Flat") { s1.toString }
+    s1.set(Direction.Long)
+    expect("Long") { s1.valueToString }
+    expect("S1: Long") { s1.toString }
+    s1.set(Direction.Short)
+    expect("Short") { s1.valueToString }
+    expect("S1: Short") { s1.toString }
+  }
 }

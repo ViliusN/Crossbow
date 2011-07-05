@@ -17,8 +17,8 @@ long_line_column=100
 
 [files]
 current_page=1
-FILE_NAME_0=1107;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/core/Signal.scala;0;2
-FILE_NAME_1=0;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/indicators/Sum.scala;0;2
+FILE_NAME_0=794;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/core/Direction.scala;0;2
+FILE_NAME_1=945;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/test/core/DirectionTest.scala;0;2
 
 [build-menu]
 NF_00_LB=Deploy

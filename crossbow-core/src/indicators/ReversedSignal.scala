@@ -17,10 +17,11 @@
 
 package lt.norma.crossbow.core
 
-sealed trait Direction {
-  def reversed: Direction
-}
-object Direction {
-  case object Long extends Direction { def reversed = Short } // TODO test reversed
-  case object Short extends Direction { def reversed = Long }
+/** Holds value, opposite to that of the specified signal. */
+class ReversedSignal(signal: Signal) extends Signal {
+  def name = "Reversed("+signal.name+")"
+  def dependencies = Set(signal)
+  def calculate = {
+    case _ => signal() map { _.reversed }
+  }
 }

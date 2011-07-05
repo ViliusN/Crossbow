@@ -17,10 +17,12 @@
 
 package lt.norma.crossbow.core
 
-sealed trait Direction {
-  def reversed: Direction
-}
-object Direction {
-  case object Long extends Direction { def reversed = Short } // TODO test reversed
-  case object Short extends Direction { def reversed = Long }
+import org.scalatest.FunSuite
+
+class DirectionTest extends FunSuite {
+  import Direction._
+  test("Direction") {
+    expect(Short) { Long.reversed }
+    expect(Long) { Short.reversed }
+  }
 }

@@ -24,4 +24,6 @@ trait Signal extends Indicator[Direction] {
 
   /** Returns true if signal's value is set to `Short` */
   def isShort = optionalValue exists { _ == Direction.Short }
+
+  override def valueNotSetString = "Flat"
 }

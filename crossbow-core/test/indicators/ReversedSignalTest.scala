@@ -15,12 +15,31 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.indicators
 
-sealed trait Direction {
-  def reversed: Direction
-}
-object Direction {
-  case object Long extends Direction { def reversed = Short } // TODO test reversed
-  case object Short extends Direction { def reversed = Long }
+import lt.norma.crossbow.core._
+import org.scalatest.FunSuite
+
+class ReversedSignalTest extends FunSuite {
+  import Direction._
+  test("ReversedSignal") {
+    val s1 = new Signal { def name = "S1"; def dependencies = Empty; def calculate = Empty }
+    val s = new ReversedSignal(s1)
+    val l = new IndicatorList(s)
+    expect("Reversed(S1)") { s.name }
+    expect(Set(s1)) { s.dependencies }
+    assert { s.isEmpty }
+
+    l.send(EmptyData)
+    assert { s.isEmpty }
+    s1.set(Long)
+    l.send(EmptyData)
+    assert { s.isShort }
+    s1.set(Short)
+    l.send(EmptyData)
+    assert { s.isLong }
+    s1.unset()
+    l.send(EmptyData)
+    assert { s.isEmpty }
+  }
 }

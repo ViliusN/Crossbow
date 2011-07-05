@@ -17,10 +17,21 @@
 
 package lt.norma.crossbow.core
 
-sealed trait Direction {
-  def reversed: Direction
-}
-object Direction {
-  case object Long extends Direction { def reversed = Short } // TODO test reversed
-  case object Short extends Direction { def reversed = Long }
+/** Holds `Direction.Long` value if at least one of the specified signals has long value, and no
+  * signals are short. Holds `Direction.Short` value if at least one of the specified signals has
+  * short value, and no signals are long. Otherwise the values is `None`. */
+class AllSignals(signals: Signal*) extends Signal {
+  def name = "AllSignals("+(signals map { _.name } mkString("; "))+")"
+  def dependencies = signals.toSet
+  def calculate = {
+    case _ =>
+      val setSignals = signals.filter(_.isSet)
+      if(setSignals.size > 0 && setSignals.forall(_.isLong)) {
+        Direction.Long
+      } else if(setSignals.size > 0 && setSignals.forall(_.isShort)) {
+        Direction.Short
+      } else {
+        None
+      }
+  }
 }
