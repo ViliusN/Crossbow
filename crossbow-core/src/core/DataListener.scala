@@ -17,9 +17,6 @@
 
 package lt.norma.crossbow.core
 
-/** Any data message sent to data listeners must extend this trait. */
-trait Data
-
 /** Receives data messages. Instances of `BasicDataListener` cannot receive data messages directly
   * from data providers. Therefore this trait should be implemented only to create data listeners
   * which need some special data handling. For example, `Indicator`s implement `BasicDataListener`

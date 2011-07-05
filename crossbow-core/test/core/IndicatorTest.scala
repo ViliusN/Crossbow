@@ -59,26 +59,31 @@ class IndicatorTest extends FunSuite {
     intercept[Indicator.ValueNotSetException] { i.value }
     expect(None) { i.optionalValue }
     assert { !i.isSet }
+    assert { i.isEmpty }
 
     i.set(15)
     expect(15) { i.value }
     expect(Some(15)) { i.optionalValue }
     assert { i.isSet }
+    assert { !i.isEmpty }
 
     i.set(Some(16))
     expect(16) { i.value }
     expect(Some(16)) { i.optionalValue }
     assert { i.isSet }
+    assert { !i.isEmpty }
 
     i.unset()
     intercept[Indicator.ValueNotSetException] { i.value }
     expect(None) { i.optionalValue }
     assert { !i.isSet }
+    assert { i.isEmpty }
 
     i.set(17)
     expect(17) { i.value }
     expect(Some(17)) { i.optionalValue }
     assert { i.isSet }
+    assert { !i.isEmpty }
   }
 
   test("Name") {

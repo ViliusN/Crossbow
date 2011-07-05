@@ -17,8 +17,8 @@ long_line_column=100
 
 [files]
 current_page=1
-FILE_NAME_0=2097;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-demo/src/IndicatorDemo.scala;0;2
-FILE_NAME_1=6115;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-demo/test/IndicatorDemoTest.scala;0;2
+FILE_NAME_0=0;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-demo/src/demoIndicators.scala;0;2
+FILE_NAME_1=6501;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-demo/test/demoIndicatorsTest.scala;0;2
 
 [build-menu]
 NF_00_LB=

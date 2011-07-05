@@ -71,6 +71,9 @@ abstract class Indicator[Value : Manifest] extends BasicDataListener with Depend
   /** Checks if indicator's value is set. */
   def isSet = _value.isDefined
 
+  /** Checks if indicator's value is not set. */
+  def isEmpty = !isSet
+
   /** Converts the specified value to string. Override this method if custom formatting is
     * needed. */
   def valueToString(valueToConvert: Value): String = {

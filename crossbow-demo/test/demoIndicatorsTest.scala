@@ -18,6 +18,7 @@
 package lt.norma.crossbow.demo
 
 import lt.norma.crossbow.core._
+import lt.norma.crossbow.indicators._
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
 import TestUtils._
@@ -224,11 +225,43 @@ class IndicatorToStringTest extends FunSuite {
   expect("[123.45]") { i2.valueToString(123.45) }
 }
 
-object TestUtils {
-  import org.scalatest.TestFailedException
+class CombiningIndicatorsTest extends FunSuite {
+  val i1 = new Variable[Double] { override def name = "I1" }
+  val i2 = new Variable[Double] { override def name = "I2" }
+  val i3 = new Variable[Double] { override def name = "I3" }
 
-  def approx(expected: Double, e: Double)(value: Double) {
-    if(value < expected - e || value > expected + e) throw new TestFailedException(
-      "Expected "+expected+" ±"+e+", but got "+value, 0)
-  }
+  val sum = new Sum(i1, i2)
+  val avg = new Average(i1, i2, i3)
+  val diff = new Difference(i1, i2)
+  val list = new IndicatorList(sum, avg, diff)
+
+  expect("Sum(I1; I2)") { sum.name }
+  expect("Average(I1; I2; I3)") { avg.name }
+  expect("Difference(I1; I2)") { diff.name }
+
+  assert { sum.isEmpty }
+  assert { avg.isEmpty }
+  assert { diff.isEmpty }
+  list.send(EmptyData)
+  assert { sum.isEmpty }
+  assert { avg.isEmpty }
+  assert { diff.isEmpty }
+  i1.set(5)
+  list.send(EmptyData)
+  assert { sum.isEmpty }
+  assert { avg.isEmpty }
+  assert { diff.isEmpty }
+
+  i2.set(6)
+  list.send(EmptyData)
+  expect(11) { sum.value }
+  assert { avg.isEmpty }
+  expect(-1) { diff.value }
+
+  i1.set(9)
+  i3.set(8)
+  list.send(EmptyData)
+  expect(15) { sum.value }
+  approx(7.7, 0.05) { avg.value }
+  expect(3) { diff.value }
 }
