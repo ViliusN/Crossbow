@@ -17,5 +17,37 @@
 
 package lt.norma.crossbow.core
 
-/** Extend this trait to create data filters. */
-trait DataFilter extends DataProvider with DataListener
+import org.joda.time.DateTime
+import org.scalatest.FunSuite
+
+class SessionFilterTest extends FunSuite {
+  test("SessionFilter") {
+    val l = new DataListener {
+      var lastData: Option[Data] = None
+      def dependencies = Empty
+      def receive = {
+        case data => lastData = Some(data)
+      }
+    }
+    val f = new SessionFilter()
+    f.add(l)
+    expect(None) { l.lastData }
+
+    f.send(EmptyData)
+    expect(None) { l.lastData }
+
+    val so = SessionOpen(new DateTime)
+    f.send(so)
+    expect(Some(so)) { l.lastData }
+
+    f.send(EmptyData)
+    expect(Some(EmptyData)) { l.lastData }
+
+    val sc = SessionClose(new DateTime)
+    f.send(sc)
+    expect(Some(sc)) { l.lastData }
+
+    f.send(EmptyData)
+    expect(Some(sc)) { l.lastData }
+  }
+}

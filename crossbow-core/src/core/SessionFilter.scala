@@ -17,5 +17,20 @@
 
 package lt.norma.crossbow.core
 
-/** Extend this trait to create data filters. */
-trait DataFilter extends DataProvider with DataListener
+/** Filters out any data between `SessionClose` and `SessionOpen` data messages. */
+class SessionFilter extends DataFilter {
+  var isOpen = false
+
+  def dependencies = Empty
+
+  def receive = {
+    case open: SessionOpen =>
+      isOpen = true
+      dispatch(open)
+    case close: SessionClose =>
+      isOpen = false
+      dispatch(close)
+    case data if(isOpen) =>
+      dispatch(data)
+  }
+}

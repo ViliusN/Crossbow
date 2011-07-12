@@ -24,31 +24,29 @@ class SignalTest  extends FunSuite {
   test("Signal") {
     import Direction._
 
-    class MySignal extends Signal {
-      def name = "s1"
-      def dependencies = Empty
-      def calculate = Empty
-    }
-
-    val s = new MySignal
+    val s = new Signal { def name = "s1"; def dependencies = Empty; def calculate = Empty }
     expect(None) { s() }
     assert { !s.isLong }
     assert { !s.isShort }
+    assert { s.isFlat }
 
     s.set(Long)
     expect(Long) { s.value }
     assert { s.isLong }
     assert { !s.isShort }
+    assert { !s.isFlat }
 
     s.set(Short)
     expect(Short) { s.value }
     assert { !s.isLong }
     assert { s.isShort }
+    assert { !s.isFlat }
 
     s.unset()
     expect(None) { s() }
     assert { !s.isLong }
     assert { !s.isShort }
+    assert { s.isFlat }
   }
   test("Conversion to string") {
     val s1 = new Signal { def name = "S1"; def dependencies = Empty; def calculate = Empty }

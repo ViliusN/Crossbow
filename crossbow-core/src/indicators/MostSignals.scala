@@ -18,9 +18,8 @@
 package lt.norma.crossbow.core
 
 /** Holds `Direction.Long` if the amount of long signals is greater than the amount of short
-  * signals. Holds `Direction.Short` if the amount of short signals is greater than the amount of
-  * long signals. Holds `None` value if the amount of short and long signals is equal, or all of the
-  * signals are unset. */
+  * and flat signals combined. Holds `Direction.Short` if the amount of short signals is greater
+  * than the amount of long and flat signals combined. Otherwise holds `None` value. */
 class MostSignals(signals: Signal*) extends Signal {
   def name = "MostSignals("+(signals map { _.name } mkString("; "))+")"
   def dependencies = signals.toSet
@@ -28,9 +27,10 @@ class MostSignals(signals: Signal*) extends Signal {
     case _ =>
       val longCount = signals.count(_.isLong)
       val shortCount = signals.count(_.isShort)
-      if(longCount > shortCount) {
+      val total = signals.size
+      if(longCount > total - longCount) {
         Direction.Long
-      } else if(shortCount > longCount) {
+      } else if(shortCount > total - shortCount) {
         Direction.Short
       } else {
         None

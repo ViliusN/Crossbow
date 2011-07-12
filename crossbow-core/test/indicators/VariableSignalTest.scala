@@ -15,7 +15,23 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.indicators
 
-/** Extend this trait to create data filters. */
-trait DataFilter extends DataProvider with DataListener
+import lt.norma.crossbow.core._
+import org.scalatest.FunSuite
+
+class VariableSignalTest extends FunSuite {
+  test("Variable signal") {
+    val s = new VariableSignal
+
+    expect("Variable Signal") { s.name }
+    expect(Set.empty) { s.dependencies }
+    assert { s.isFlat }
+    s.set(Direction.Long)
+    assert { s.isLong }
+    s.set(Direction.Short)
+    assert { s.isShort }
+    s.unset()
+    assert { s.isFlat }
+  }
+}

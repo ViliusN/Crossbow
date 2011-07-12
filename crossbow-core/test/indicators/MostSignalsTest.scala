@@ -31,42 +31,42 @@ class MostSignalsTest extends FunSuite {
     val l = new IndicatorList(s)
     expect("MostSignals(S1; S2; S3; S4)") { s.name }
     expect(Set(s1, s2, s3, s4)) { s.dependencies }
-    assert { s.isEmpty }
+    assert { s.isFlat }
 
     l.send(EmptyData)
-    assert { s.isEmpty }
+    assert { s.isFlat }
     s1.set(Long)
     l.send(EmptyData)
-    assert { s.isLong }
+    assert { s.isFlat }
     s2.set(Long)
     l.send(EmptyData)
-    assert { s.isLong }
-    s3.set(Short)
+    assert { s.isFlat }
+    s3.set(Long)
     l.send(EmptyData)
     assert { s.isLong }
-    s4.set(Short)
+    s4.set(Long)
     l.send(EmptyData)
-    assert { s.isEmpty }
+    assert { s.isLong }
     s1.set(Short)
     l.send(EmptyData)
-    assert { s.isShort }
-    s1.unset()
-    s2.unset()
-    s3.unset()
-    s4.unset()
+    assert { s.isLong }
+    s2.set(Short)
     l.send(EmptyData)
-    assert { s.isEmpty }
+    assert { s.isFlat }
+    s2.unset()
+    l.send(EmptyData)
+    assert { s.isFlat }
   }
-  test("MostSignals - one signal") {
+  test("one signal") {
     val s1 = new Signal { def name = "S1"; def dependencies = Empty; def calculate = Empty }
     val s = new MostSignals(s1)
     val l = new IndicatorList(s)
     expect("MostSignals(S1)") { s.name }
     expect(Set(s1)) { s.dependencies }
-    assert { s.isEmpty }
+    assert { s.isFlat }
 
     l.send(EmptyData)
-    assert { s.isEmpty }
+    assert { s.isFlat }
     s1.set(Long)
     l.send(EmptyData)
     assert { s.isLong }
@@ -75,15 +75,15 @@ class MostSignalsTest extends FunSuite {
     assert { s.isShort }
     s1.unset()
     l.send(EmptyData)
-    assert { s.isEmpty }
+    assert { s.isFlat }
   }
-  test("MostSignals - empty") {
+  test("empty list of signals") {
     val s = new MostSignals()
     val l = new IndicatorList(s)
     expect("MostSignals()") { s.name }
     expect(Set.empty) { s.dependencies }
-    expect(None) { s() }
+    assert { s.isFlat }
     l.send(EmptyData)
-    expect(None) { s() }
+    assert { s.isFlat }
   }
 }

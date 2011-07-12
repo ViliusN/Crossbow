@@ -15,7 +15,13 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.indicators
 
-/** Extend this trait to create data filters. */
-trait DataFilter extends DataProvider with DataListener
+import lt.norma.crossbow.core._
+
+/** Variable signal, whose value can be set only from outside. */
+class VariableSignal extends Signal {
+  def name = "Variable Signal"
+  def dependencies = Empty
+  def calculate = Empty
+}

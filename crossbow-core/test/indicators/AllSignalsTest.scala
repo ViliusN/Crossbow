@@ -23,48 +23,53 @@ import org.scalatest.FunSuite
 class AllSignalsTest extends FunSuite {
   import Direction._
   test("AllSignals") {
-    val s1 = new Signal { def name = "S1"; def dependencies = Empty; def calculate = Empty }
-    val s2 = new Signal { def name = "S2"; def dependencies = Empty; def calculate = Empty }
-    val s3 = new Signal { def name = "S3"; def dependencies = Empty; def calculate = Empty }
+    val s1 = new VariableSignal { override def name = "S1" }
+    val s2 = new VariableSignal { override def name = "S2" }
+    val s3 = new VariableSignal { override def name = "S3" }
     val s = new AllSignals(s1, s2, s3)
     val l = new IndicatorList(s)
     expect("AllSignals(S1; S2; S3)") { s.name }
     expect(Set(s1, s2, s3)) { s.dependencies }
-    assert { s.isEmpty }
+    assert { s.isFlat }
 
     l.send(EmptyData)
-    assert { s.isEmpty }
+    assert { s.isFlat }
     s1.set(Long)
     l.send(EmptyData)
-    assert { s.isLong }
+    assert { s.isFlat }
     s2.set(Long)
     l.send(EmptyData)
-    assert { s.isLong }
-    s3.set(Short)
+    assert { s.isFlat }
+    s3.set(Long)
     l.send(EmptyData)
-    assert { s.isEmpty }
+    assert { s.isLong }
     s1.set(Short)
+    l.send(EmptyData)
+    assert { s.isFlat }
     s2.set(Short)
+    l.send(EmptyData)
+    assert { s.isFlat }
+    s3.set(Short)
     l.send(EmptyData)
     assert { s.isShort }
     s1.unset()
     l.send(EmptyData)
-    assert { s.isShort }
+    assert { s.isFlat }
     s2.unset()
     s3.unset()
     l.send(EmptyData)
-    assert { s.isEmpty }
+    assert { s.isFlat }
   }
-  test("AllSignals - one signal") {
+  test("one signal") {
     val s1 = new Signal { def name = "S1"; def dependencies = Empty; def calculate = Empty }
     val s = new AllSignals(s1)
     val l = new IndicatorList(s)
     expect("AllSignals(S1)") { s.name }
     expect(Set(s1)) { s.dependencies }
-    assert { s.isEmpty }
+    assert { s.isFlat }
 
     l.send(EmptyData)
-    assert { s.isEmpty }
+    assert { s.isFlat }
     s1.set(Long)
     l.send(EmptyData)
     assert { s.isLong }
@@ -73,15 +78,15 @@ class AllSignalsTest extends FunSuite {
     assert { s.isShort }
     s1.unset()
     l.send(EmptyData)
-    assert { s.isEmpty }
+    assert { s.isFlat }
   }
-  test("AllSignals - empty") {
+  test("empty list of signals") {
     val s = new AllSignals()
     val l = new IndicatorList(s)
     expect("AllSignals()") { s.name }
     expect(Set.empty) { s.dependencies }
-    expect(None) { s() }
+    assert { s.isFlat }
     l.send(EmptyData)
-    expect(None) { s() }
+    assert { s.isFlat }
   }
 }
