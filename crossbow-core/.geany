@@ -16,8 +16,10 @@ long_line_behaviour=1
 long_line_column=100
 
 [files]
-current_page=0
-FILE_NAME_0=1481;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/indicators/MostSignals.scala;0;2
+current_page=2
+FILE_NAME_0=786;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/indicators/MostSignals.scala;0;2
+FILE_NAME_1=1014;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/core/SessionFilter.scala;0;2
+FILE_NAME_2=802;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/test/core/SessionFilterTest.scala;0;2
 
 [build-menu]
 NF_00_LB=Deploy
