@@ -18,33 +18,12 @@
 package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
-import org.scalatest.FunSuite
 
-class ConditionalTest extends FunSuite {
-  test("Conditional") {
-    val target = new Variable[Double] { override def name = "T" }
-    val i = new Conditional(target)(_ > 5)
-    expect("Conditional T") { i.name }
-    expect(Set(target)) { i.dependencies }
-    expect(None) { i() }
+/** Holds value of the specified indicator or the specified default value if the indicator is
+  * empty. */
+class Default[Value : Manifest](indicator: Indicator[Value], defaultValue: Value)
+    extends Alternative[Value](indicator, new Variable[Value]) {
+  override def name = indicator.name+" with default "+defaultValue
 
-    target.set(1)
-    i.send(EmptyData)
-    expect(None) { i() }
-    target.set(5)
-    i.send(EmptyData)
-    expect(None) { i() }
-    target.set(6)
-    i.send(EmptyData)
-    expect(6) { i.value }
-    target.set(999)
-    i.send(EmptyData)
-    expect(999) { i.value }
-    target.set(0)
-    i.send(EmptyData)
-    expect(None) { i() }
-    target.unset()
-    i.send(EmptyData)
-    expect(None) { i() }
-  }
+  alternative.set(defaultValue)
 }
