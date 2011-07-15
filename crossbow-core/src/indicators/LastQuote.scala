@@ -21,16 +21,18 @@ import lt.norma.crossbow.core._
 import org.joda.time.DateTime
 
 /** Records last quote received for the specified instrument. */
-class LastQuote(_instrument: Instrument) extends Indicator[Quote] {
+class LastQuote(optionalInstrument: Option[Instrument]) extends Indicator[Quote] {
+  def this() = this(None)
+  def this(_instrument: Instrument) = this(Some(_instrument))
+
   def name = "Last Quote"
-  private val wrapped = new InstrumentWrapper(_instrument)
-  def dependencies = Set(wrapped)
+  val instrument = new InstrumentWrapper(optionalInstrument)
+  def dependencies = Set(instrument)
 
   def calculate = {
-    case q @ Quote(i, _, _, _, _, _) if(i == instrument) => q
+    // Unset last quote if the instrument is empty.
+    case _ if(instrument.isEmpty) => None
+    // Capture the quote if instrument matches.
+    case q @ Quote(i, _, _, _, _, _) if(i == instrument.value) => q
   }
-
-  def setInstrument(_instrument: Instrument) { wrapped.set(_instrument) }
-
-  def instrument = wrapped.value
 }

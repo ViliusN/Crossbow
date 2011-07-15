@@ -23,7 +23,10 @@ import org.joda.time.DateTime
 /** Wraps an instrument inside indicator. It is recommended to add `InstrumentWrapper` to
   * indicator's dependencies when mutable instrument is needed, instead of using `var instrument`
   * field. */
-class InstrumentWrapper(instrument: Instrument) extends Variable[Instrument] {
+class InstrumentWrapper(optionalInstrument: Option[Instrument]) extends Variable[Instrument] {
+  def this() = this(None)
+  def this(instrument: Instrument) = this(Some(instrument))
   override def name = "Instrument"
-  set(instrument)
+
+  optionalInstrument foreach set
 }

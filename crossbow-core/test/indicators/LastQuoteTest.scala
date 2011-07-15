@@ -28,8 +28,8 @@ class LastQuoteTest extends FunSuite {
     val i = new LastQuote(s)
     expect("Last Quote") { i.name }
     expect(1) { i.dependencies.size }
-    expect(None) { i.optionalValue }
-    expect(s) { i.instrument }
+    expect(None) { i() }
+    expect(s) { i.instrument.value }
 
     val q1 = Quote(s, 5, 100, 4.5, 800, new DateTime)
     i.send(q1)
@@ -51,9 +51,44 @@ class LastQuoteTest extends FunSuite {
     expect(q3) { i.value }
 
     val q5 = Quote(sOther, 11, 100, 4.5, 800, new DateTime)
-    i.setInstrument(sOther)
-    expect(sOther) { i.instrument }
+    i.instrument.set(sOther)
+    expect(sOther) { i.instrument.value }
     i.send(q5)
     expect(q5) { i.value }
+  }
+  test("empty instrument") {
+    val s = new Stock("AA", Exchange.nasdaq, "USD")
+    val i = new LastQuote()
+    expect(None) { i() }
+    expect(None) { i.instrument() }
+
+    val q1 = Quote(s, 5, 100, 4.5, 800, new DateTime)
+    i.send(q1)
+    expect(None) { i() }
+    i.instrument.set(s)
+    i.send(q1)
+    expect(q1) { i.value }
+    i.instrument.unset
+    i.send(q1)
+    expect(None) { i() }
+  }
+  test("constructors") {
+    val s = new Stock("AA", Exchange.nasdaq, "USD")
+    expect(s) {
+      val i = new LastQuote(Some(s))
+      i.instrument.value
+    }
+    expect(s) {
+      val i = new LastQuote(s)
+      i.instrument.value
+    }
+    expect(None) {
+      val i = new LastQuote(None)
+      i.instrument()
+    }
+    expect(None) {
+      val i = new LastQuote()
+      i.instrument()
+    }
   }
 }

@@ -21,15 +21,39 @@ import lt.norma.crossbow.core._
 import org.scalatest.FunSuite
 
 class InstrumentWrapperTest extends FunSuite {
-  test("InstrumentWrapper") {
-    val s1 = new Stock("AA", Exchange.nasdaq, "USD")
-    val s2 = new Stock("AA", Exchange.nyse, "USD")
-    val i = new InstrumentWrapper(s1)
+  val s1 = new Stock("S1", Exchange.nasdaq, "USD")
+  val s2 = new Stock("S2", Exchange.nyse, "USD")
 
+  test("constructor with optional instrument - Some") {
+    val i = new InstrumentWrapper(Some(s1))
     expect("Instrument") { i.name }
     expect(Set.empty) { i.dependencies }
     expect(s1) { i.value }
     i.set(s2)
     expect(s2) { i.value }
+  }
+  test("constructor with optional instrument - None") {
+    val i = new InstrumentWrapper(None)
+    expect("Instrument") { i.name }
+    expect(Set.empty) { i.dependencies }
+    expect(None) { i() }
+    i.set(s1)
+    expect(s1) { i.value }
+  }
+  test("constructor with specified instrument") {
+    val i = new InstrumentWrapper(s1)
+    expect("Instrument") { i.name }
+    expect(Set.empty) { i.dependencies }
+    expect(s1) { i.value }
+    i.set(s2)
+    expect(s2) { i.value }
+  }
+  test("constructor with no arguments") {
+    val i = new InstrumentWrapper()
+    expect("Instrument") { i.name }
+    expect(Set.empty) { i.dependencies }
+    expect(None) { i() }
+    i.set(s1)
+    expect(s1) { i.value }
   }
 }
