@@ -16,9 +16,7 @@ long_line_behaviour=1
 long_line_column=100
 
 [files]
-current_page=0
-FILE_NAME_0=1067;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/indicators/LastTrade.scala;0;2
-FILE_NAME_1=1839;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/test/indicators/LastQuoteTest.scala;0;2
+current_page=-1
 
 [build-menu]
 NF_00_LB=Deploy

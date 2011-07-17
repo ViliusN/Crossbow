@@ -19,14 +19,15 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 
-/** Calculates average of the values of the specified indicators of `Double` type. If at least one
-  * of the target indicators is empty, the `Average` will result in `None` value.
-  * {{{Average = (I1 + I2 + ... + In) / n}}} */
-class Average(indicators: Indicator[Double]*) extends Indicator[Double] {
-  def name = "Average("+(indicators map { _.name } mkString("; "))+")"
-  private val sum = new Sum(indicators: _*)
-  def dependencies = Set(sum)
+/** Calculates sum of the specified indicators of `Double` type. Empty indicators are ignored.
+  * `SumSet` results in `None` if all of the target indicators are empty.
+  * {{{SumSet = I1 + I2 + ... + In}}} */
+class SumSet(indicators: Indicator[Double]*) extends Indicator[Double] {
+  def name = "SumSet("+(indicators map { _.name } mkString("; "))+")"
+  private val defSum = new Sum(indicators map { i => new Default(i, 0.0) } : _*)
+  def dependencies = Set(defSum)
   def calculate = {
-    case _ => sum() map { _ / indicators.size }
+    case _ if(indicators.exists(_.isSet)) => defSum()
+    case _ => None
   }
 }

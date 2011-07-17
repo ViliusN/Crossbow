@@ -19,7 +19,8 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 
-/** Calculates sum of the specified indicators of `Double` type.
+/** Calculates sum of the specified indicators of `Double` type. If at least one of the target
+  * indicators is empty, the `Sum` will result in `None` value.
   * {{{Sum = I1 + I2 + ... + In}}} */
 class Sum(indicators: Indicator[Double]*) extends Indicator[Double] {
   def name = "Sum("+(indicators map { _.name } mkString("; "))+")"
