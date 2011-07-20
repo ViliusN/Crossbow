@@ -1,6 +1,6 @@
 Crossbow is an open source library for trading strategy developers.
 
-Copyright 2010-2011 Vilius Normantas <code@norma.lt>
+Copyright 2010-2011 Vilius Normantas code@norma.lt
 
 Crossbow is free software: you can redistribute it and/or modify it under the terms of the GNU
 General Public License as published by the Free Software Foundation, either version 3 of the
@@ -11,7 +11,7 @@ the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  Se
 Public License for more details.
 
 You should have received a copy of the GNU General Public License along with Crossbow.  If not, see
-<http://www.gnu.org/licenses/>.
+http://www.gnu.org/licenses/.
 
-
-This product includes software developed by Joda.org (http://www.joda.org/).
+***
+This product includes software developed by Joda.org http://www.joda.org/.

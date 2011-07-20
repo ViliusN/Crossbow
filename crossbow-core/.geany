@@ -16,7 +16,8 @@ long_line_behaviour=1
 long_line_column=100
 
 [files]
-current_page=-1
+current_page=0
+FILE_NAME_0=1354;Scala;0;16;0;1;0;/home/vilius/work/trading/crossbow/crossbow-core/src/indicators/AverageSet.scala;0;2
 
 [build-menu]
 NF_00_LB=Deploy
