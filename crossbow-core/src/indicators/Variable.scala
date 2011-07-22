@@ -21,6 +21,11 @@ import lt.norma.crossbow.core._
 
 /** Wraps a variable value as indicator. The value can be set only externally via `set` method. */
 class Variable[Value : Manifest] extends Indicator[Value] {
+  def this(initialValue: Value) = {
+    this()
+    set(initialValue)
+  }
+
   def name = "Variable"
   def dependencies = Empty
   def calculate = Empty

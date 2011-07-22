@@ -33,7 +33,7 @@ abstract class Indicator[Value : Manifest] extends BasicDataListener with Depend
     with HistoryHolder[Value] with Name {
   import Indicator._
 
-  implicit def valueToOptional(v: Value): Option[Value] = Some(v)
+  implicit def valueToOption(v: Value): Option[Value] = Some(v)
   implicit def emptyToCalculator(empty: Empty): PartialFunction[Data, Option[Value]] = {
     case _ => optionalValue
   }

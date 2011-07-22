@@ -23,18 +23,21 @@ import org.scalatest.FunSuite
 class VariableTest extends FunSuite {
   test("Variable indicator") {
     val i = new Variable[Double]
-
     expect("Variable") { i.name }
     expect(Set()) { i.dependencies }
     expect(None) { i() }
 
     i.set(52.123)
     expect(52.123) { i.value }
-
     i.unset()
     expect(None) { i() }
-
     i.set(0)
     expect(0) { i.value }
+  }
+  test("constructor with initial value") {
+    expect("ABC") {
+      val i = new Variable("ABC")
+      i.value
+    }
   }
 }

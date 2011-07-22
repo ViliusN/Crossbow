@@ -30,4 +30,7 @@ class Alternative[Value : Manifest](indicator: Indicator[Value], val alternative
     case _ if(indicator.isEmpty) => alternative()
     case _ => indicator.value
   }
+
+  // Initialize alternative with current values
+  send(EmptyData)
 }

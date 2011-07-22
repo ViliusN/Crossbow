@@ -26,7 +26,7 @@ class DefaultTest extends FunSuite {
     val i = new Default(target, 8.0)
     expect("T with default 8.0") { i.name }
     expect(2) { i.dependencies.size }
-    expect(None) { i() }
+    expect(8) { i.value }
 
     i.send(EmptyData)
     expect(8) { i.value }

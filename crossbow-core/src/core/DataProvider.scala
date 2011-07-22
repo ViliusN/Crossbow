@@ -50,5 +50,6 @@ trait DataProvider {
 
 /** Performs instrument look-up requests. */
 trait InstrumentProvider {
-  def optionsChain(underlying: Instrument): List[Instrument]
+  def requestOptionsChain(underlying: Instrument)
+  // TODO return instruments via data messages
 }
