@@ -48,3 +48,4 @@ class Change(period: Int, indicator: Indicator[Double] with History) extends Ind
     }
   }
 }
+// TODO capture previous value, don't use the history
