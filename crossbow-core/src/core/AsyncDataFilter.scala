@@ -20,20 +20,20 @@ package lt.norma.crossbow.core
 import scala.actors.Actor
 import scala.actors.Actor._
 
-class AsyncDataListener(listener: DataListener) extends DataListener with Actor {
+/** Receives data from multiple threads and forwards all data messages to it's own listeners in
+  * single thread. The main use of this filter is to ensure that only one thread provides data to
+  * all listeners. */
+class AsyncDataFilter extends DataFilter with Actor {
   def dependencies = Empty
-
   def act() {
     loop {
       react {
-        case d: Data => listener.send(d)
+        case d: Data => dispatch(d)
       }
     }
   }
-
   def receive = {
     case d => this ! d
   }
-
   start
 }

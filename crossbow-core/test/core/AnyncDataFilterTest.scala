@@ -19,8 +19,8 @@ package lt.norma.crossbow.core
 
 import org.scalatest.FunSuite
 
-class AnyncDataListenerTest extends FunSuite {
-  test("Asynchronous data listener") {
+class AnyncDataFilterTest extends FunSuite {
+  test("Asynchronous data filter") {
     var counter = 1
     case class D(v: Int) extends Data
     class LFast extends DataListener {
@@ -49,7 +49,8 @@ class AnyncDataListenerTest extends FunSuite {
 
     val fast = new LFast
     val slow = new LSlow
-    val async = new AsyncDataListener(slow)
+    val async = new AsyncDataFilter
+    async.add(slow)
 
     val d1 = D(1)
     slow.send(d1)
