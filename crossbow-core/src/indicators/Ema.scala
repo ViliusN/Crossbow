@@ -54,3 +54,4 @@ class EmaContinuous(period: Int, indicator: Indicator[Double]) extends Indicator
     case BarClose(_) if(indicator.isSet) => indicator.value
   }
 }
+// TODO Move EmaContinuous to separate file

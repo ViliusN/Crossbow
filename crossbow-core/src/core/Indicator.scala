@@ -113,6 +113,9 @@ abstract class Indicator[Value : Manifest] extends BasicDataListener with Depend
   protected def calculate: PartialFunction[Data, Option[Value]]
 
   override def toString = name+": "+valueToString()
+
+  /** Initializes indicator by sending empty data message */
+  final def initialize { send(EmptyData) }
 }
 
 object Indicator {
@@ -122,3 +125,5 @@ object Indicator {
 trait Name {
   def name: String
 }
+
+// TODO Test whether all indicator initialize correctly

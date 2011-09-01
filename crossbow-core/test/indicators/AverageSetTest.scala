@@ -22,6 +22,14 @@ import lt.norma.crossbow.testutils._
 import org.scalatest.FunSuite
 
 class AverageSetTest extends FunSuite {
+  test("name") {
+    val tartget1 = new Variable[Double] { override def name = "A" }
+    val tartget2 = new Variable[Double] { override def name = "B" }
+    val tartget3 = new Variable[Double] { override def name = "C" }
+    val indicator = new AverageSet(tartget1, tartget2, tartget3)
+    expect("AverageSet(A; B; C)") { indicator.name }
+  }
+
   test("AverageSet indicator") {
     val e = 0.00001
     val i1 = new Variable[Double] { override def name = "A" }

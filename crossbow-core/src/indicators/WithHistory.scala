@@ -15,20 +15,17 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.indicators
 
-/** Holds `Direction.Long` value if all of the target signals are long. Holds `Direction.Short`
-  * value if all of the target signals are short. Otherwise the values is `None`. */
-class AllSignals(signals: Signal*) extends Signal {
-  def name = "AllSignals("+(signals map { _.name } mkString("; "))+")"
-  def dependencies = signals.toSet
-  def calculate = if(signals.size > 0) {
-    case _ if(signals.forall(_.isLong)) => Direction.Long
-    case _ if(signals.forall(_.isShort)) => Direction.Short
-    case _ => None
-  } else {
-    case _ => None
-  }
+import lt.norma.crossbow.core._
+
+/** Wraps the specified indicator and collects it's historical values. This is useful when there is
+  * need to add history to an indicator at run-time. */
+class WithHistory[Value : Manifest](indicator: Indicator[Value]) extends Indicator[Value]
+    with History {
+  def name = "WithHistory("+indicator.name+")"
+  def dependencies = Set(indicator)
+  def calculate = { case _ => indicator() }
 
   initialize
 }
