@@ -47,9 +47,3 @@ trait DataProvider {
     }
   }
 }
-
-/** Performs instrument look-up requests. */
-trait InstrumentProvider {
-  def requestOptionsChain(underlying: Instrument)
-  // TODO return instruments via data messages
-}

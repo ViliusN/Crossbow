@@ -36,7 +36,7 @@ class IndicatorTest extends FunSuite {
 
   test("Accessing value") {
     val i = new Dummy
-    intercept[Indicator.ValueNotSetException] { i.value }
+    intercept[Indicator.ValueNotSet] { i.value }
     i.set(8)
     expect(8) { i.value }
   }
@@ -56,7 +56,7 @@ class IndicatorTest extends FunSuite {
 
   test("Setting, unset value, method isSet") {
     val i = new Dummy
-    intercept[Indicator.ValueNotSetException] { i.value }
+    intercept[Indicator.ValueNotSet] { i.value }
     expect(None) { i.optionalValue }
     assert { !i.isSet }
     assert { i.isEmpty }
@@ -74,7 +74,7 @@ class IndicatorTest extends FunSuite {
     assert { !i.isEmpty }
 
     i.unset()
-    intercept[Indicator.ValueNotSetException] { i.value }
+    intercept[Indicator.ValueNotSet] { i.value }
     expect(None) { i.optionalValue }
     assert { !i.isSet }
     assert { i.isEmpty }

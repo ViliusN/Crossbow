@@ -43,21 +43,21 @@ abstract class Indicator[Value : Manifest] extends BasicDataListener with Depend
   private var _optionManifest = manifest[Option[Value]]
 
   /** Attempts to obtain value of the indicator. If the value is not set, returns the result of
-    *  `default` method, which throws `ValueNotSetException` unless overridden. */
+    *  `default` method, which throws `ValueNotSet` unless overridden. */
   def value: Value = _value getOrElse default
 
   /** Returns optional value of the indicator. If the value is not set, returns optional result of
-    *  `default` method, unless it throws `ValueNotSetException`, in which case returns `None`. */
+    *  `default` method, unless it throws `ValueNotSet`, in which case returns `None`. */
   def optionalValue: Option[Value] =
-    try { Some(value) } catch { case _: ValueNotSetException => None }
+    try { Some(value) } catch { case _: ValueNotSet => None }
 
   /** Returns optional value of the indicator. If the value is not set, returns optional result of
-    *  `default` method, unless it throws `ValueNotSetException`, in which case returns `None`. */
+    *  `default` method, unless it throws `ValueNotSet`, in which case returns `None`. */
   def apply() = optionalValue
 
   /** Result of this method is returned by `value` and `optionalValue` methods if the value of this
-    * indicator is not set. Unless overridden, `default` method throws `ValueNotSetException`. */
-  def default: Value = { throw ValueNotSetException() }
+    * indicator is not set. Unless overridden, `default` method throws `ValueNotSet`. */
+  def default: Value = { throw ValueNotSet() }
 
   /** Sets value of the indicator. */
   def set(newValue: Option[Value]) { _value = newValue }
@@ -119,11 +119,10 @@ abstract class Indicator[Value : Manifest] extends BasicDataListener with Depend
 }
 
 object Indicator {
-  case class ValueNotSetException() extends Exception("Indicator's value has not been set")
+  case class ValueNotSet()
+      extends java.lang.Exception("Indicator's value has not been set")
 }
 
 trait Name {
   def name: String
 }
-
-// TODO Test whether all indicator initialize correctly

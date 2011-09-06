@@ -19,21 +19,19 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 
-/** Calculates exponential moving average of the specified indicator. Indicator's value is not set
-  * until there are at least `period` bars collected. */
-class Ema(period: Int, indicator: Indicator[Double]) extends Indicator[Double] {
-  def name = "EMA("+period+"; "+indicator.name+")"
+/** Calculates exponential moving average of the specified indicator. In case indicator's value is
+  * unset, `EmaContinuous` retains the last value. */
+class EmaContinuous(period: Int, indicator: Indicator[Double]) extends Indicator[Double] {
+  def name = "EMA_C("+period+"; "+indicator.name+")"
 
   if(period < 1)
     throw new IllegalArgumentException("Period of "+name+" indicator cannot be less than 1")
 
-  private val counter = new CountHistory(indicator)
-  private val calculator = new EmaContinuous(period, indicator)
+  def dependencies = Set(indicator)
 
-  def dependencies = Set(calculator, counter)
-
+  val e = 2.0 / (period + 1)
   def calculate = {
-    case BarClose(_) if(indicator.isSet && counter.value >= period) => calculator.value
-    case BarClose(_) => None
+    case BarClose(_) if(indicator.isSet && isSet) => e * indicator.value + (1 - e) * value
+    case BarClose(_) if(indicator.isSet) => indicator.value
   }
 }
