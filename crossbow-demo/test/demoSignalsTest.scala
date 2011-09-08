@@ -34,22 +34,22 @@ class DifferenceSignalTest extends FunSuite {
   assert { signal.isFlat }
 
   i2.set(5)
-  list.send(EmptyData)
+  list.send(EmptyMessage)
   assert { signal.isEmpty }
   assert { signal.isFlat }
 
   i1.set(5.4)
-  list.send(EmptyData)
+  list.send(EmptyMessage)
   assert { signal.isEmpty }
   assert { signal.isFlat }
 
   i1.set(6)
-  list.send(EmptyData)
+  list.send(EmptyMessage)
   expect(Direction.Long) { signal.value }
   assert { signal.isLong }
 
   i1.set(4.4)
-  list.send(EmptyData)
+  list.send(EmptyMessage)
   expect(Direction.Short) { signal.value }
   assert { signal.isShort }
 }
@@ -65,28 +65,28 @@ class CombiningSignalsTest extends FunSuite {
     val all = new AllSignals(s1, s2, s3)
     val list = new IndicatorList(all)
     assert { all.isFlat }
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { all.isFlat }
     s1.set(Long)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { all.isFlat }
     s2.set(Long)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { all.isFlat }
     s3.set(Long)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { all.isLong }
     s1.set(Short)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { all.isFlat }
     s2.set(Short)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { all.isFlat }
     s3.set(Short)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { all.isShort }
     s1.unset()
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { all.isFlat }
   }
 
@@ -94,28 +94,28 @@ class CombiningSignalsTest extends FunSuite {
     val most = new MostSignals(s1, s2, s3)
     val list = new IndicatorList(most)
     assert { most.isFlat }
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { most.isFlat }
     s1.set(Long)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { most.isLong }
     s2.set(Long)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { most.isLong }
     s3.set(Long)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { most.isLong }
     s1.set(Short)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { most.isFlat }
     s2.set(Short)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { most.isFlat }
     s3.set(Short)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { most.isShort }
     s1.unset()
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     assert { most.isFlat }
   }
 

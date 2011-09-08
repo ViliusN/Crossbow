@@ -30,7 +30,7 @@ class Indicator1Test extends FunSuite {
 
   expect(None) { i.optionalValue }
   expect(None) { i() }
-  intercept[Indicator.ValueNotSetException] { i.value }
+  intercept[Indicator.ValueNotSet] { i.value }
   assert { !i.isSet }
 
   i.set(1.5)
@@ -242,25 +242,25 @@ class CombiningIndicatorsTest extends FunSuite {
   assert { sum.isEmpty }
   assert { avg.isEmpty }
   assert { diff.isEmpty }
-  list.send(EmptyData)
+  list.send(EmptyMessage)
   assert { sum.isEmpty }
   assert { avg.isEmpty }
   assert { diff.isEmpty }
   i1.set(5)
-  list.send(EmptyData)
+  list.send(EmptyMessage)
   assert { sum.isEmpty }
   assert { avg.isEmpty }
   assert { diff.isEmpty }
 
   i2.set(6)
-  list.send(EmptyData)
+  list.send(EmptyMessage)
   expect(11) { sum.value }
   assert { avg.isEmpty }
   expect(-1) { diff.value }
 
   i1.set(9)
   i3.set(8)
-  list.send(EmptyData)
+  list.send(EmptyMessage)
   expect(15) { sum.value }
   approx(7.7, 0.05) { avg.value }
   expect(3) { diff.value }

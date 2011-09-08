@@ -1,5 +1,5 @@
-bin/
 target/
+lib/
 project/
 .git/
 crossbow-core-*.jar
