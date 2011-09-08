@@ -29,22 +29,22 @@ class ConditionalTest extends FunSuite {
     expect(None) { i() }
 
     target.set(1)
-    i.send(EmptyData)
+    i.send(EmptyMessage)
     expect(None) { i() }
     target.set(5)
-    i.send(EmptyData)
+    i.send(EmptyMessage)
     expect(None) { i() }
     target.set(6)
-    i.send(EmptyData)
+    i.send(EmptyMessage)
     expect(6) { i.value }
     target.set(999)
-    i.send(EmptyData)
+    i.send(EmptyMessage)
     expect(999) { i.value }
     target.set(0)
-    i.send(EmptyData)
+    i.send(EmptyMessage)
     expect(None) { i() }
     target.unset()
-    i.send(EmptyData)
+    i.send(EmptyMessage)
     expect(None) { i() }
   }
 }

@@ -28,16 +28,16 @@ class DefaultTest extends FunSuite {
     expect(2) { i.dependencies.size }
     expect(8) { i.value }
 
-    i.send(EmptyData)
+    i.send(EmptyMessage)
     expect(8) { i.value }
     target.set(5)
-    i.send(EmptyData)
+    i.send(EmptyMessage)
     expect(5) { i.value }
     target.set(-1)
-    i.send(EmptyData)
+    i.send(EmptyMessage)
     expect(-1) { i.value }
     target.unset()
-    i.send(EmptyData)
+    i.send(EmptyMessage)
     expect(8) { i.value }
   }
 }

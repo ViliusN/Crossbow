@@ -126,14 +126,14 @@ class IndicatorListTest  extends FunSuite {
   }
 
   test("Receiving data from provider") {
-    val l1 = new DataListener {
+    val l1 = new Listener {
       var lastData: Option[Data] = None
       def dependencies = Set.empty
       def receive = {
         case d: Data => lastData = Some(d)
       }
     }
-    val l2 = new DataListener {
+    val l2 = new Listener {
       var lastData: Option[Data] = None
       def dependencies = Set(l1)
       def receive = {

@@ -12,8 +12,6 @@ scalaSource in Compile <<= baseDirectory(_ / "src")
 
 scalaSource in Test <<= baseDirectory(_ / "test")
 
-target <<= baseDirectory(_ / "bin")
-
 libraryDependencies += "org.scalatest" % "scalatest_2.9.1" % "1.6.1"
 
 libraryDependencies += "joda-time" % "joda-time" % "2.0"

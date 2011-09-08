@@ -30,16 +30,16 @@ class ReversedSignalTest extends FunSuite {
     expect(Set(s1)) { s.dependencies }
     assert { s.isEmpty }
 
-    l.send(EmptyData)
-    assert { s.isEmpty }
+    l.send(EmptyMessage)
+    expect(None) { s() }
     s1.set(Long)
-    l.send(EmptyData)
-    assert { s.isShort }
+    l.send(EmptyMessage)
+    expect(Some(Short)) { s() }
     s1.set(Short)
-    l.send(EmptyData)
-    assert { s.isLong }
+    l.send(EmptyMessage)
+    expect(Some(Long)) { s() }
     s1.unset()
-    l.send(EmptyData)
-    assert { s.isEmpty }
+    l.send(EmptyMessage)
+    expect(None) { s() }
   }
 }

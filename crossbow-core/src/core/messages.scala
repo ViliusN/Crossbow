@@ -17,15 +17,15 @@
 
 package lt.norma.crossbow.core
 
-/** Performs instrument look-up requests. */
-trait InstrumentProvider {
-  def requestStocks(symbol: String) {
-    throw NotSupported("This instrument provider does not provide stocks")
-  }
-  def requestOptionsChain(underlying: Instrument) {
-    throw NotSupported("This instrument provider does not provide options chains")
-  }
-  def requestFuturesChain(underlying: Instrument) {
-    throw NotSupported("This instrument provider does not provide futures chains")
-  }
-}
+/** Represent any message sent through data nodes. */
+trait Message
+
+/** Represent data message. */
+trait Data extends Message
+
+/** Represents request message. */
+trait Request extends Message
+
+/** Empty message. Can be used to indicate that the data node is running, but has not generated any
+  * meaningful data messages yet. */
+case object EmptyMessage extends Message

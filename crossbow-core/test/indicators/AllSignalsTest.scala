@@ -106,54 +106,54 @@ class AllSignalsTest extends FunSuite {
     val target3 = new VariableSignal
     val signal = new AllSignals(target1, target2, target3)
     val list = new IndicatorList(signal)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(None) { signal() }
     target1.set(Long)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(None) { signal() }
     target2.set(Long)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(None) { signal() }
     target3.set(Long)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(Some(Long)) { signal() }
     target1.set(Short)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(None) { signal() }
     target2.set(Short)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(None) { signal() }
     target3.set(Short)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(Some(Short)) { signal() }
     target1.unset()
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(None) { signal() }
     target2.unset()
     target3.unset()
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(None) { signal() }
   }
   test("sending data - one target") {
     val target = new VariableSignal
     val signal = new AllSignals(target)
     val list = new IndicatorList(signal)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(None) { signal() }
     target.set(Long)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(Some(Long)) { signal() }
     target.set(Short)
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(Some(Short)) { signal() }
     target.unset()
-    list.send(EmptyData)
+    list.send(EmptyMessage)
     expect(None) { signal() }
   }
   test("sending data - no targets") {
     val signal = new AllSignals()
     expect(None) { signal() }
-    signal.send(EmptyData)
+    signal.send(EmptyMessage)
     expect(None) { signal() }
   }
 }

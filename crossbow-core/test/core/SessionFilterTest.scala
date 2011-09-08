@@ -22,32 +22,32 @@ import org.scalatest.FunSuite
 
 class SessionFilterTest extends FunSuite {
   test("SessionFilter") {
-    val l = new DataListener {
-      var lastData: Option[Data] = None
+    val l = new Listener {
+      var lastData: Option[Message] = None
       def dependencies = Empty
       def receive = {
-        case data => lastData = Some(data)
+        case m => lastData = Some(m)
       }
     }
     val f = new SessionFilter()
     f.add(l)
     expect(None) { l.lastData }
 
-    f.send(EmptyData)
+    f.send(EmptyMessage)
     expect(None) { l.lastData }
 
     val so = SessionOpen(new DateTime)
     f.send(so)
     expect(Some(so)) { l.lastData }
 
-    f.send(EmptyData)
-    expect(Some(EmptyData)) { l.lastData }
+    f.send(EmptyMessage)
+    expect(Some(EmptyMessage)) { l.lastData }
 
     val sc = SessionClose(new DateTime)
     f.send(sc)
     expect(Some(sc)) { l.lastData }
 
-    f.send(EmptyData)
+    f.send(EmptyMessage)
     expect(Some(sc)) { l.lastData }
   }
 }

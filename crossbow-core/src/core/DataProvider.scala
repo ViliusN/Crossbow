@@ -21,23 +21,23 @@ package lt.norma.crossbow.core
   * dependencies receive messages before the listener depending on them. Otherwise the order of in
   * which the listeners get updated is undefined and should not be relied on. */
 trait DataProvider {
-  class RootListener(deps: DataListener*) extends Dependant[DataListener] {
+  class RootListener(deps: Listener*) extends Dependant[Listener] {
     def dependencies = deps.toSet
   }
 
   private var root = new RootListener
 
   /** Sends out data messages to the listeners. */
-  def dispatch(data: Data) { root.deepDependencies foreach { _ send data } }
+  def dispatch(message: Message) { root.deepDependencies foreach { _ send message } }
 
   /** Adds the specified listener. */
-  def add(listener: DataListener) {
+  def add(listener: Listener) {
     root = new RootListener((listener :: root.shallowDependencies) :_*)
   }
 
   /** Removes the specified listener. Throws an exception if other listeners depend on the
     * removed listener. */
-  def remove(listener: DataListener) {
+  def remove(listener: Listener) {
     if(root dependsOn listener) {
       if(root hasOnTopLevel listener) {
         root = new RootListener((root.shallowDependencies.filterNot(_ == listener)) :_*)

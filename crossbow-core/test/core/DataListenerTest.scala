@@ -21,9 +21,9 @@ import org.scalatest.FunSuite
 
 class DataListenerTest extends FunSuite {
   test("Inline data listener") {
-    var lastData: Option[Data] = None
+    var lastData: Option[Message] = None
     val dp = new DataProvider { }
-    val l = DataListener { case d => lastData = Some(d) }
+    val l = Listener { case d => lastData = Some(d) }
     dp.add(l)
     expect(None) { lastData }
     dp.dispatch(DummyData(55))
@@ -34,7 +34,7 @@ class DataListenerTest extends FunSuite {
   }
 
   test("Empty receiver") {
-    class L extends DataListener {
+    class L extends Listener {
       def dependencies = Empty
       def receive = Empty
     }

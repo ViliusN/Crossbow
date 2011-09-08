@@ -18,7 +18,7 @@
 package lt.norma.crossbow.core
 
 /** Filters out any data between `SessionClose` and `SessionOpen` data messages. */
-class SessionFilter extends DataFilter {
+class SessionFilter extends DataNode {
   var isOpen = false
 
   def dependencies = Empty

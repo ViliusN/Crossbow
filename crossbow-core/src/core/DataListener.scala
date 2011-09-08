@@ -17,6 +17,8 @@
 
 package lt.norma.crossbow.core
 
+import Listener._
+
 /** Receives data messages. Instances of `BasicDataListener` cannot receive data messages directly
   * from data providers. Therefore this trait should be implemented only to create data listeners
   * which need some special data handling. For example, `Indicator`s implement `BasicDataListener`
@@ -53,23 +55,25 @@ package lt.norma.crossbow.core
   *   }
   * }
   * }}} */
-trait BasicDataListener {
-  implicit def emptyToReceiver(empty: Empty): PartialFunction[Data, Unit] = { case _ => }
+trait BasicListener {
+  implicit def emptyToReceiver(empty: Empty): Receiver = { case _ => }
 
   /** Send data to this listener. */
-  final def send(data: Data) { if(receive.isDefinedAt(data)) receive(data) }
+  final def send(message: Message) { if(receive.isDefinedAt(message)) receive(message) }
 
   /** Creates a receiver for this listener. Partial function provided as an argument is executed
     * only when data is received via `send` method and only if it is defined for that particular
     * data message. Therefore there is no need to provide the default `case _ =>` option. */
-  protected def receive: PartialFunction[Data, Unit]
+  protected def receive: Receiver
 }
 
 /** Extend this trait to create custom data listeners. */
-trait DataListener extends BasicDataListener with Dependant[DataListener]
+trait Listener extends BasicListener with Dependant[Listener]
 
 /** Contains factory methods for simplified creation of data liteners. */
-object DataListener {
+object Listener {
+  type Receiver = PartialFunction[Message, Unit]
+
   /** Enables inline creation of data listeners. Example:
     * {{{
     * val l = DataListener {
@@ -78,7 +82,7 @@ object DataListener {
     *   case d: Data => println("Unkown type of data received "+d)
     * }
     * }}} */
-  def apply(action: PartialFunction[Data, Unit]) = new DataListener {
+  def apply(action: Receiver) = new Listener {
     def dependencies = Empty
     def receive = action
   }

@@ -21,10 +21,10 @@ import org.scalatest.FunSuite
 
 class DataProviderTest extends FunSuite {
   object Counter { var n = 0 }
-  class DummyListener(deps: DataListener*) extends DataListener {
+  class DummyListener(deps: Listener*) extends Listener {
     def dependencies = deps.toSet
     def reset() { order = 0; lastData = None }
-    var lastData: Option[Data] = None
+    var lastData: Option[Message] = None
     var order = 0
     def receive = {
       case d: Data =>

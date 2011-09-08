@@ -33,28 +33,28 @@ class MostSignalsTest extends FunSuite {
     expect(Set(s1, s2, s3, s4)) { s.dependencies }
     assert { s.isFlat }
 
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isFlat }
     s1.set(Long)
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isFlat }
     s2.set(Long)
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isFlat }
     s3.set(Long)
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isLong }
     s4.set(Long)
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isLong }
     s1.set(Short)
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isLong }
     s2.set(Short)
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isFlat }
     s2.unset()
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isFlat }
   }
   test("one signal") {
@@ -65,16 +65,16 @@ class MostSignalsTest extends FunSuite {
     expect(Set(s1)) { s.dependencies }
     assert { s.isFlat }
 
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isFlat }
     s1.set(Long)
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isLong }
     s1.set(Short)
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isShort }
     s1.unset()
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isFlat }
   }
   test("empty list of signals") {
@@ -83,7 +83,7 @@ class MostSignalsTest extends FunSuite {
     expect("MostSignals()") { s.name }
     expect(Set.empty) { s.dependencies }
     assert { s.isFlat }
-    l.send(EmptyData)
+    l.send(EmptyMessage)
     assert { s.isFlat }
   }
 }

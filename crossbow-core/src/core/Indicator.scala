@@ -29,12 +29,12 @@ package lt.norma.crossbow.core
   *   def calculate = Empty
   * }
   * }}}*/
-abstract class Indicator[Value : Manifest] extends BasicDataListener with Dependant[Indicator[_]]
+abstract class Indicator[Value : Manifest] extends BasicListener with Dependant[Indicator[_]]
     with HistoryHolder[Value] with Name {
   import Indicator._
 
   implicit def valueToOption(v: Value): Option[Value] = Some(v)
-  implicit def emptyToCalculator(empty: Empty): PartialFunction[Data, Option[Value]] = {
+  implicit def emptyToCalculator(empty: Empty): PartialFunction[Message, Option[Value]] = {
     case _ => optionalValue
   }
 
@@ -104,18 +104,18 @@ abstract class Indicator[Value : Manifest] extends BasicDataListener with Depend
   def valueNotSetString = "N/A"
 
   final def receive = {
-    case data if(calculate.isDefinedAt(data)) => set(calculate(data))
+    case message if(calculate.isDefinedAt(message)) => set(calculate(message))
   }
 
   /** Override this method to update indicator's value on data update. Use object `Empty` when there
     * is no need to calculate value on data updates, for example when indicator's value is assigned
     * externally via `set` method. */
-  protected def calculate: PartialFunction[Data, Option[Value]]
+  protected def calculate: PartialFunction[Message, Option[Value]]
 
   override def toString = name+": "+valueToString()
 
   /** Initializes indicator by sending empty data message */
-  final def initialize { send(EmptyData) }
+  final def initialize { send(EmptyMessage) }
 }
 
 object Indicator {

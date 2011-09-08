@@ -23,9 +23,9 @@ class AnyncDataFilterTest extends FunSuite {
   test("Asynchronous data filter") {
     var counter = 1
     case class D(v: Int) extends Data
-    class LFast extends DataListener {
+    class LFast extends Listener {
       def dependencies = Empty
-      var lastData: Option[Data] = None
+      var lastData: Option[Message] = None
       var order = 0
       def receive = {
         case d =>
@@ -34,9 +34,9 @@ class AnyncDataFilterTest extends FunSuite {
           counter += 1
       }
     }
-    class LSlow extends DataListener {
+    class LSlow extends Listener {
       def dependencies = Empty
-      var lastData: Option[Data] = None
+      var lastData: Option[Message] = None
       var order = 0
       def receive = {
         case d =>

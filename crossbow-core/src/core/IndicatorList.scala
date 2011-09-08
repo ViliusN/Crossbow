@@ -22,7 +22,7 @@ package lt.norma.crossbow.core
   *
   * Received data is forwarded to all indicators in the deep list. Dependencies are ensured to be
   * updated before the dependents as they appear higher in the deep list. */
-class IndicatorList(indicators: Indicator[_]*) extends DataListener {
+class IndicatorList(indicators: Indicator[_]*) extends Listener {
   private val root = new Dependant[Indicator[_]] {
     def dependencies = indicators.toSet
   }
@@ -39,10 +39,10 @@ class IndicatorList(indicators: Indicator[_]*) extends DataListener {
 
   def receive = {
     case barClose: BarClose => updateIndicators(barClose); updateHistory(barClose)
-    case d: Data => updateIndicators(d)
+    case m => updateIndicators(m)
   }
 
-  private def updateIndicators(data: Data) { deepList foreach { _.send(data) } }
+  private def updateIndicators(message: Message) { deepList foreach { _.send(message) } }
 
   private def updateHistory(barClose: BarClose) {
     deepList foreach {

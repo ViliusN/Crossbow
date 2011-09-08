@@ -31,49 +31,49 @@ class SumSetTest extends FunSuite {
     expect(1) { i.dependencies.size }
     expect(None) { i() }
     expect(None) {
-      l.send(EmptyData)
+      l.send(EmptyMessage)
       i()
     }
     expect(1) {
       i1.set(1)
-      l.send(EmptyData)
+      l.send(EmptyMessage)
       i.value
     }
     expect(3) {
       i2.set(2)
-      l.send(EmptyData)
+      l.send(EmptyMessage)
       i.value
     }
     expect(7) {
       i3.set(4)
-      l.send(EmptyData)
+      l.send(EmptyMessage)
       i.value
     }
     expect(23) {
       i3.set(20)
-      l.send(EmptyData)
+      l.send(EmptyMessage)
       i.value
     }
     expect(3) {
       i3.unset()
-      l.send(EmptyData)
+      l.send(EmptyMessage)
       i.value
     }
     expect(13) {
       i3.set(10)
-      l.send(EmptyData)
+      l.send(EmptyMessage)
       i.value
     }
     expect(14) {
       i1.set(2)
-      l.send(EmptyData)
+      l.send(EmptyMessage)
       i.value
     }
     expect(None) {
       i1.unset()
       i2.unset()
       i3.unset()
-      l.send(EmptyData)
+      l.send(EmptyMessage)
       i()
     }
   }
@@ -86,7 +86,7 @@ class SumSetTest extends FunSuite {
     expect(None) { i() }
     expect(15) {
       i1.set(15)
-      l.send(EmptyData)
+      l.send(EmptyMessage)
       i.value
     }
   }
@@ -97,7 +97,7 @@ class SumSetTest extends FunSuite {
     expect(1) { i.dependencies.size }
     expect(None) { i() }
     expect(None) {
-      l.send(EmptyData)
+      l.send(EmptyMessage)
       i()
     }
   }

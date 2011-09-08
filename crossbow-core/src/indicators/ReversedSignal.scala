@@ -22,6 +22,7 @@ class ReversedSignal(signal: Signal) extends Signal {
   def name = "Reversed("+signal.name+")"
   def dependencies = Set(signal)
   def calculate = {
-    case _ => signal() map { _.reversed }
+    case _ =>
+      signal() map { _.reversed }
   }
 }

@@ -17,5 +17,5 @@
 
 package lt.norma.crossbow.core
 
-/** Extend this trait to create data filters. */
-trait DataFilter extends DataProvider with DataListener
+/** Extend this trait to create custom data nodes. */
+trait DataNode extends DataProvider with Listener

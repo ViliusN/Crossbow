@@ -17,9 +17,6 @@
 
 package lt.norma.crossbow.core
 
-/** Any data message sent to data listeners must extend this trait. */
-trait Data
-
-/** Empty data message. Can be used to indicate that the data provider is running, but has not
-  * generated any meaningful data messages yet. */
-case object EmptyData extends Data
+case class StockRequest(symbol: String) extends Request
+case class OptionsChainRequest(underlying: Instrument) extends Request
+case class FuturesChainRequest(underlying: Instrument) extends Request
