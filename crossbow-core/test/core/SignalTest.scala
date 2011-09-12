@@ -20,7 +20,7 @@ package lt.norma.crossbow.core
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
-class SignalTest  extends FunSuite {
+class SignalTest extends FunSuite {
   test("Signal") {
     import Direction._
 
