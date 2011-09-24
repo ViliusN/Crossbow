@@ -25,6 +25,7 @@ class AlternativeTest extends FunSuite {
     val target1 = new Variable[Double] { override def name = "T1" }
     val target2 = new Variable[Double] { override def name = "T2" }
     val i = new Alternative(target1, target2)
+    val list = new IndicatorList(i)
     expect("T1 or alternative T2") { i.name }
     expect(Set(target1, target2)) { i.dependencies }
     expect(None) { i() }
@@ -49,6 +50,7 @@ class AlternativeTest extends FunSuite {
       val target1 = new Variable[Double]
       val target2 = new Variable[Double]
       val i = new Alternative(target1, target2)
+      val list = new IndicatorList(i)
       i()
     }
     expect(123) {
@@ -56,6 +58,7 @@ class AlternativeTest extends FunSuite {
       val target2 = new Variable[Double]
       target1.set(123)
       val i = new Alternative(target1, target2)
+      val list = new IndicatorList(i)
       i.value
     }
     expect(456) {
@@ -63,6 +66,7 @@ class AlternativeTest extends FunSuite {
       val target2 = new Variable[Double]
       target2.set(456)
       val i = new Alternative(target1, target2)
+      val list = new IndicatorList(i)
       i.value
     }
     expect(789) {
@@ -71,6 +75,7 @@ class AlternativeTest extends FunSuite {
       val target2 = new Variable[Double]
       target2.set(555)
       val i = new Alternative(target1, target2)
+      val list = new IndicatorList(i)
       i.value
     }
   }

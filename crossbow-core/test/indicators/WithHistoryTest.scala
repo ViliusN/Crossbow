@@ -35,11 +35,12 @@ class WithHistoryTest extends FunSuite {
   test("dependencies") {
     val target = new Variable[Int]
     val indicator = new WithHistory(target)
-    expect(Set(target)) {  indicator.dependencies }
+    expect(Set(target)) { indicator.dependencies }
   }
   test("initial empty value") {
     val target = new Variable[Int]
     val indicator = new WithHistory(target)
+    val list = new IndicatorList(indicator)
     assert ( indicator.isEmpty, "should be empty as target is empty" )
   }
   test("initial value") {
@@ -47,6 +48,7 @@ class WithHistoryTest extends FunSuite {
     target.set(15)
     expect(15) { target.value }
     val indicator = new WithHistory(target)
+    val list = new IndicatorList(indicator)
     expect(15) { indicator.value }
   }
 }

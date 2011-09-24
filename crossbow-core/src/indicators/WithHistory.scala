@@ -26,6 +26,4 @@ class WithHistory[Value : Manifest](indicator: Indicator[Value]) extends Indicat
   def name = "WithHistory("+indicator.name+")"
   def dependencies = Set(indicator)
   def calculate = { case _ => indicator() }
-
-  initialize
 }

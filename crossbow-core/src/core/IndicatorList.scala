@@ -50,4 +50,7 @@ class IndicatorList(indicators: Indicator[_]*) extends Listener {
       case _ =>
     }
   }
+
+  // Send IndicatorCreated message to all indicators
+  updateIndicators(IndicatorCreated)
 }

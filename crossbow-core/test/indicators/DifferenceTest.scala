@@ -26,7 +26,17 @@ class DifferenceTest extends FunSuite {
     def dependencies = Empty
     def calculate = Empty
   }
-
+  test("alternative constructor") {
+    val target1 = new I("A")
+    target1.set(123)
+    val target2 = new I("B")
+    target2.set(456)
+    val diff = new Difference(target1, target2)
+    val list = new IndicatorList(diff)
+    expect("Difference(A; B)") { diff.name }
+    expect(2) { diff.dependencies.size }
+    expect(Some(-333)) { diff() }
+  }
   test("Difference indicator") {
     val i1 = new I("A")
     val i2 = new I("B")

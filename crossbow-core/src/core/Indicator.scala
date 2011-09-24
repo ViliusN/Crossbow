@@ -113,15 +113,13 @@ abstract class Indicator[Value : Manifest] extends BasicListener with Dependant[
   protected def calculate: PartialFunction[Message, Option[Value]]
 
   override def toString = name+": "+valueToString()
-
-  /** Initializes indicator by sending empty data message */
-  final def initialize { send(EmptyMessage) }
 }
 
 object Indicator {
-  case class ValueNotSet()
-      extends java.lang.Exception("Indicator's value has not been set")
+  case class ValueNotSet() extends java.lang.Exception("Indicator's value has not been set")
 }
+
+case object IndicatorCreated extends Message
 
 trait Name {
   def name: String

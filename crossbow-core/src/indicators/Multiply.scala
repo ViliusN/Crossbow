@@ -19,18 +19,18 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 
-/** Calculates sum of the specified indicators of `Double` type. If at least one of the target
-  * indicators is empty, the `Sum` will result in `None` value.
-  * {{{Sum = I1 + I2 + ... + In}}} */
-class Sum(indicators: Indicator[Double]*) extends Indicator[Double] {
+/** Calculates multiplication of the specified indicators of `Double` type. If at least one of the
+  * target indicators is empty, the `Multiply` will result in `None` value.
+  * {{{Multiply = I1 * I2 * ... * In}}} */
+class Multiply(indicators: Indicator[Double]*) extends Indicator[Double] {
   def this(indicator: Indicator[Double], constant: Double) =
     this(indicator, new Variable(constant) { override def name = constant.toString })
 
-  def name = "Sum("+(indicators map { _.name } mkString("; "))+")"
+  def name = "Multiply("+(indicators map { _.name } mkString("; "))+")"
   def dependencies = indicators.toSet
   def calculate = {
     case _ if(indicators.size > 0 && indicators.forall(_.isSet)) =>
-      indicators map(_.value) reduceLeft(_ + _)
+      indicators map(_.value) reduceLeft(_ * _)
     case _ => None
   }
 }

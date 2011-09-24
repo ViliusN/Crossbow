@@ -20,21 +20,21 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 import org.scalatest.FunSuite
 
-class SumTest extends FunSuite {
+class MultiplyTest extends FunSuite {
   class I(n: String) extends Indicator[Double] {
     def name = n
     def dependencies = Empty
     def calculate = Empty
   }
 
-  test("Sum indicator") {
+  test("indicator") {
     val i1 = new I("A")
     val i2 = new I("B")
     val i3 = new I("C")
-    val i = new Sum(i1, i2, i3)
+    val i = new Multiply(i1, i2, i3)
     val l = new IndicatorList(i)
 
-    expect("Sum(A; B; C)") { i.name }
+    expect("Multiply(A; B; C)") { i.name }
     expect(Set(i1, i2, i3)) { i.dependencies }
     expect(None) { i() }
 
@@ -51,11 +51,11 @@ class SumTest extends FunSuite {
 
     i3.set(4)
     l.send(new Data { })
-    expect(7) { i.value }
+    expect(8) { i.value }
 
     i3.set(20)
     l.send(new Data { })
-    expect(23) { i.value }
+    expect(40) { i.value }
 
     i3.unset()
     l.send(new Data { })
@@ -63,19 +63,19 @@ class SumTest extends FunSuite {
 
     i3.set(10)
     l.send(new Data { })
-    expect(13) { i.value }
+    expect(20) { i.value }
 
     i1.set(2)
     l.send(new Data { })
-    expect(14) { i.value }
+    expect(40) { i.value }
   }
 
   test("One indicator") {
     val i1 = new I("A")
-    val i = new Sum(i1)
+    val i = new Multiply(i1)
     val l = new IndicatorList(i)
 
-    expect("Sum(A)") { i.name }
+    expect("Multiply(A)") { i.name }
     expect(Set(i1)) { i.dependencies }
     expect(None) { i() }
 
@@ -85,10 +85,10 @@ class SumTest extends FunSuite {
   }
 
   test("No indicators") {
-    val i = new Sum()
+    val i = new Multiply()
     val l = new IndicatorList(i)
 
-    expect("Sum()") { i.name }
+    expect("Multiply()") { i.name }
     expect(Set()) { i.dependencies }
     expect(None) { i() }
 
@@ -100,27 +100,27 @@ class SumTest extends FunSuite {
     target1.set(123)
     val target2 = new I("B")
     target2.set(456)
-    val sum = new Sum(target1, target2)
-    val list = new IndicatorList(sum)
-    expect("Sum(A; B)") { sum.name }
-    expect(2) { sum.dependencies.size }
-    expect(Some(579)) { sum() }
+    val Multiply = new Multiply(target1, target2)
+    val list = new IndicatorList(Multiply)
+    expect("Multiply(A; B)") { Multiply.name }
+    expect(2) { Multiply.dependencies.size }
+    expect(Some(56088)) { Multiply() }
   }
   test("alternative constructor") {
     val target = new I("A")
-    val sum = new Sum(target, 500)
-    val list = new IndicatorList(sum)
-    expect("Sum(A; 500.0)") { sum.name }
-    expect(2) { sum.dependencies.size }
-    expect(None) { sum() }
+    val Multiply = new Multiply(target, 500)
+    val list = new IndicatorList(Multiply)
+    expect("Multiply(A; 500.0)") { Multiply.name }
+    expect(2) { Multiply.dependencies.size }
+    expect(None) { Multiply() }
     target.set(28.5)
     list.send(EmptyMessage)
-    expect(Some(528.5)) { sum() }
-    target.set(1)
+    expect(Some(14250)) { Multiply() }
+    target.set(2)
     list.send(EmptyMessage)
-    expect(Some(501)) { sum() }
+    expect(Some(1000)) { Multiply() }
     target.unset()
     list.send(EmptyMessage)
-    expect(None) { sum() }
+    expect(None) { Multiply() }
   }
 }

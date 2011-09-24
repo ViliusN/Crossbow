@@ -29,6 +29,4 @@ class AllSignals(signals: Signal*) extends Signal {
   } else {
     case _ => None
   }
-
-  initialize
 }

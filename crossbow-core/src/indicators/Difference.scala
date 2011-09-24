@@ -23,6 +23,9 @@ import lt.norma.crossbow.core._
   * {{{Difference = I1 - I2}}} */
 class Difference(indicator1: Indicator[Double], indicator2: Indicator[Double])
     extends Indicator[Double] {
+  def this(indicator: Indicator[Double], constant: Double) =
+    this(indicator, new Variable(constant) { override def name = constant.toString })
+
   def name = "Difference("+indicator1.name+"; "+indicator2.name+")"
   def dependencies = Set(indicator1, indicator2)
   def calculate = {

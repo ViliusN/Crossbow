@@ -21,13 +21,12 @@ import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 class IndicatorListTest  extends FunSuite {
-  class Dummy(deps: Dummy*) extends Indicator[Int] {
-    def name = "D"
-    def dependencies = deps.toSet
-    def calculate = Empty
-  }
-
   test("IndicatorList") {
+    class Dummy(deps: Dummy*) extends Indicator[Int] {
+      def name = "D"
+      def dependencies = deps.toSet
+      def calculate = Empty
+    }
     val g = new Dummy()
     val h = new Dummy()
     val i = new Dummy()
@@ -53,7 +52,22 @@ class IndicatorListTest  extends FunSuite {
     expect(List(g, c, a, b)) { (new IndicatorList(g, c, a, b)).list }
     expect(List(g, i, c, d, a, h, e, f, b)) { (new IndicatorList(g, c, a, b)).deepList }
   }
-
+  test("indicator creation message") {
+    class LastMessage extends Indicator[Message] {
+      def name = "LastMessage"
+      def dependencies = Empty
+      def calculate = {
+        case d => d
+      }
+    }
+    val target1 = new LastMessage
+    val target2 = new LastMessage
+    val target3 = new LastMessage
+    val list = new IndicatorList(target1, target2)
+    expect(Some(IndicatorCreated)) { target1() }
+    expect(Some(IndicatorCreated)) { target2() }
+    expect(None) { target3() }
+  }
   test("IndicatorList - history") {
     case class DummyData(val value: Int) extends Data
     class HistoryIndicator extends Indicator[Int] {
@@ -98,8 +112,17 @@ class IndicatorListTest  extends FunSuite {
     expect(Some(8)) { i.optionalValue }
     expect(Some(8)) { ih.optionalValue }
   }
-
-  test("IndicatorList - data forwarding") {
+  test("data forwarding") {
+    var counter = 0
+    class UpdateOrder(val dependencies: Set[Indicator[_]] = Set.empty) extends Indicator[Double] {
+      def name = "D"
+      def calculate = {
+        case EmptyMessage =>
+          counter += 1
+          counter - 1
+      }
+      override def toString = name
+    }
     val g = new UpdateOrder()
     val h = new UpdateOrder()
     val i = new UpdateOrder(Set())
@@ -110,10 +133,7 @@ class IndicatorListTest  extends FunSuite {
     val b = new UpdateOrder(Set(d, e, f))
     val c = new UpdateOrder(Set(i))
     val lst = new IndicatorList(g, c, a, b)
-    val s = Stock("MSFT", Exchange.nasdaq, "USD")
-    val t = Trade(s, 30.05, 100000, new DateTime(2011, 3, 4, 7, 9, 8, 155, Settings.timeZone))
-    lst.send(t)
-
+    lst.send(EmptyMessage)
     expect(0) { g.value }
     expect(1) { i.value }
     expect(2) { c.value }
@@ -124,7 +144,6 @@ class IndicatorListTest  extends FunSuite {
     expect(7) { f.value }
     expect(8) { b.value }
   }
-
   test("Receiving data from provider") {
     val l1 = new Listener {
       var lastData: Option[Data] = None
@@ -167,17 +186,5 @@ class IndicatorListTest  extends FunSuite {
     expect(data) { l2.lastData.get }
     expect(data) { i1.value }
     expect(data) { i2.value }
-  }
-
-  object Counter { var n = 0 }
-  class UpdateOrder(val dependencies: Set[Indicator[_]] = Set.empty) extends Indicator[Double] {
-    def name = "D"
-    def calculate = {
-      case _ =>
-        val n = Counter.n
-        Counter.n += 1
-        n
-    }
-    override def toString = name
   }
 }

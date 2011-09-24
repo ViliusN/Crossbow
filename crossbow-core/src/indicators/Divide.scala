@@ -19,18 +19,19 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 
-/** Calculates sum of the specified indicators of `Double` type. If at least one of the target
-  * indicators is empty, the `Sum` will result in `None` value.
-  * {{{Sum = I1 + I2 + ... + In}}} */
-class Sum(indicators: Indicator[Double]*) extends Indicator[Double] {
+/** Calculates division between two indicators of `Double` type. If the value of `indicator2` is 0,
+  * `Divide` results in `None` value.
+  * {{{Divide = I1 / I2}}} */
+class Divide(indicator1: Indicator[Double], indicator2: Indicator[Double])
+    extends Indicator[Double] {
   def this(indicator: Indicator[Double], constant: Double) =
     this(indicator, new Variable(constant) { override def name = constant.toString })
 
-  def name = "Sum("+(indicators map { _.name } mkString("; "))+")"
-  def dependencies = indicators.toSet
+  def name = indicator1.name+" / "+indicator2.name
+  def dependencies = Set(indicator1, indicator2)
   def calculate = {
-    case _ if(indicators.size > 0 && indicators.forall(_.isSet)) =>
-      indicators map(_.value) reduceLeft(_ + _)
+    case _ if(indicator1.isSet && indicator2.isSet && indicator2.value != 0) =>
+      indicator1.value / indicator2.value
     case _ => None
   }
 }

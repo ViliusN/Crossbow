@@ -62,6 +62,7 @@ class AllSignalsTest extends FunSuite {
     val target2 = new VariableSignal(Long)
     val target3 = new VariableSignal(Long)
     val signal = new AllSignals(target1, target2, target3)
+    val list = new IndicatorList(signal)
     expect(Long) { signal.value }
   }
   test("initial value - multiple targets, differing values") {
@@ -69,6 +70,7 @@ class AllSignalsTest extends FunSuite {
     val target2 = new VariableSignal(Long)
     val target3 = new VariableSignal
     val signal = new AllSignals(target1, target2, target3)
+    val list = new IndicatorList(signal)
     expect(None) { signal() }
   }
   test("initial value - multiple targets, some empty") {
@@ -76,6 +78,7 @@ class AllSignalsTest extends FunSuite {
     val target2 = new VariableSignal(Long)
     val target3 = new VariableSignal
     val signal = new AllSignals(target1, target2, target3)
+    val list = new IndicatorList(signal)
     expect(None) { signal() }
   }
   test("initial value - multiple empty targets") {
@@ -83,20 +86,24 @@ class AllSignalsTest extends FunSuite {
     val target2 = new VariableSignal
     val target3 = new VariableSignal
     val signal = new AllSignals(target1, target2, target3)
+    val list = new IndicatorList(signal)
     expect(None) { signal() }
   }
   test("initial value - one target") {
     val target = new VariableSignal(Long)
     val signal = new AllSignals(target)
+    val list = new IndicatorList(signal)
     expect(Long) { signal.value }
   }
   test("initial value - one empty target") {
     val target = new VariableSignal
     val signal = new AllSignals(target)
+    val list = new IndicatorList(signal)
     expect(None) { signal() }
   }
   test("initial value - no targets") {
     val signal = new AllSignals()
+    val list = new IndicatorList(signal)
     expect(None) { signal() }
   }
 
@@ -152,6 +159,7 @@ class AllSignalsTest extends FunSuite {
   }
   test("sending data - no targets") {
     val signal = new AllSignals()
+    val list = new IndicatorList(signal)
     expect(None) { signal() }
     signal.send(EmptyMessage)
     expect(None) { signal() }

@@ -24,6 +24,7 @@ class DefaultTest extends FunSuite {
   test("Default") {
     val target = new Variable[Double] { override def name = "T" }
     val i = new Default(target, 8.0)
+    val list = new IndicatorList(i)
     expect("T with default 8.0") { i.name }
     expect(2) { i.dependencies.size }
     expect(8) { i.value }
