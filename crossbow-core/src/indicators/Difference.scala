@@ -26,7 +26,7 @@ class Difference(indicator1: Indicator[Double], indicator2: Indicator[Double])
   def this(indicator: Indicator[Double], constant: Double) =
     this(indicator, new Variable(constant) { override def name = constant.toString })
 
-  def name = "Difference("+indicator1.name+"; "+indicator2.name+")"
+  def name = "("+indicator1.name+" - "+indicator2.name+")"
   def dependencies = Set(indicator1, indicator2)
   def calculate = {
     case _ if(indicator1.isSet && indicator2.isSet) => indicator1.value - indicator2.value

@@ -34,7 +34,7 @@ class SumTest extends FunSuite {
     val i = new Sum(i1, i2, i3)
     val l = new IndicatorList(i)
 
-    expect("Sum(A; B; C)") { i.name }
+    expect("(A + B + C)") { i.name }
     expect(Set(i1, i2, i3)) { i.dependencies }
     expect(None) { i() }
 
@@ -75,7 +75,7 @@ class SumTest extends FunSuite {
     val i = new Sum(i1)
     val l = new IndicatorList(i)
 
-    expect("Sum(A)") { i.name }
+    expect("(A)") { i.name }
     expect(Set(i1)) { i.dependencies }
     expect(None) { i() }
 
@@ -88,7 +88,7 @@ class SumTest extends FunSuite {
     val i = new Sum()
     val l = new IndicatorList(i)
 
-    expect("Sum()") { i.name }
+    expect("()") { i.name }
     expect(Set()) { i.dependencies }
     expect(None) { i() }
 
@@ -102,7 +102,7 @@ class SumTest extends FunSuite {
     target2.set(456)
     val sum = new Sum(target1, target2)
     val list = new IndicatorList(sum)
-    expect("Sum(A; B)") { sum.name }
+    expect("(A + B)") { sum.name }
     expect(2) { sum.dependencies.size }
     expect(Some(579)) { sum() }
   }
@@ -110,7 +110,7 @@ class SumTest extends FunSuite {
     val target = new I("A")
     val sum = new Sum(target, 500)
     val list = new IndicatorList(sum)
-    expect("Sum(A; 500.0)") { sum.name }
+    expect("(A + 500.0)") { sum.name }
     expect(2) { sum.dependencies.size }
     expect(None) { sum() }
     target.set(28.5)

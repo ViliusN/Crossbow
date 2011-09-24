@@ -33,7 +33,7 @@ class DifferenceTest extends FunSuite {
     target2.set(456)
     val diff = new Difference(target1, target2)
     val list = new IndicatorList(diff)
-    expect("Difference(A; B)") { diff.name }
+    expect("(A - B)") { diff.name }
     expect(2) { diff.dependencies.size }
     expect(Some(-333)) { diff() }
   }
@@ -43,7 +43,7 @@ class DifferenceTest extends FunSuite {
     val i = new Difference(i1, i2)
     val l = new IndicatorList(i)
 
-    expect("Difference(A; B)") { i.name }
+    expect("(A - B)") { i.name }
     expect(Set(i1, i2)) { i.dependencies }
     expect(None) { i() }
 

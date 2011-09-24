@@ -26,7 +26,7 @@ class Multiply(indicators: Indicator[Double]*) extends Indicator[Double] {
   def this(indicator: Indicator[Double], constant: Double) =
     this(indicator, new Variable(constant) { override def name = constant.toString })
 
-  def name = "Multiply("+(indicators map { _.name } mkString("; "))+")"
+  def name = indicators map { _.name } mkString(" * ")
   def dependencies = indicators.toSet
   def calculate = {
     case _ if(indicators.size > 0 && indicators.forall(_.isSet)) =>

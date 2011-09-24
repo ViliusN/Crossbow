@@ -34,7 +34,7 @@ class MultiplyTest extends FunSuite {
     val i = new Multiply(i1, i2, i3)
     val l = new IndicatorList(i)
 
-    expect("Multiply(A; B; C)") { i.name }
+    expect("A * B * C") { i.name }
     expect(Set(i1, i2, i3)) { i.dependencies }
     expect(None) { i() }
 
@@ -75,7 +75,7 @@ class MultiplyTest extends FunSuite {
     val i = new Multiply(i1)
     val l = new IndicatorList(i)
 
-    expect("Multiply(A)") { i.name }
+    expect("A") { i.name }
     expect(Set(i1)) { i.dependencies }
     expect(None) { i() }
 
@@ -88,7 +88,7 @@ class MultiplyTest extends FunSuite {
     val i = new Multiply()
     val l = new IndicatorList(i)
 
-    expect("Multiply()") { i.name }
+    expect("") { i.name }
     expect(Set()) { i.dependencies }
     expect(None) { i() }
 
@@ -102,7 +102,7 @@ class MultiplyTest extends FunSuite {
     target2.set(456)
     val Multiply = new Multiply(target1, target2)
     val list = new IndicatorList(Multiply)
-    expect("Multiply(A; B)") { Multiply.name }
+    expect("A * B") { Multiply.name }
     expect(2) { Multiply.dependencies.size }
     expect(Some(56088)) { Multiply() }
   }
@@ -110,7 +110,7 @@ class MultiplyTest extends FunSuite {
     val target = new I("A")
     val Multiply = new Multiply(target, 500)
     val list = new IndicatorList(Multiply)
-    expect("Multiply(A; 500.0)") { Multiply.name }
+    expect("A * 500.0") { Multiply.name }
     expect(2) { Multiply.dependencies.size }
     expect(None) { Multiply() }
     target.set(28.5)
