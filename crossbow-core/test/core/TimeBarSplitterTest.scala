@@ -30,7 +30,7 @@ class TimeBarSplitterTest extends FunSuite {
     expect(0) { tbs.previousBarTime }
   }
   test("first bar") {
-    val s = Stock("MSFT", Exchange.nasdaq, "USD")
+    val s = Stock("MSFT", Nasdaq, "USD")
     var lastMessage: Option[Message] = None
     val l = Listener {
       case m => lastMessage = Some(m)

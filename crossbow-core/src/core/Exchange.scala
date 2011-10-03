@@ -19,15 +19,23 @@ package lt.norma.crossbow.core
 
 import org.joda.time.DateTimeZone
 
-/** Exchange information.
-  * @param name      name of the exchange
-  * @param timeZone  time zone at the exchange */
-case class Exchange(name: String, timeZone: DateTimeZone)
-
-object Exchange {
-  def nasdaq = Exchange("NASDAQ", DateTimeZone.forID("America/New_York"))
-  def nyse = Exchange("NYSE", DateTimeZone.forID("America/New_York"))
-  def cboe = Exchange("CBOE", DateTimeZone.forID("America/Chicago"))
+/** Represents exchange. */
+trait Exchange {
+  /** Name of the exchange. */
+  def name: String
+  /** Time zone at the exchange. */
+  def timeZone: DateTimeZone
 }
 
-// TODO create trait Exchange and create case objects for every exchange
+case object Nasdaq extends Exchange {
+  def name = "NASDAQ"
+  def timeZone = DateTimeZone.forID("America/New_York")
+}
+case object Nyse extends Exchange {
+  def name = "NYSE"
+  def timeZone = DateTimeZone.forID("America/New_York")
+}
+case object Cboe extends Exchange {
+  def name = "CBOE"
+  def timeZone = DateTimeZone.forID("America/Chicago")
+}

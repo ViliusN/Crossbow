@@ -26,7 +26,7 @@ class SpreadTest extends FunSuite {
   val e = 0.000001
 
   test("Spread test") {
-    val s = new Stock("AA", Exchange.nasdaq, "USD")
+    val s = new Stock("AA", Nasdaq, "USD")
     val lq = new LastQuote(s)
     val ask = new Ask(lq)
     val bid = new Bid(lq)

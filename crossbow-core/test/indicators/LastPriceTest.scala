@@ -23,7 +23,7 @@ import org.scalatest.FunSuite
 
 class LastPriceTest extends FunSuite {
   test("Last Price indicator") {
-    val s = new Stock("AA", Exchange.nasdaq, "USD")
+    val s = new Stock("AA", Nasdaq, "USD")
     val lt = new LastTrade(s)
     val i = new LastPrice(lt)
     expect("Last Price") { i.name }

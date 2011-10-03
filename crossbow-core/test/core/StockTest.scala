@@ -22,10 +22,10 @@ import org.joda.time.DateTimeZone
 
 class StockTest extends FunSuite {
   test("comparison") {
-    val s = Stock("MSFT", Exchange.nasdaq, "USD")
-    assert { s == Stock("MSFT", Exchange.nasdaq, "USD") }
-    assert { s != Stock("MSF", Exchange.nasdaq, "USD") }
-    assert { s != Stock("MSFT", Exchange("NASDAQ", DateTimeZone.forID("America/Chicago")), "USD") }
-    assert { s != Stock("MSFT", Exchange.nasdaq, "Usd") }
+    val s = Stock("MSFT", Nasdaq, "USD")
+    assert { s == Stock("MSFT", Nasdaq, "USD") }
+    assert { s != Stock("MSF", Nasdaq, "USD") }
+    assert { s != Stock("MSFT", Nyse, "USD") }
+    assert { s != Stock("MSFT", Nasdaq, "Usd") }
   }
 }

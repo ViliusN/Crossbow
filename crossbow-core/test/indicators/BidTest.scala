@@ -23,7 +23,7 @@ import org.scalatest.FunSuite
 
 class BidTest extends FunSuite {
   test("Bid test") {
-    val s = new Stock("AA", Exchange.nasdaq, "USD")
+    val s = new Stock("AA", Nasdaq, "USD")
     val lq = new LastQuote(s)
     val bid = new Bid(lq)
     expect("Bid Price") { bid.name }

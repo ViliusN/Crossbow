@@ -23,8 +23,8 @@ import org.scalatest.FunSuite
 
 class LastQuoteTest extends FunSuite {
   test("LastQuote") {
-    val s = new Stock("AA", Exchange.nasdaq, "USD")
-    val sOther = new Stock("AA", Exchange.nyse, "USD")
+    val s = new Stock("AA", Nasdaq, "USD")
+    val sOther = new Stock("AA", Nyse, "USD")
     val i = new LastQuote(s)
     expect("Last Quote") { i.name }
     expect(1) { i.dependencies.size }
@@ -57,7 +57,7 @@ class LastQuoteTest extends FunSuite {
     expect(q5) { i.value }
   }
   test("empty instrument") {
-    val s = new Stock("AA", Exchange.nasdaq, "USD")
+    val s = new Stock("AA", Nasdaq, "USD")
     val i = new LastQuote()
     expect(None) { i() }
     expect(None) { i.instrument() }
@@ -73,7 +73,7 @@ class LastQuoteTest extends FunSuite {
     expect(None) { i() }
   }
   test("constructors") {
-    val s = new Stock("AA", Exchange.nasdaq, "USD")
+    val s = new Stock("AA", Nasdaq, "USD")
     expect(s) {
       val i = new LastQuote(Some(s))
       i.instrument.value

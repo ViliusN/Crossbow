@@ -40,7 +40,7 @@ class AnyncDataFilterTest extends FunSuite {
       var order = 0
       def receive = {
         case d =>
-          Thread.sleep(100);
+          Thread.sleep(200);
           lastData = Some(d)
           order = counter
           counter += 1
@@ -63,7 +63,7 @@ class AnyncDataFilterTest extends FunSuite {
     val d2 = D(2)
     async.send(d2)
     fast.send(d2)
-    Thread.sleep(200)
+    Thread.sleep(500)
     expect(d2) { slow.lastData.get }
     expect(4) { slow.order }
     expect(d2) { fast.lastData.get }

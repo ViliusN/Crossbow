@@ -23,7 +23,7 @@ import org.scalatest.FunSuite
 
 class MidPriceTest extends FunSuite {
   test("MidPrice test") {
-    val s = new Stock("AA", Exchange.nasdaq, "USD")
+    val s = new Stock("AA", Nasdaq, "USD")
     val lq = new LastQuote(s)
     val i = new MidPrice(new Ask(lq), new Bid(lq))
     val l = new IndicatorList(i)

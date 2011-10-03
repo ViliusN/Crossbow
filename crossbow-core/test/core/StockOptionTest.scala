@@ -24,27 +24,27 @@ import org.scalatest.FunSuite
 
 class StockOptionTest extends FunSuite {
   test("invert") {
-    val s = Stock("XOM", Exchange.nyse, "USD")
+    val s = Stock("XOM", Nyse, "USD")
     val expiration = new DateMidnight(2011, 3, 5, Settings.timeZone)
-    val call = StockOption(s, OptionRight.Call, 30.01, expiration, Exchange.cboe, "USD")
-    val put = StockOption(s, OptionRight.Put, 30.01, expiration, Exchange.cboe, "USD")
+    val call = StockOption(s, OptionRight.Call, 30.01, expiration, Cboe, "USD")
+    val put = StockOption(s, OptionRight.Put, 30.01, expiration, Cboe, "USD")
     expect(put) { call.invert }
     expect(call) { put.invert }
     expect(call) { call.invert.invert }
     expect(put) { put.invert.invert }
   }
   test("comparison") {
-    val s = Stock("MSFT", Exchange.nasdaq, "USD")
-    val sWrong = Stock("MSFT-", Exchange.nasdaq, "USD")
+    val s = Stock("MSFT", Nasdaq, "USD")
+    val sWrong = Stock("MSFT-", Nasdaq, "USD")
     val expiration = new DateMidnight(2011, 3, 5, Settings.timeZone)
     val expirationWrong = new DateMidnight(2011, 3, 4, Settings.timeZone)
-    val so = StockOption(s, OptionRight.Call, 30, expiration, Exchange.cboe, "USD")
-    assert { so == StockOption(s, OptionRight.Call, 30, expiration, Exchange.cboe, "USD") }
-    assert { so != StockOption(sWrong, OptionRight.Call, 30, expiration, Exchange.cboe, "USD") }
-    assert { so != StockOption(s, OptionRight.Put, 30, expiration, Exchange.cboe, "USD") }
-    assert { so != StockOption(s, OptionRight.Call, 30.000001, expiration, Exchange.cboe, "USD") }
-    assert { so != StockOption(s, OptionRight.Call, 30, expirationWrong, Exchange.cboe, "USD") }
-    assert { so != StockOption(s, OptionRight.Call, 30, expiration, Exchange.nasdaq, "USD") }
-    assert { so != StockOption(s, OptionRight.Call, 30, expiration, Exchange.cboe, "EUR") }
+    val so = StockOption(s, OptionRight.Call, 30, expiration, Cboe, "USD")
+    assert { so == StockOption(s, OptionRight.Call, 30, expiration, Cboe, "USD") }
+    assert { so != StockOption(sWrong, OptionRight.Call, 30, expiration, Cboe, "USD") }
+    assert { so != StockOption(s, OptionRight.Put, 30, expiration, Cboe, "USD") }
+    assert { so != StockOption(s, OptionRight.Call, 30.000001, expiration, Cboe, "USD") }
+    assert { so != StockOption(s, OptionRight.Call, 30, expirationWrong, Cboe, "USD") }
+    assert { so != StockOption(s, OptionRight.Call, 30, expiration, Nasdaq, "USD") }
+    assert { so != StockOption(s, OptionRight.Call, 30, expiration, Cboe, "EUR") }
   }
 }

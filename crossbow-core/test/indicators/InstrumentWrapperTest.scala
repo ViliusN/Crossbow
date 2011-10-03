@@ -21,8 +21,8 @@ import lt.norma.crossbow.core._
 import org.scalatest.FunSuite
 
 class InstrumentWrapperTest extends FunSuite {
-  val s1 = new Stock("S1", Exchange.nasdaq, "USD")
-  val s2 = new Stock("S2", Exchange.nyse, "USD")
+  val s1 = new Stock("S1", Nasdaq, "USD")
+  val s2 = new Stock("S2", Nyse, "USD")
 
   test("constructor with optional instrument - Some") {
     val i = new InstrumentWrapper(Some(s1))
