@@ -28,8 +28,4 @@ class StockTest extends FunSuite {
     assert { s != Stock("MSFT", Exchange("NASDAQ", DateTimeZone.forID("America/Chicago")), "USD") }
     assert { s != Stock("MSFT", Exchange.nasdaq, "Usd") }
   }
-  test("toString") {
-    val s = Stock("MSFT", Exchange.nasdaq, "USD")
-    expect("MSFT/USD@NASDAQ") { s.toString }
-  }
 }

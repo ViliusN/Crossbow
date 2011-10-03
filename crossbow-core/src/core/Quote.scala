@@ -29,15 +29,4 @@ import org.joda.time.format.DateTimeFormatter
   * @param bidSize     number of contracts at bid price
   * @param time        time of the quote */
 case class Quote(instrument: Instrument, askPrice: BigDecimal, askSize: Long, bidPrice: BigDecimal,
-    bidSize: Long, time: DateTime) extends Data {
-  /** Uses the specified time format. Example output:
-    * {{{Quote MSFT ask:800@30.2 bid:1600@30.18 [2009-12-19 09:45:52]}}}
-    * @return quote data as text */
-  def toString(dateTimeFormatter: DateTimeFormatter): String = {
-    "Quote "+instrument+" ask:"+askSize+"@"+askPrice+" bid:"+bidSize+"@"+bidPrice+" ["+
-    dateTimeFormatter.print(time)+"]";
-  }
-  /** Uses default date-time format.
-    * @return quote data as text */
-  override def toString: String = toString(Settings.dateTimeFormatter)
-}
+    bidSize: Long, time: DateTime) extends Data

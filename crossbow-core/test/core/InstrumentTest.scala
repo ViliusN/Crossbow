@@ -27,20 +27,4 @@ class InstrumentTest extends FunSuite {
       expiration: DateMidnight, exchange: Exchange, currency: String) extends OptionInstrument {
     def invert = MockOption(underlying, right.invert, strike, expiration, exchange, currency)
   }
-  test("toString - default date formatter") {
-    expect("[MSFT/USD@NASDAQ] Call 2011-03-05 @30") {
-      val s = Stock("MSFT", Exchange.nasdaq, "USD")
-      val expiration = new DateMidnight(2011, 3, 5, Settings.timeZone)
-      val so = StockOption(s, OptionRight.Call, 30, expiration, Exchange.cboe, "USD")
-      so.toString
-    }
-    expect("[[MSFT/USD@NASDAQ] Call 2011-03-05 @30] Put 2012-04-06 @31") {
-      val s = Stock("MSFT", Exchange.nasdaq, "USD")
-      val expiration = new DateMidnight(2011, 3, 5, Settings.timeZone)
-      val u = MockOption(s, OptionRight.Call, 30, expiration, Exchange.cboe, "USD")
-      val so = new MockOption(u, OptionRight.Put, 31,
-        new DateMidnight(2012, 4, 6, Settings.timeZone), Exchange.cboe, "USD")
-      so.toString
-    }
-  }
 }

@@ -27,14 +27,4 @@ import org.joda.time.format.DateTimeFormatter
   * @param size        number of contracts traded (volume)
   * @param time        time of the trade */
 case class Trade(instrument: Instrument, price: BigDecimal, size: Long, time: DateTime)
-    extends Data {
-  /** Uses the specified time format. Example output:
-    * {{{Trade MSFT 800@30.2 [2009-12-19 09:45:52]}}}
-    *  @return trade data as text */
-  def toString(dateTimeFormatter: DateTimeFormatter): String = {
-    "Trade "+instrument+" "+size+"@"+price+" ["+dateTimeFormatter.print(time)+"]";
-  }
-  /** Uses default date-time format.
-    * @return trade data as text */
-  override def toString: String = toString(Settings.dateTimeFormatter)
-}
+    extends Data

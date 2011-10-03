@@ -21,11 +21,10 @@ import org.joda.time.format.DateTimeFormatter
 
 /** A trait for all options. Extend this trait to create custom option instruments. */
 trait OptionInstrument extends Derivative {
+  /** Right (call/put) of the option instrument. */
   def right: OptionRight
+  /** Strike price of the option instrument.*/
   def strike: BigDecimal
-  /** Writes data of the option to a string. Uses default date formatter. */
-  override def toString: String =
-    "["+underlying+"]"+" "+right+" "+Settings.dateFormatter.print(expiration)+" @"+strike.toString()
   /** Returns an option with the same parameters, but inverted right of the option (`Call` is
     * changed to `Put` and vice versa). */
   def invert: OptionInstrument
