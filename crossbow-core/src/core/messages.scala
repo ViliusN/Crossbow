@@ -26,6 +26,9 @@ trait Data extends Message
 /** Represents request message. */
 trait Request extends Message
 
+/** Represents error message. */
+trait Error extends Message
+
 /** Empty message. Can be used to indicate that the data node is running, but has not generated any
   * meaningful data messages yet. */
 case object EmptyMessage extends Message

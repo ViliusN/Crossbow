@@ -25,8 +25,8 @@ class TradeTest extends FunSuite {
   test("Trade") {
     val s = Stock("MSFT", Exchange.nasdaq, "USD")
     val t = Trade(s, 30.05, 100000, new DateTime(2011, 3, 4, 7, 9, 8, 155, Settings.timeZone))
-    expect("Trade MSFT 100000@30.05 [2011-03-04 07:09:08]") { t.toString }
-    expect("Trade MSFT 100000@30.05 [Mar, 11 7:9:8.155]") {
+    expect("Trade MSFT/USD@NASDAQ 100000@30.05 [2011-03-04 07:09:08]") { t.toString }
+    expect("Trade MSFT/USD@NASDAQ 100000@30.05 [Mar, 11 7:9:8.155]") {
       val dateTimeFormatter =
         DateTimeFormat.forPattern("MMM, YY h:m:s.SSS").withZone(Settings.timeZone)
       t.toString(dateTimeFormatter)

@@ -26,8 +26,8 @@ class QuoteTest extends FunSuite {
     val s = Stock("MSFT", Exchange.nasdaq, "USD")
     val q = Quote(s, 30.05, 100000, 30.02, 500,
       new DateTime(2011, 3, 4, 7, 9, 8, 155, Settings.timeZone))
-    expect("Quote MSFT ask:100000@30.05 bid:500@30.02 [2011-03-04 07:09:08]") { q.toString }
-    expect("Quote MSFT ask:100000@30.05 bid:500@30.02 [Mar, 11 7:9:8.155]") {
+    expect("Quote MSFT/USD@NASDAQ ask:100000@30.05 bid:500@30.02 [2011-03-04 07:09:08]") { q.toString }
+    expect("Quote MSFT/USD@NASDAQ ask:100000@30.05 bid:500@30.02 [Mar, 11 7:9:8.155]") {
       val dateTimeFormatter =
         DateTimeFormat.forPattern("MMM, YY h:m:s.SSS").withZone(Settings.timeZone)
       q.toString(dateTimeFormatter)

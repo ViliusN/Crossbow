@@ -26,4 +26,7 @@ class ExchangeTest extends FunSuite {
     expect(Exchange("NYSE", DateTimeZone.forID("America/New_York"))) { Exchange.nyse }
     expect(Exchange("CBOE", DateTimeZone.forID("America/Chicago"))) { Exchange.cboe }
   }
+  test("toString") {
+    expect("NASDAQ") { Exchange.nasdaq.toString }
+  }
 }

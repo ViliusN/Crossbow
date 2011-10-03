@@ -30,6 +30,6 @@ class StockTest extends FunSuite {
   }
   test("toString") {
     val s = Stock("MSFT", Exchange.nasdaq, "USD")
-    expect("MSFT") { s.toString }
+    expect("MSFT/USD@NASDAQ") { s.toString }
   }
 }

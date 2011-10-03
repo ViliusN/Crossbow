@@ -20,5 +20,5 @@ package lt.norma.crossbow.core
 /** Stock financial instrument. */
 case class Stock(symbol: String, exchange: Exchange, currency: String) extends Instrument {
   /** Returns symbol of the stock. */
-  override def toString = symbol
+  override def toString = symbol+"/"+currency+"@"+exchange
 }

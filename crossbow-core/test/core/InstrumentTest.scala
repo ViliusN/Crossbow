@@ -28,13 +28,13 @@ class InstrumentTest extends FunSuite {
     def invert = MockOption(underlying, right.invert, strike, expiration, exchange, currency)
   }
   test("toString - default date formatter") {
-    expect("[MSFT] Call 2011-03-05 @30") {
+    expect("[MSFT/USD@NASDAQ] Call 2011-03-05 @30") {
       val s = Stock("MSFT", Exchange.nasdaq, "USD")
       val expiration = new DateMidnight(2011, 3, 5, Settings.timeZone)
       val so = StockOption(s, OptionRight.Call, 30, expiration, Exchange.cboe, "USD")
       so.toString
     }
-    expect("[[MSFT] Call 2011-03-05 @30] Put 2012-04-06 @31") {
+    expect("[[MSFT/USD@NASDAQ] Call 2011-03-05 @30] Put 2012-04-06 @31") {
       val s = Stock("MSFT", Exchange.nasdaq, "USD")
       val expiration = new DateMidnight(2011, 3, 5, Settings.timeZone)
       val u = MockOption(s, OptionRight.Call, 30, expiration, Exchange.cboe, "USD")

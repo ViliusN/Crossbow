@@ -22,7 +22,9 @@ import org.joda.time.DateTimeZone
 /** Exchange information.
   * @param name      name of the exchange
   * @param timeZone  time zone at the exchange */
-case class Exchange(name: String, timeZone: DateTimeZone)
+case class Exchange(name: String, timeZone: DateTimeZone) {
+  override def toString = name
+}
 object Exchange {
   def nasdaq = Exchange("NASDAQ", DateTimeZone.forID("America/New_York"))
   def nyse = Exchange("NYSE", DateTimeZone.forID("America/New_York"))
