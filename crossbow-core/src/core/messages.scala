@@ -23,12 +23,20 @@ trait Message
 /** Represent data message. */
 trait Data extends Message
 
-/** Represents request message. */
+/** Represents error message. Should be used to inform listeners about any abnormal conditions which
+  * are not serious enough to be thrown as exceptions. */
+trait ErrorMessage extends Message { def exception: java.lang.Exception }
+
+/** Represents request message. Every data node should document all supported requests and responses
+  * to them. */
 trait Request extends Message
 
-/** Represents error message. */
-trait Error extends Message
+/** Represents response to a request. */
+trait Response extends Message { def request: Request }
 
-/** Empty message. Can be used to indicate that the data node is running, but has not generated any
-  * meaningful data messages yet. */
+/** Response to a request which could not be fulfilled. */
+case class FailedRequest(request: Request, exception: java.lang.Exception)
+    extends Response with ErrorMessage
+
+/** Empty message. Should be used for testing purposes only. */
 case object EmptyMessage extends Message

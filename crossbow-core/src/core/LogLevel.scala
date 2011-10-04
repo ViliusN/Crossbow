@@ -17,6 +17,13 @@
 
 package lt.norma.crossbow.core
 
-case class StockRequest(symbol: String) extends Request
-case class OptionsChainRequest(underlying: Instrument) extends Request
-case class FuturesChainRequest(underlying: Instrument) extends Request
+/** Represents logging levels. */
+trait LogLevel
+object LogLevel {
+  /** Any message will be logged. */
+  case object Everything extends LogLevel
+  /** Any non-data message will be logged. */
+  case object ExceptData extends LogLevel
+  /** Only error messages will be logged. */
+  case object ErrorsOnly extends LogLevel
+}

@@ -17,7 +17,9 @@
 
 package lt.norma.crossbow.core
 
+/** Represents general exception with specified message and optional cause. */
 case class Exception(message: String, cause: Throwable = null)
     extends java.lang.Exception(message, cause)
 
+/** Exception thrown when some requested features are not supported. */
 case class NotSupported(message: String) extends java.lang.Exception(message)
