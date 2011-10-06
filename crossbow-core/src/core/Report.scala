@@ -28,6 +28,15 @@ trait Report {
   }
 }
 
+/** Extend this trait to create custom history report generators. */
+trait HistoryReport {
+  def generate(writer: BufferedWriter, indicators: Indicator[_] with History*)
+
+  def generate(fileName: String, indicators: Indicator[_] with History*) {
+    generate(new BufferedWriter(new FileWriter(fileName)), indicators:_*)
+  }
+}
+
 object CsvReport {
   val delimiter = ","
 
@@ -43,8 +52,8 @@ object CsvReport {
   /** Writes historical values of the specified indicators to the specified buffer. Only indicators
     * marked by `History` trait will be included into report. If indicators' history sizes do not
     * match an exception is thrown. */
-  object History extends Report {
-    def generate(writer: BufferedWriter, indicators: Indicator[_]*) {
+  object History extends HistoryReport {
+    def generate(writer: BufferedWriter, indicators: Indicator[_] with History*) {
       val withHistory = indicators filter { _.hasHistory }
       if(withHistory.size > 0) {
         val firstSize = withHistory.head.history.size

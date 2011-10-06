@@ -42,21 +42,15 @@ class CsvHistoryReportTest extends FunSuite {
     val id = new IndDouble with History
     val ii = new IndInt with History
     val ic = new IndCust with History
-    val no = new IndInt
 
     expect("") {
       val out = new StringWriter
       CsvReport.History.generate(new BufferedWriter(out))
       out.toString
     }
-    expect("") {
-      val out = new StringWriter
-      CsvReport.History.generate(new BufferedWriter(out), no)
-      out.toString
-    }
     expect("Double Indicator,Int Indicator,Custom Indicator") {
       val out = new StringWriter
-      CsvReport.History.generate(new BufferedWriter(out), id, ii, no, ic)
+      CsvReport.History.generate(new BufferedWriter(out), id, ii, ic)
       out.toString
     }
 
@@ -69,7 +63,7 @@ class CsvHistoryReportTest extends FunSuite {
     expect("Custom Indicator,Int Indicator,Custom Indicator,Double Indicator\n"+
            "~~~first~~~,999,~~~first~~~,123.123") {
       val out = new StringWriter
-      CsvReport.History.generate(new BufferedWriter(out), ic, ii, ic, id, no)
+      CsvReport.History.generate(new BufferedWriter(out), ic, ii, ic, id)
       out.toString
     }
 
