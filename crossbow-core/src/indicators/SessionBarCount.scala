@@ -19,9 +19,15 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 
-/** Stores first known value of the target indicator. */
-class FirstValue[Value : Manifest](target: Indicator[Value]) extends Indicator[Value] {
-  def name = "First value of "+target.name
-  def dependencies = Set(target)
-  def calculate = { case _ if(isEmpty && target.isSet) => target() }
+/** Number of complete bars during current session. */
+class SessionBarCount extends Indicator[Int] {
+  def name = "Session Bar Count"
+  def dependencies = Empty
+
+  override def default = 0
+
+  def calculate = {
+    case _: SessionOpen => 0
+    case _: BarClose => value + 1
+  }
 }
