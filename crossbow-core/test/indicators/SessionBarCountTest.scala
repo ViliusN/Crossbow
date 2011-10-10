@@ -30,7 +30,7 @@ class SessionBarCountTest extends FunSuite {
     val indicator = new SessionBarCount
     expect(Set()) { indicator.dependencies }
   }
-  test("initial value") {
+  test("default value") {
     val indicator = new SessionBarCount
     expect(Some(0)) { indicator() }
   }

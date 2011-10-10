@@ -19,13 +19,12 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 
-/** Holds value of the specified indicator if `condition` results in `true` value. */
-class Conditional[Value : Manifest](indicator: Indicator[Value])(condition: Value => Boolean)
-    extends Indicator[Value] {
-  def name = "Conditional "+indicator.name
-  def dependencies = Set(indicator)
+/** Calculates natural logarithm of the specified target indicator. */
+class Ln(target: Indicator[Double]) extends Indicator[Double] {
+  def name = "Ln("+target.name+")"
+  def dependencies = Set(target)
   def calculate = {
-    case _ if(indicator.isSet && condition(indicator.value)) => indicator.value
+    case _ if(target.isSet && target.value > 0) => math.log(target.value)
     case _ => None
   }
 }
