@@ -19,7 +19,18 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 
-/** Calculates square root of the specified target indicator. */
-class Sqrt(target: Indicator[Double]) extends Power(target, 0.5) {
-  override def name = "Sqrt("+target.name+")"
+/** Raises the specified target indicator to the specified power. */
+class Power(target: Indicator[Double], power: Indicator[Double]) extends Indicator[Double] {
+  def this(indicator: Indicator[Double], constant: Double) =
+    this(indicator, new Variable(constant) { override def name = constant.toString })
+
+  def name = "Power("+target.name+"; "+power.name+")"
+  def dependencies = Set(target, power)
+  def calculate = {
+    case _ if(target.isSet && power.isSet) =>
+      val v = math.pow(target.value, power.value)
+      if(!v.isNaN && !v.isInfinity) v
+      else None
+    case _ => None
+  }
 }

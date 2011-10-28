@@ -21,42 +21,49 @@ import lt.norma.crossbow.core._
 import lt.norma.crossbow.testutils._
 import org.scalatest.FunSuite
 
-class SqrtTest extends FunSuite {
+class PowerTest extends FunSuite {
   val e = 0.00005
 
   test("name") {
     val target = new Variable(5.0) { override def name = "A" }
-    val indicator = new Sqrt(target)
-    expect("Sqrt(A)") { indicator.name }
+    val power = new Variable(5.0) { override def name = "B" }
+    val indicator = new Power(target, power)
+    expect("Power(A; B)") { indicator.name }
   }
 
   test("dependencies") {
     val target = new Variable(5.0)
-    val indicator = new Sqrt(target)
-    expect(2) { indicator.dependencies.size }
+    val power = new Variable(5.0)
+    val indicator = new Power(target, power)
+    expect(Set(target, power)) { indicator.dependencies }
   }
 
   test("calculation") {
     val target = new Variable[Double]
-    val indicator = new Sqrt(target)
+    val power = new Variable[Double]
+    val indicator = new Power(target, power)
     val list = new IndicatorList(indicator)
-    approx(2, e) {
+    approx(16, e) {
       target.set(4)
+      power.set(2)
       list.send(EmptyMessage)
       indicator.value
     }
-    approx(3.872983346, e) {
-      target.set(15)
+    approx(2, e) {
+      target.set(8)
+      power.set(1.0/3)
       list.send(EmptyMessage)
       indicator.value
     }
     approx(1, e) {
       target.set(1)
+      power.set(1)
       list.send(EmptyMessage)
       indicator.value
     }
-    approx(0, e) {
+    approx(1, e) {
       target.set(0)
+      power.set(0)
       list.send(EmptyMessage)
       indicator.value
     }
@@ -64,27 +71,53 @@ class SqrtTest extends FunSuite {
 
   test("calculation - invalid values") {
     val target = new Variable[Double]
-    val indicator = new Sqrt(target)
+    val power = new Variable[Double]
+    val indicator = new Power(target, power)
     val list = new IndicatorList(indicator)
     expect(None) {
       target.set(-0.0001)
+      power.set(0.5)
       list.send(EmptyMessage)
       indicator()
     }
     expect(None) {
-      target.set(-1)
+      target.set(1)
+      power.set(Double.PositiveInfinity)
       list.send(EmptyMessage)
       indicator()
     }
   }
 
-  test("calculation - empty target") {
+  test("calculation - empty target and/or power") {
     val target = new Variable[Double]
-    val indicator = new Sqrt(target)
+    val power = new Variable[Double]
+    val indicator = new Power(target, power)
     val list = new IndicatorList(indicator)
     expect(None) {
+      target.unset()
+      power.unset()
       list.send(EmptyMessage)
       indicator()
     }
+    expect(None) {
+      target.set(2)
+      power.unset()
+      list.send(EmptyMessage)
+      indicator()
+    }
+    expect(None) {
+      target.unset()
+      power.set(2)
+      list.send(EmptyMessage)
+      indicator()
+    }
+  }
+
+  test("alternative constructor") {
+    val target = new Variable[Double](5) { override def name = "T" }
+    val i = new Power(target, 2)
+    val list = new IndicatorList(i)
+    expect("Power(T; 2.0)") { i.name }
+    expect(Some(25)) { i() }
   }
 }
