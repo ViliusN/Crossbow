@@ -175,4 +175,47 @@ class IndicatorTest extends FunSuite {
     expect(Set()) { i.dependencies }
     i.send(new Data { })
   }
+
+  test("requiredHistory") {
+    val i = new Indicator[Int] {
+      def name = ""
+      def dependencies = Empty
+      def calculate = Empty
+    }
+    expect(0) { i.requiredHistory }
+  }
+
+  test("hasHistory") {
+    class Dummy extends Indicator[Int] {
+      def name = "D"
+      def dependencies = Empty
+      def calculate = Empty
+    }
+    val ih = new Dummy with History
+    val i = new Dummy
+    assert { ih.hasHistory }
+    assert { i.hasHistory == false }
+  }
+
+  test("history") {
+    class Dummy extends Indicator[Int] {
+      def name = "D"
+      def dependencies = Empty
+      def calculate = Empty
+    }
+    val ih = new Dummy with History
+    val h = ih.history
+    expect(0) { h.size }
+    assert { h eq ih.history }
+  }
+
+  test("history - exception") {
+    class Dummy extends Indicator[Int] {
+      def name = "D"
+      def dependencies = Empty
+      def calculate = Empty
+    }
+    val i = new Dummy
+    intercept[Exception] { i.history }
+  }
 }

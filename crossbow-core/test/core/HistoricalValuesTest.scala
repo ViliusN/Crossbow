@@ -24,6 +24,7 @@ class HistoricalValuesTest extends FunSuite {
     val hw = new HistoricalValues({ () => Some(0) }, { v: Option[Int] => v.toString })
     expect(Nil) { hw.values }
   }
+
   test("update") {
     var value: Option[Int] = None
     val hw = new HistoricalValues({ () => value }, { v: Option[Int] => v.toString })
@@ -41,6 +42,7 @@ class HistoricalValuesTest extends FunSuite {
     hw.update
     expect(List(None, Some(15), Some(15), None, Some(-5))) { hw.values }
   }
+
   test("size") {
     var value: Option[Int] = None
     val hw = new HistoricalValues({ () => value }, { v: Option[Int] => v.toString })
@@ -54,6 +56,7 @@ class HistoricalValuesTest extends FunSuite {
     hw.update
     expect(3) { hw.size }
   }
+
   test("isEmpty") {
     var value: Option[Int] = None
     val hw = new HistoricalValues({ () => value }, { v: Option[Int] => v.toString })
@@ -67,6 +70,7 @@ class HistoricalValuesTest extends FunSuite {
     hw.update
     expect(false) { hw.isEmpty }
   }
+
   test("last") {
     var value: Option[Int] = None
     val hw = new HistoricalValues({ () => value }, { v: Option[Int] => v.toString })
@@ -81,6 +85,7 @@ class HistoricalValuesTest extends FunSuite {
     hw.update
     expect(None) { hw.last }
   }
+
   test("lastSet") {
     var value: Option[Int] = None
     val hw = new HistoricalValues({ () => value }, { v: Option[Int] => v.toString })
@@ -98,6 +103,7 @@ class HistoricalValuesTest extends FunSuite {
     hw.update
     expect(Some(5)) { hw.lastSet }
   }
+
   test("take") {
     var value: Option[Int] = None
     val hw = new HistoricalValues({ () => value }, { v: Option[Int] => v.toString })
@@ -135,6 +141,7 @@ class HistoricalValuesTest extends FunSuite {
     expect(Nil) { hw.take(0) }
     expect(Nil) { hw.take(-1) }
   }
+
   test("takeSet") {
     var value: Option[Int] = None
     val hw = new HistoricalValues({ () => value }, { v: Option[Int] => v.toString })
@@ -186,6 +193,7 @@ class HistoricalValuesTest extends FunSuite {
     expect(Nil) { hw.takeSet(0) }
     expect(Nil) { hw.takeSet(-1) }
   }
+
   test("truncate") {
     var value: Option[Int] = None
     val hw = new HistoricalValues({ () => value }, { v: Option[Int] => v.toString })
@@ -211,6 +219,7 @@ class HistoricalValuesTest extends FunSuite {
     hw.truncate(0)
     expect(Nil) { hw.values }
   }
+
   test("valuesToStrings") {
     var value: Option[Int] = None
     val hw = new HistoricalValues({ () => value },
