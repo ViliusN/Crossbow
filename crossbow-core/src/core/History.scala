@@ -17,53 +17,28 @@
 
 package lt.norma.crossbow.core
 
-import annotation.tailrec
-
-/** Holds history of indicator's values */
-final class IndicatorHistory[Value](optionalValue: () => Option[Value],
-    valueToString: Option[Value] => String) {
-  private var reversedValues = List[Option[Value]]()
-
-  def update() { reversedValues = optionalValue() :: reversedValues }
-  def values: List[Option[Value]] = reversedValues.reverse
-  def size = reversedValues.size
-  def isEmpty = reversedValues.isEmpty
-  def last = if(reversedValues.isEmpty) None else reversedValues.head
-  def lastSet = reversedValues.find(_.isDefined).map(_.get)
-  def valuesToStrings: List[String] = values map { valueToString }
-
-  /** Returns up to `n` latest historical values. */
-  def take(n: Int): List[Option[Value]] = reversedValues.take(n).reverse
-
-  /** Returns up to `n` latest historical values, where value is not `None`. */
-  def takeSet(n: Int): List[Option[Value]] = {
-    reversedValues.iterator.filter(_.isDefined).take(n).toList.reverse
-  }
-}
-
-/** Extend this trait to create indicators capable of collecting history of their values. To
-  * actually collect history, marker trait `History` must be extended as well. */
-trait HistoryHolder[Value] {
-  def name: String
-  def optionalValue: Option[Value]
-  def valueToString(valueToConvert: Option[Value]): String
-
-  def hasHistory = this.isInstanceOf[History]
-  lazy val history = if(hasHistory) new IndicatorHistory(optionalValue _, valueToString _)
-    else throw new Exception("Indicator "+name+" does not support history")
-}
-
-/** Mixin this trait to enable particular instance of indicator to collect history.
+/** Mixin this trait at declaration or creation of concrete indicators to enable collection of
+  * historical values.
   *
-  * Examples: {{{
-  * // This indicator does not collect historical values
-  * val i1 = new MyIndicator
+  * === Examples ===
   *
-  * // This indicator collects historical values
-  * val i2 = new MyIndicator with History
-  *
-  * // If the indicator uses historical values internally, `History` can be included in extends
-  * // clause of the indicator's class:
-  * class MyIndicator extends Indicator[Double] with History { ... }
-  * }}} */
+  * Normally, trait `History` is mixed in at creation of particular indicator:
+  * {{{
+  *   val i = new MyIndicator with History
+  *   assert(i.hasHistory)
+  * }}}
+  * If the indicator uses historical values internally, `History` can be mixed in at the declaration
+  * of indicator's class:
+  * {{{
+  *   class MyIndicator extends Indicator[Double] with History { ... }
+  *   i = new MyIndicator
+  *   assert(i.hasHistory)
+  * }}}
+  * Indicators without `History` trait either at declaration or at creation do not collect
+  * historical values:
+  * {{{
+  *   val i = new MyIndicator
+  *   assert(i.hasHistory == false)
+  * }}}
+  */
 trait History

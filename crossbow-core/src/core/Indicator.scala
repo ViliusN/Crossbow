@@ -30,7 +30,7 @@ package lt.norma.crossbow.core
   * }
   * }}}*/
 abstract class Indicator[Value : Manifest] extends BasicListener with Dependant[Indicator[_]]
-    with HistoryHolder[Value] with Name {
+    with Name {
   import Indicator._
 
   implicit def valueToOption(v: Value): Option[Value] = Some(v)
@@ -111,6 +111,15 @@ abstract class Indicator[Value : Manifest] extends BasicListener with Dependant[
     * is no need to calculate value on data updates, for example when indicator's value is assigned
     * externally via `set` method. */
   protected def calculate: PartialFunction[Message, Option[Value]]
+
+  /** Number of historical values required by this indicator. Override the default value (0) to make
+    * sure that the required amount of history remains after truncating. */
+  def requiredHistory: Int = 0
+  /** Checks whether this indicator collects historical values. */
+  def hasHistory = this.isInstanceOf[History]
+  /** Holds historical values. */
+  lazy val history = if(hasHistory) new HistoricalValues(optionalValue _, valueToString _)
+    else throw new Exception("Indicator "+name+" does not support history")
 
   override def toString = name+": "+valueToString()
 }

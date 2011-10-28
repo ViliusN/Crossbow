@@ -23,34 +23,41 @@ package lt.norma.crossbow.core
   * Received data is forwarded to all indicators in the deep list. Dependencies are ensured to be
   * updated before the dependents as they appear higher in the deep list. */
 class IndicatorList(indicators: Indicator[_]*) extends Listener {
-  private val root = new Dependant[Indicator[_]] {
-    def dependencies = indicators.toSet
-  }
-
-  /** Contents of the list. */
-  lazy val list = indicators.toList.distinct filter { root.shallowDependencies contains }
-
-  /** Contents of the list including dependencies in full depth. */
-  lazy val deepList = root.deepDependencies
-
   /** `IndicatorList` updates contained indicators by itself. Therefore there is no need to
     * depend on them. */
-  def dependencies = Set.empty
-
+  def dependencies = Empty
+  /** Root dependant to hold all indicators of this list. */
+  private val root = new Dependant[Indicator[_]] { def dependencies = indicators.toSet }
+  /** Shallow contents of the list. Includes only indicators, explicitly added to the list via
+    * constructor, excluding any dependencies. Duplicate entries are filtered out. For complete
+    * (deep) list of indicators use `deep`. */
+  lazy val shallow: List[Indicator[_]] =
+    indicators.toList.distinct.filter { root.shallowDependencies contains }
+  /** Contents of the list including dependencies in full depth. */
+  lazy val deep: List[Indicator[_]] = root.deepDependencies
+  /** Indicators of the deep list, which collect historical values. */
+  lazy val deepWithHistory: List[Indicator[_]] = deep.filter(_.hasHistory)
+  /** Forwards all messages to the indicators in `deep` list. On `BarClose` message, indicators'
+    * histories are updated. Historical values are collected '''after''' dispatching `BarClose`
+    * messages, so that indicators could update their values, before historical value is
+    * recorded. */
   def receive = {
-    case barClose: BarClose => updateIndicators(barClose); updateHistory(barClose)
-    case m => updateIndicators(m)
+    case bc: BarClose =>
+      deep.foreach(_.send(bc))
+      deepWithHistory.foreach(_.history.update())
+    case m =>
+      deep.foreach(_.send(m))
+  }
+  /** Forwards the specified message to al indicators in `deep` list. */
+  private def updateIndicators(message: Message) { deep.foreach(_.send(message)) }
+  /** Finds largest required history of all indicators. */
+  def maxRequiredHistory: Int = (0 :: deep.map(_.requiredHistory)).max
+  /** Truncates history of all indicators to the amount specified by `leave` or the result of
+    * `maxRequiredHistory`, whichever is bigger. */
+  def truncateHistory(leave: Int) {
+    deepWithHistory.foreach(_.history.truncate(math.max(leave, maxRequiredHistory)))
   }
 
-  private def updateIndicators(message: Message) { deepList foreach { _.send(message) } }
-
-  private def updateHistory(barClose: BarClose) {
-    deepList foreach {
-      case ih: History => ih.history.update()
-      case _ =>
-    }
-  }
-
-  // Send IndicatorCreated message to all indicators
+  // Send IndicatorCreated message to all indicators on creation of the list.
   updateIndicators(IndicatorCreated)
 }

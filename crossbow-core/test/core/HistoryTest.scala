@@ -30,30 +30,6 @@ class IndicatorHistoryTest extends FunSuite {
     case _ =>
   }
 
-  test("IndicatorHistory") {
-    val i = new Dummy
-    val ih = new Dummy with History
-
-    expect(Nil) { ih.history.values }
-    expect(None) { ih.history.last }
-
-    updateHistory(ih)
-    updateHistory(i)
-    expect(1) { ih.history.size }
-    expect(None) { ih.history.last }
-
-    ih.set(5)
-    expect(None) { ih.history.last }
-    expect(List(None)) { ih.history.values }
-    ih.history.update()
-    expect(List(None, Some(5))) { ih.history.values }
-    expect(Some(5)) { ih.history.last }
-
-    ih.history.update()
-    expect(List(None, Some(5), Some(5))) { ih.history.values }
-    expect(5) { ih.history.last.get }
-  }
-
   test("size and isEmpty methods") {
     val ih = new Dummy with History
     expect(0) { ih.history.size }
@@ -114,7 +90,7 @@ class IndicatorHistoryTest extends FunSuite {
 
   test("History of custom types") {
     class A(val d: Double) { def d2 = d * 2 }
-    class DummyA extends Indicator[A] with HistoryHolder[A] {
+    class DummyA extends Indicator[A] {
       def name = "DA"
       def dependencies = Empty
       def calculate = Empty
@@ -272,3 +248,4 @@ class HistoryHolderTest extends FunSuite {
     intercept[Exception] {  i.history }
   }
 }
+// TODO clean-up and more to IndicatorTest
