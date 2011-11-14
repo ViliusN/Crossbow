@@ -17,10 +17,26 @@
 
 package lt.norma.crossbow.core
 
-import org.joda.time.DateMidnight
+import org.joda.time.{ DateMidnight, Duration }
 
 /** A trait for all derivative instruments. Extend this trait to create custom derivatives. */
 trait Derivative extends Instrument {
+  /** Underlying instrument. */
   def underlying: Instrument
+  /** Expiration time of derivative instrument. */
   def expiration: DateMidnight
+
+  /** Checks whether this derivative instrument is expired on the specified date. */
+  def isExpired(now: DateMidnight) = !(now isBefore expiration)
+  /** Calculates remaining time to expiration of derivatives instrument. Returns 0 for expired
+    * instruments. As `DateMidnight` is used to store expiration date, the result of
+    * `timeToExpiration` is rounded to 24-hour precision. Weekends and bank holidays are
+    * included. */
+  def timeToExpiration(now: DateMidnight): Duration = {
+    if(!isExpired(now)) {
+      new Duration(now, expiration)
+    } else {
+      new Duration(0)
+    }
+  }
 }
