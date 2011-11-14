@@ -173,7 +173,7 @@ class IndicatorTest extends FunSuite {
     }
     val i = new MyIndicator
     expect(Set()) { i.dependencies }
-    i.send(new Data { })
+    i.send(EmptyMessage)
   }
 
   test("requiredHistory") {

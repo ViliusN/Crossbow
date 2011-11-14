@@ -40,30 +40,30 @@ class CrossedMarketTest extends FunSuite {
 
     ask.set(5)
     bid.set(4.5)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(false) { i.value }
 
     ask.set(4.49)
     bid.set(4.5)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(true) { i.value }
 
     ask.unset()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(None) { i() }
 
     ask.set(8)
     bid.set(8)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(false) { i.value }
 
     bid.unset()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(None) { i() }
 
     ask.set(0)
     bid.set(0.000001)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(true) { i.value }
   }
 }

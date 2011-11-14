@@ -30,31 +30,31 @@ class HighSoFarTest extends FunSuite {
     expect(Set(i1)) { i.dependencies }
     expect(None) { i() }
 
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(8)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(8) { i.value }
 
     i1.set(9)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(9) { i.value }
 
     i1.set(7)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(9) { i.value }
 
     i1.unset()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(9) { i.value }
 
     i1.set(6)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(9) { i.value }
 
     i1.set(20)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(20) { i.value }
 
     i.send(BarOpen(new DateTime))
@@ -70,27 +70,27 @@ class HighSoFarTest extends FunSuite {
     expect(1) { i.dependencies.size }
     expect(None) { i() }
 
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(8)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(9)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(7)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.unset()
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(6)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     l.send(BarClose(new DateTime))
@@ -108,31 +108,31 @@ class HighSoFarTest extends FunSuite {
     expect(Set(i1)) { i.dependencies }
     expect(None) { i() }
 
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(8)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(8) { i.value }
 
     i1.set(9)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(8) { i.value }
 
     i1.set(7)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(7) { i.value }
 
     i1.unset()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(7) { i.value }
 
     i1.set(8)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(7) { i.value }
 
     i1.set(-1)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(-1) { i.value }
 
     i.send(BarOpen(new DateTime))
@@ -148,27 +148,27 @@ class HighSoFarTest extends FunSuite {
     expect(1) { i.dependencies.size }
     expect(None) { i() }
 
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(8)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(9)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(7)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.unset()
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(6)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     l.send(BarClose(new DateTime))
@@ -187,27 +187,27 @@ class HighSoFarTest extends FunSuite {
     expect(1) { i.dependencies.size }
     expect(None) { i() }
 
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(8)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(8) { i.value }
 
     i1.set(9)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(8) { i.value }
 
     i1.set(7)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(8) { i.value }
 
     i1.unset()
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(8) { i.value }
 
     i1.set(6)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(8) { i.value }
 
     l.send(BarClose(new DateTime))
@@ -226,19 +226,19 @@ class HighSoFarTest extends FunSuite {
     expect(1) { i.dependencies.size }
     expect(None) { i() }
 
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(8)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.unset()
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(6)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     l.send(BarClose(new DateTime))

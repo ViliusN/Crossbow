@@ -41,42 +41,42 @@ class AverageSetTest extends FunSuite {
     expect(1) { i.dependencies.size }
     expect(None) { i() }
     expect(None) {
-      l.send(new Data { })
+      l.send(EmptyMessage)
       i()
     }
     approx(1, e) {
       i1.set(1)
-      l.send(new Data { })
+      l.send(EmptyMessage)
       i.value
     }
     approx(1.5, e) {
       i2.set(2)
-      l.send(new Data { })
+      l.send(EmptyMessage)
       i.value
     }
     approx(2.33333, e) {
       i3.set(4)
-      l.send(new Data { })
+      l.send(EmptyMessage)
       i.value
     }
     approx(7.66666, e) {
       i3.set(20)
-      l.send(new Data { })
+      l.send(EmptyMessage)
       i.value
     }
     approx(1.5, e) {
       i3.unset()
-      l.send(new Data { })
+      l.send(EmptyMessage)
       i.value
     }
     approx(1, e) {
       i2.unset()
-      l.send(new Data { })
+      l.send(EmptyMessage)
       i.value
     }
     expect(None) {
       i1.unset()
-      l.send(new Data { })
+      l.send(EmptyMessage)
       i()
     }
   }
@@ -89,7 +89,7 @@ class AverageSetTest extends FunSuite {
     expect(None) { i() }
     expect(15) {
       i1.set(15)
-      l.send(new Data { })
+      l.send(EmptyMessage)
       i.value
     }
   }
@@ -100,7 +100,7 @@ class AverageSetTest extends FunSuite {
     expect(1) { i.dependencies.size }
     expect(None) { i() }
     expect(None) {
-      l.send(new Data { })
+      l.send(EmptyMessage)
       i()
     }
   }

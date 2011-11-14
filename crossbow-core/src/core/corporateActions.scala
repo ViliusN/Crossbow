@@ -21,7 +21,7 @@ import org.joda.time.DateMidnight
 
 /** Stock dividend corporate event. */
 case class Dividend(instrument: Instrument, amount: BigDecimal, exDividendDate: DateMidnight,
-    paymentDate: DateMidnight) extends Data
+    paymentDate: DateMidnight) extends Message
 
 /** Stock split corporate event.
   *
@@ -30,4 +30,4 @@ case class Dividend(instrument: Instrument, amount: BigDecimal, exDividendDate: 
   * StockSplit(stock, 2, 1, date)  // Represents a 2 to 1 split
   * }}} */
 case class StockSplit(instrument: Instrument, ratioAfter: Int, ratioBefore: Int, date: DateMidnight)
-    extends Data
+    extends Message

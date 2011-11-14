@@ -168,7 +168,7 @@ class IndicatorListTest  extends FunSuite {
   }
 
   test("collecting history") {
-    case class DummyData(val value: Int) extends Data
+    case class DummyData(val value: Int) extends Data { def time = DateTime.now }
     class HistoryIndicator extends Indicator[Int] {
       def name = "HI"
       def dependencies = Empty

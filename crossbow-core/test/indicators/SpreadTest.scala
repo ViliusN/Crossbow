@@ -37,7 +37,7 @@ class SpreadTest extends FunSuite {
 
     expect(None) { i() }
 
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     l.send(Quote(s, 5, 100, 4.5, 800, new DateTime))
@@ -47,7 +47,7 @@ class SpreadTest extends FunSuite {
     approx(-0.01, e) { i.value }
 
     lq.unset()
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     l.send(Quote(s, 8, 100, 8, 800, new DateTime))

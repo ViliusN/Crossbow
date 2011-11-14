@@ -17,12 +17,13 @@
 
 package lt.norma.crossbow.core
 
+import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 class AnyncDataFilterTest extends FunSuite {
   test("Asynchronous data filter") {
     var counter = 1
-    case class D(v: Int) extends Data
+    case class D(v: Int) extends Data { def time = DateTime.now }
     class LFast extends Listener {
       def dependencies = Empty
       var lastData: Option[Message] = None

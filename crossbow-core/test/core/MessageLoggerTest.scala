@@ -18,13 +18,14 @@
 package lt.norma.crossbow.core
 
 import java.io.StringWriter
+import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 class MessageLoggerTest extends FunSuite {
   import LogLevel._
 
   val mockMessage = new Message { override def toString = "mockMessage" }
-  val mockData = new Data { override def toString = "mockData" }
+  val mockData = new Data { override def toString = "mockData"; def time = DateTime.now }
   val mockErrorMessage = new ErrorMessage {
     def exception = Exception("")
     override def toString = "mockErrorMessage"

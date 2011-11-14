@@ -29,9 +29,9 @@ case class BarOpen(time: DateTime) extends Data
 /** Bar closing data message. */
 case class BarClose(time: DateTime) extends Data
 
-/** Data message sent during loading of the system. Usually this is the first message the provider
-  * sends after starting up. */
-case class Load() extends Data
-/** Data message send before closing the system. Usually this is the last message the provider
-  * sends before shutting down. */
-case class Unload() extends Data
+/** Message sent during loading of the system. Usually this is the first message the provider sends
+  * after starting up. */
+case class Load() extends Message
+/** Message send before closing the system. Usually this is the last message the provider sends
+  * before shutting down. */
+case class Unload() extends Message

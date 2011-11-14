@@ -17,11 +17,20 @@
 
 package lt.norma.crossbow.core
 
+import org.joda.time.DateTime
+
 /** Represent any message sent through data nodes. */
-trait Message
+trait Message {
+  /** Message creation time. */
+  val timeStamp = DateTime.now
+}
 
 /** Represent data message. */
-trait Data extends Message
+trait Data extends Message {
+  /** Time of market event. Not to be confused with `timeStamp` field of `Message` trait, because in
+    * case of back-tests, message creation times will differ from times of simulated market data. */
+  def time: DateTime
+}
 
 /** Represents error message. Should be used to inform listeners about any abnormal conditions which
   * are not serious enough to be thrown as exceptions. */

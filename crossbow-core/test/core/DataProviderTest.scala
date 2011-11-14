@@ -17,6 +17,7 @@
 
 package lt.norma.crossbow.core
 
+import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 class DataProviderTest extends FunSuite {
@@ -33,7 +34,7 @@ class DataProviderTest extends FunSuite {
         order = Counter.n
     }
   }
-  case class DummyData(value: Int) extends Data
+  case class DummyData(value: Int) extends Data { def time = DateTime.now }
 
   test("Dispatching data") {
     val l1 = new DummyListener()

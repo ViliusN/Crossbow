@@ -36,42 +36,42 @@ class ChangeTest extends FunSuite {
     expect(None) { i() }
 
     i1.set(1)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(1)
     i1.history.update()
     i1.set(2)
     i1.history.update()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(3)
     i1.history.update()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(Some(2)) { i() }
 
     i1.set(4)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(Some(3)) { i() }
 
     i1.history.update()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(Some(2)) { i() }
 
     i1.unset()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(None) { i() }
 
     i1.history.update()
     i1.set(8)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(Some(5)) { i() }
     i1.history.update()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(Some(4)) { i() }
     i1.history.update()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(None) { i() }
   }
 
@@ -87,23 +87,23 @@ class ChangeTest extends FunSuite {
     expect(None) { i() }
 
     i1.set(1)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(None) { i() }
 
     i1.history.update()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(Some(0)) { i() }
 
     i1.set(3)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(Some(2)) { i() }
 
     i1.history.update()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(Some(0)) { i() }
 
     i1.set(6)
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(Some(3)) { i() }
   }
 }

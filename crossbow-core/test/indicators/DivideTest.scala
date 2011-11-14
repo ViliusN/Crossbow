@@ -49,33 +49,33 @@ class DivideTest extends FunSuite {
     expect(Set(i1, i2)) { i.dependencies }
     expect(None) { i() }
 
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(1)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i2.set(5)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     approx(0.2, e) { i.value }
 
     i1.set(123.123)
     i2.set(0.123)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     approx(1001, e) { i.value }
 
     i1.unset()
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(80)
     i2.set(25)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     approx(3.2, e) { i.value }
 
     i2.unset()
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
   }
   test("unset values - both") {

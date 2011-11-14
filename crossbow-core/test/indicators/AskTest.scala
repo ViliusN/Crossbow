@@ -41,7 +41,7 @@ class AskTest extends FunSuite {
     expect(6.5) { ask.value }
 
     lq.unset()
-    ask.send(new Data { })
+    ask.send(EmptyMessage)
     expect(None) { ask.optionalValue }
 
     val q3 = Quote(s, 8, 100, 4.5, 800, new DateTime)

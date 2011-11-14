@@ -41,7 +41,7 @@ class BidTest extends FunSuite {
     expect(3.5) { bid.value }
 
     lq.unset()
-    bid.send(new Data { })
+    bid.send(EmptyMessage)
     expect(None) { bid.optionalValue }
 
     val q3 = Quote(s, 8, 100, 2.5, 800, new DateTime)

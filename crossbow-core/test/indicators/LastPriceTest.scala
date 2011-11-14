@@ -41,7 +41,7 @@ class LastPriceTest extends FunSuite {
     expect(6.5) { i.value }
 
     lt.unset()
-    i.send(new Data { })
+    i.send(EmptyMessage)
     expect(None) { i() }
 
     val t3 = Trade(s, 8, 100, new DateTime)

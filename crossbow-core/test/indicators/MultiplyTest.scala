@@ -38,35 +38,35 @@ class MultiplyTest extends FunSuite {
     expect(Set(i1, i2, i3)) { i.dependencies }
     expect(None) { i() }
 
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i1.set(1)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i2.set(2)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i3.set(4)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(8) { i.value }
 
     i3.set(20)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(40) { i.value }
 
     i3.unset()
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
 
     i3.set(10)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(20) { i.value }
 
     i1.set(2)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(40) { i.value }
   }
 
@@ -80,7 +80,7 @@ class MultiplyTest extends FunSuite {
     expect(None) { i() }
 
     i1.set(15)
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(15) { i.value }
   }
 
@@ -92,7 +92,7 @@ class MultiplyTest extends FunSuite {
     expect(Set()) { i.dependencies }
     expect(None) { i() }
 
-    l.send(new Data { })
+    l.send(EmptyMessage)
     expect(None) { i() }
   }
   test("initialization") {
