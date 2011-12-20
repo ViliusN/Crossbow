@@ -27,23 +27,20 @@ trait DataProvider {
 
   private var root = new RootListener
 
-  /** Sends out data messages to the listeners. */
-  def dispatch(message: Message) { root.deepDependencies foreach { _ send message } }
+  /** Deep list of data listeners served by this provider. */
+  def listeners = root.deepDependencies
 
-  /** Adds the specified listener. */
-  def add(listener: Listener) {
-    root = new RootListener((listener :: root.shallowDependencies) :_*)
+  /** Sends out data messages to the listeners. */
+  def dispatch(message: Message) { listeners foreach { _ send message } }
+
+  /** Adds the specified listeners. */
+  def add(listeners: Listener*) {
+    root = new RootListener((listeners.toList ::: root.shallowDependencies) :_*)
   }
 
-  /** Removes the specified listener. Throws an exception if other listeners depend on the
-    * removed listener. */
-  def remove(listener: Listener) {
-    if(root dependsOn listener) {
-      if(root hasOnTopLevel listener) {
-        root = new RootListener((root.shallowDependencies.filterNot(_ == listener)) :_*)
-      } else {
-        throw new Exception("Unable to remove listener as other listeners depend on it.")
-      }
-    }
+  /** Removes the specified listeners. Listeners will still remain in deep list if other listeners
+    * depend on them. */
+  def remove(listeners: Listener*) {
+    root = new RootListener((root.shallowDependencies.filterNot(l => listeners.contains(l))) :_*)
   }
 }

@@ -27,6 +27,6 @@ import org.joda.time.format.DateTimeFormatter
   * @param askSize     number of contracts offered at ask price
   * @param bidPrice    bid price of the quote
   * @param bidSize     number of contracts at bid price
-  * @param time        time of the quote */
+  * @param marketTime  time of the quote */
 case class Quote(instrument: Instrument, askPrice: BigDecimal, askSize: Long, bidPrice: BigDecimal,
-    bidSize: Long, time: DateTime) extends Data
+    bidSize: Long, marketTime: DateTime) extends Data

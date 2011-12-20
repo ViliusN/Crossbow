@@ -20,14 +20,14 @@ package lt.norma.crossbow.core
 import org.joda.time.DateTime
 
 /** Session opening data message. */
-case class SessionOpen(time: DateTime) extends Data
+case class SessionOpen(marketTime: DateTime) extends Data
 /** Session closing data message. */
-case class SessionClose(time: DateTime) extends Data
+case class SessionClose(marketTime: DateTime) extends Data
 
 /** Bar opening data message. */
-case class BarOpen(time: DateTime) extends Data
+case class BarOpen(marketTime: DateTime) extends Data
 /** Bar closing data message. */
-case class BarClose(time: DateTime) extends Data
+case class BarClose(marketTime: DateTime) extends Data
 
 /** Message sent during loading of the system. Usually this is the first message the provider sends
   * after starting up. */

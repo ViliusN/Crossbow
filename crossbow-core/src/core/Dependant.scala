@@ -21,6 +21,7 @@ package lt.norma.crossbow.core
   * are used mostly to ensure that some instances (the dependencies) receive data messages before
   * others (the dependants). */
 trait Dependant[A <: Dependant[A]] {
+  /** Implicitly convert `Empty` object to an empty set. */
   implicit def emptyToDependencies(empty: Empty): Set[A] = Set.empty
 
   /** Instances used by or relied on by this `Dependant`. */
@@ -33,7 +34,7 @@ trait Dependant[A <: Dependant[A]] {
   }
 
   /** Flat list of all dependencies in full depth. It is guaranteed that the dependencies appear
-    * before the dependants in the list, except that the order is not defines and should not be
+    * before the dependants in the list, except that the order is not defined and should not be
     * relied on. Every instance appears only once. */
   lazy val deepDependencies: List[A] =
     (shallowDependencies map { d => d.deepDependencies ::: List(d) } flatten) distinct

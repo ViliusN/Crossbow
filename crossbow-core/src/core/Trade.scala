@@ -25,6 +25,6 @@ import org.joda.time.format.DateTimeFormatter
   * @param instrument  financial instrument
   * @param price       price of the trade
   * @param size        number of contracts traded (volume)
-  * @param time        time of the trade */
-case class Trade(instrument: Instrument, price: BigDecimal, size: Long, time: DateTime)
+  * @param marketTime  time of the trade */
+case class Trade(instrument: Instrument, price: BigDecimal, size: Long, marketTime: DateTime)
     extends Data

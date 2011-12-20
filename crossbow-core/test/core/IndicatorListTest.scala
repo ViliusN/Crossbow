@@ -168,7 +168,7 @@ class IndicatorListTest  extends FunSuite {
   }
 
   test("collecting history") {
-    case class DummyData(val value: Int) extends Data { def time = DateTime.now }
+    case class DummyData(val value: Int) extends Data { def marketTime = DateTime.now }
     class HistoryIndicator extends Indicator[Int] {
       def name = "HI"
       def dependencies = Empty
@@ -217,7 +217,7 @@ class IndicatorListTest  extends FunSuite {
       def name = "D"
       def dependencies = Empty
       def calculate = {
-        case bc: BarClose => bc.time
+        case bc: BarClose => bc.marketTime
       }
     }
     val i = new Dummy with History

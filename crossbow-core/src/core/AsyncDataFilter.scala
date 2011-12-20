@@ -23,7 +23,7 @@ import scala.actors.Actor._
 /** Receives messages from multiple threads and forwards all messages to it's own listeners in
   * single thread. The main use of this filter is to ensure that only one thread provides messages
   * to all listeners. */
-class AsyncDataFilter extends DataNode with Actor {
+class AsyncDataFilter(listeners: Listener*) extends DataNode with Actor {
   def dependencies = Empty
   def act() {
     loop {
@@ -33,7 +33,11 @@ class AsyncDataFilter extends DataNode with Actor {
     }
   }
   def receive = {
-    case m => this ! m
+    case m =>
+      start
+      this ! m
   }
-  start
+
+  // Add all listeners, passed to constructor
+  add(listeners: _*)
 }

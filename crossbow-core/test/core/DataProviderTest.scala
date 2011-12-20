@@ -34,9 +34,75 @@ class DataProviderTest extends FunSuite {
         order = Counter.n
     }
   }
-  case class DummyData(value: Int) extends Data { def time = DateTime.now }
+  case class DummyData(value: Int) extends Data { def marketTime = DateTime.now }
 
-  test("Dispatching data") {
+  test("add one listener") {
+    val listener1 = new DummyListener()
+    val provider = new DataProvider { }
+    provider.add(listener1)
+    expect(List(listener1)) { provider.listeners }
+  }
+
+  test("add one listener with dependency") {
+    val listener1 = new DummyListener()
+    val listener2 = new DummyListener(listener1)
+    val provider = new DataProvider { }
+    provider.add(listener2)
+    expect(List(listener1, listener2)) { provider.listeners }
+  }
+
+  test("add multiple listeners") {
+    val listener1 = new DummyListener()
+    val listener2 = new DummyListener(listener1)
+    val listener3 = new DummyListener(listener2, listener1)
+    val provider = new DataProvider { }
+    provider.add(listener1, listener2, listener3)
+    expect(Set(listener1, listener2, listener3)) { provider.listeners.toSet }
+  }
+
+  test("add with no arguments") {
+    val provider = new DataProvider { }
+    provider.add()
+    expect(Nil) { provider.listeners }
+  }
+
+  test("remove one listener") {
+    val listener1 = new DummyListener()
+    val provider = new DataProvider { }
+    provider.add(listener1)
+    provider.remove(listener1)
+    expect(Nil) { provider.listeners }
+  }
+
+  test("remove one listener with dependency") {
+    val listener1 = new DummyListener()
+    val listener2 = new DummyListener(listener1)
+    val provider = new DataProvider { }
+    provider.add(listener2)
+    provider.remove(listener1)
+    expect(List(listener1, listener2)) { provider.listeners }
+    provider.remove(listener2)
+    expect(Nil) { provider.listeners }
+  }
+
+  test("remove multiple listeners") {
+    val listener1 = new DummyListener()
+    val listener2 = new DummyListener(listener1)
+    val listener3 = new DummyListener(listener2, listener1)
+    val listener4 = new DummyListener()
+    val provider = new DataProvider { }
+    provider.add(listener1, listener2, listener3, listener4)
+    provider.remove(listener2, listener3, listener4)
+    expect(List(listener1)) { provider.listeners }
+  }
+
+  test("remove with no arguments") {
+    val provider = new DataProvider { }
+    provider.remove()
+    expect(Nil) { provider.listeners }
+  }
+
+  test("dispatch data") {
     val l1 = new DummyListener()
     val l2 = new DummyListener(l1)
     val l3 = new DummyListener(l2, l1)
@@ -112,23 +178,5 @@ class DataProviderTest extends FunSuite {
     l1.reset()
     l2.reset()
     l3.reset()
-  }
-
-  test("Try to remove items with and without dependants") {
-    val l0 = new DummyListener()
-    val l1 = new DummyListener()
-    val l2 = new DummyListener(l1)
-    val l3 = new DummyListener(l2)
-    val dp = new DataProvider { }
-    dp.add(l1)
-    dp.add(l2)
-    dp.add(l3)
-
-    dp.remove(l0)
-    intercept[Exception] { dp.remove(l1) }
-    intercept[Exception] { dp.remove(l2) }
-    dp.remove(l3)
-    dp.remove(l2)
-    dp.remove(l1)
   }
 }

@@ -25,7 +25,7 @@ class MessageLoggerTest extends FunSuite {
   import LogLevel._
 
   val mockMessage = new Message { override def toString = "mockMessage" }
-  val mockData = new Data { override def toString = "mockData"; def time = DateTime.now }
+  val mockData = new Data { override def toString = "mockData"; def marketTime = DateTime.now }
   val mockErrorMessage = new ErrorMessage {
     def exception = Exception("")
     override def toString = "mockErrorMessage"

@@ -20,11 +20,37 @@ package lt.norma.crossbow.core
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
-class AnyncDataFilterTest extends FunSuite {
-  test("Asynchronous data filter") {
+class AsyncDataFilterTest extends FunSuite {
+  var n = 0
+  class DummyListener extends Listener {
+    def dependencies = Empty
+    def receive = Empty
+    override val toString = { n += 1; "listener"+n }
+  }
+
+  test("add one listener by constructor") {
+    val listener = new DummyListener
+    val filter = new AsyncDataFilter(listener)
+    expect(List(listener)) { filter.listeners }
+  }
+
+  test("add multiple listeners by constructor") {
+    val listener1 = new DummyListener
+    val listener2 = new DummyListener
+    val listener3 = new DummyListener
+    val filter = new AsyncDataFilter(listener1, listener2, listener3)
+    expect(Set(listener1, listener2, listener3)) { filter.listeners.toSet }
+  }
+
+  test("add no listeners by constructor") {
+    val filter = new AsyncDataFilter()
+    expect(Nil) { filter.listeners }
+  }
+
+  test("send data asynchronously") {
+    case class D(v: Int) extends Data { def marketTime = DateTime.now }
     var counter = 1
-    case class D(v: Int) extends Data { def time = DateTime.now }
-    class LFast extends Listener {
+    val fast = new Listener {
       def dependencies = Empty
       var lastData: Option[Message] = None
       var order = 0
@@ -35,39 +61,37 @@ class AnyncDataFilterTest extends FunSuite {
           counter += 1
       }
     }
-    class LSlow extends Listener {
+    val slow = new Listener {
       def dependencies = Empty
       var lastData: Option[Message] = None
       var order = 0
       def receive = {
         case d =>
-          Thread.sleep(200);
+          Thread.sleep(100);
           lastData = Some(d)
           order = counter
           counter += 1
       }
     }
+    val async = new AsyncDataFilter(slow)
 
-    val fast = new LFast
-    val slow = new LSlow
-    val async = new AsyncDataFilter
-    async.add(slow)
-
+    // Send message in normal order - slow listener receives data first
     val d1 = D(1)
     slow.send(d1)
     fast.send(d1)
-    expect(d1) { slow.lastData.get }
+    expect(Some(d1)) { slow.lastData }
     expect(1) { slow.order }
-    expect(d1) { fast.lastData.get }
+    expect(Some(d1)) { fast.lastData }
     expect(2) { fast.order }
 
+    // Send message asynchronously - slow listener receives data last
     val d2 = D(2)
     async.send(d2)
     fast.send(d2)
-    Thread.sleep(500)
-    expect(d2) { slow.lastData.get }
+    Thread.sleep(200)
+    expect(Some(d2)) { slow.lastData }
     expect(4) { slow.order }
-    expect(d2) { fast.lastData.get }
+    expect(Some(d2)) { fast.lastData }
     expect(3) { fast.order }
   }
 }

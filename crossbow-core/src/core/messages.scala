@@ -29,7 +29,7 @@ trait Message {
 trait Data extends Message {
   /** Time of market event. Not to be confused with `timeStamp` field of `Message` trait, because in
     * case of back-tests, message creation times will differ from times of simulated market data. */
-  def time: DateTime
+  def marketTime: DateTime
 }
 
 /** Represents error message. Should be used to inform listeners about any abnormal conditions which
