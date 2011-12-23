@@ -12,10 +12,10 @@ scalaSource in Compile <<= baseDirectory(_ / "src")
 
 scalaSource in Test <<= baseDirectory(_ / "test")
 
-libraryDependencies += "org.scalatest" % "scalatest_2.9.1" % "1.6.1"
-
 libraryDependencies += "joda-time" % "joda-time" % "2.0"
 
-libraryDependencies += "org.joda" % "joda-convert" % "1.1"
+libraryDependencies += "org.joda" % "joda-convert" % "1.2"
+
+libraryDependencies += "org.scalatest" %% "scalatest" % "1.6.1" % "test"
 
 crossPaths := false
