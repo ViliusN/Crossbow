@@ -31,7 +31,7 @@ case class OptionsLookupRequest(underlying: Instrument) extends Request
 /** Futures look-up request by the specified underlying instrument. */
 case class FuturesLookupRequest(underlying: Instrument) extends Request
 /** Response to instrument look-up requests. */
-case class LookupResult(request: Request, instruments: Set[Instrument]) extends Response
+case class LookupResult(request: Request, instruments: List[Instrument]) extends Response
 
 /** Market data request. */
 case class MarketDataRequest(instrument: Instrument) extends Request
