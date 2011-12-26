@@ -18,21 +18,18 @@
 package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
+import org.joda.time.{ Duration }
 
-/** Requests options chain at the opening of trading session. */
-class OptionsChain(underlying: Instrument, dataProvider: DataNode)
-    extends Indicator[List[OptionInstrument]] {
-  def name = "Options chain for "+underlying
-  def dependencies = Empty
+/** Calculates time to expiration of the specified derivative instrument. */
+class TimeToExpiration(val derivative: InstrumentWrapper) extends Indicator[Duration] {
+  def this(derivativeInstrument: Derivative) = this(new InstrumentWrapper(derivativeInstrument))
+  def name = "TimeToExpiration"
+  def dependencies = Set(derivative)
   def calculate = {
-    case SessionOpen(time) =>
-      dataProvider.send(OptionsLookupRequest(underlying))
-      optionalValue
-    case LookupResult(OptionsLookupRequest(`underlying`), chain) =>
-      chain.map(_.asInstanceOf[OptionInstrument])
+    case _ if(!checkDerivative) =>
+      None
+    case data: Data if(checkDerivative) =>
+      derivative.value.asInstanceOf[Derivative].timeToExpiration(data.marketTime.toDateMidnight)
   }
-  // Check if options look-up requests are supported by the specified provider
-  if(!dataProvider.supports(OptionsLookupRequest(underlying))) {
-    throw Exception("Data provider doesn't support options look-up requests")
-  }
+  private def checkDerivative = derivative.isSet && derivative.value.isInstanceOf[Derivative]
 }
