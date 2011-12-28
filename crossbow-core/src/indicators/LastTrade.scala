@@ -21,12 +21,11 @@ import lt.norma.crossbow.core._
 import org.joda.time.DateTime
 
 /** Records last trade received for the specified instrument. */
-class LastTrade(optionalInstrument: Option[Instrument]) extends Indicator[Trade] {
-  def this() = this(None)
-  def this(_instrument: Instrument) = this(Some(_instrument))
+class LastTrade(val instrument: InstrumentWrapper = new InstrumentWrapper())
+    extends Indicator[Trade] {
+  def this(_instrument: Instrument) = this(new InstrumentWrapper(_instrument))
 
   def name = "Last Trade"
-  val instrument = new InstrumentWrapper(optionalInstrument)
   def dependencies = Set(instrument)
 
   def calculate = {

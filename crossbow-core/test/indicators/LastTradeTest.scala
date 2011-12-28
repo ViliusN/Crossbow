@@ -75,16 +75,16 @@ class LastTradeTest extends FunSuite {
   }
   test("constructors") {
     val s = new Stock("AA", Nasdaq, "USD")
-    expect(s) {
-      val i = new LastTrade(Some(s))
-      i.instrument.value
+    expect(Some(s)) {
+      val i = new LastTrade(new InstrumentWrapper(s))
+      i.instrument()
     }
-    expect(s) {
+    expect(Some(s)) {
       val i = new LastTrade(s)
-      i.instrument.value
+      i.instrument()
     }
     expect(None) {
-      val i = new LastTrade(None)
+      val i = new LastTrade(new InstrumentWrapper)
       i.instrument()
     }
     expect(None) {
