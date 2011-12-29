@@ -19,21 +19,12 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 
-/** Calculates change in indicator's value since the specified period ago. Period of 1 means that
-  * the change is calculated between current target's value and the most recent historical value.
-  *
-  * `period` cannot be less than 1. */
-class Change(period: Int, target: Indicator[Double] with History) extends Indicator[Double] {
-  def name = "Change("+period+"; "+target.name+")"
-  private val historicalValue = new HistoryAt(period - 1, target)
-  def dependencies = Set(target, historicalValue)
-
+/** Stores historical value of the specified target indicator, at the specified index. */
+class HistoryAt[Value : Manifest](index: Int, target: Indicator[Value] with History)
+    extends Indicator[Value] {
+  def name = "HistoryAt("+index+"; "+target.name+")"
+  def dependencies = Set(target)
   def calculate = {
-    case _ => (target(), historicalValue()) match {
-      case (Some(v), Some(hv)) => v - hv
-      case _ => None
-    }
+    case _ => target.history.valueAt(index)
   }
-
-  if(period < 1) throw Exception("Period of "+name+" indicator cannot be less than 1")
 }

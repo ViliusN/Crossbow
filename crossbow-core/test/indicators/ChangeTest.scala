@@ -27,83 +27,95 @@ class ChangeTest extends FunSuite {
     def calculate = Empty
   }
 
-  test("Change test") {
-    val i1 = new I("A") with History
-    val i = new Change(3, i1)
+  test("name") {
+    val target = new I("T") with History
+    val change = new Change(3, target)
+    expect("Change(3; T)") { change.name }
+  }
 
-    expect("Change(3; A)") { i.name }
-    expect(Set(i1)) { i.dependencies }
-    expect(None) { i() }
+  test("dependencies") {
+    val target = new I("T") with History
+    val change = new Change(3, target)
+    expect(2) { change.dependencies.size }
+    assert { change.dependencies.contains(target) }
+  }
 
-    i1.set(1)
-    i.send(EmptyMessage)
-    expect(None) { i() }
+  test("calculation") {
+    val target = new I("A") with History
+    val change = new Change(3, target)
+    val list = new IndicatorList(change)
 
-    i1.set(1)
-    i1.history.update()
-    i1.set(2)
-    i1.history.update()
-    i.send(EmptyMessage)
-    expect(None) { i() }
+    expect(None) { change() }
 
-    i1.set(3)
-    i1.history.update()
-    i.send(EmptyMessage)
-    expect(Some(2)) { i() }
+    target.set(1)
+    list.send(EmptyMessage)
+    expect(None) { change() }
 
-    i1.set(4)
-    i.send(EmptyMessage)
-    expect(Some(3)) { i() }
+    target.history.update()
+    target.set(2)
+    target.history.update()
+    list.send(EmptyMessage)
+    expect(None) { change() }
 
-    i1.history.update()
-    i.send(EmptyMessage)
-    expect(Some(2)) { i() }
+    target.set(3)
+    target.history.update()
+    list.send(EmptyMessage)
+    expect(Some(2)) { change() }
 
-    i1.unset()
-    i.send(EmptyMessage)
-    expect(None) { i() }
+    target.set(4)
+    list.send(EmptyMessage)
+    expect(Some(3)) { change() }
 
-    i1.history.update()
-    i1.set(8)
-    i.send(EmptyMessage)
-    expect(Some(5)) { i() }
-    i1.history.update()
-    i.send(EmptyMessage)
-    expect(Some(4)) { i() }
-    i1.history.update()
-    i.send(EmptyMessage)
-    expect(None) { i() }
+    target.history.update()
+    list.send(EmptyMessage)
+    expect(Some(2)) { change() }
+
+    target.unset()
+    list.send(EmptyMessage)
+    expect(None) { change() }
+
+    target.history.update()
+    target.set(8)
+    list.send(EmptyMessage)
+    expect(Some(5)) { change() }
+    target.history.update()
+    list.send(EmptyMessage)
+    expect(Some(4)) { change() }
+    target.history.update()
+    list.send(EmptyMessage)
+    expect(None) { change() }
   }
 
   test("Change test - invalid period") {
-    intercept[IllegalArgumentException] { new Change(0, new I("A") with History) }
-    intercept[IllegalArgumentException] { new Change(-5, new I("A") with History) }
+    intercept[Exception] { new Change(0, new I("A") with History) }
+    intercept[Exception] { new Change(-5, new I("A") with History) }
   }
 
   test("Change test - last bar") {
-    val i1 = new I("A") with History
-    val i = new Change(1, i1)
+    val target = new I("A") with History
+    val change = new Change(1, target)
+    val list = new IndicatorList(change)
 
-    expect(None) { i() }
+    expect(None) { change() }
 
-    i1.set(1)
-    i.send(EmptyMessage)
-    expect(None) { i() }
+    target.set(1)
+    list.send(EmptyMessage)
+    expect(None) { change() }
 
-    i1.history.update()
-    i.send(EmptyMessage)
-    expect(Some(0)) { i() }
+    target.history.update()
+    list.send(EmptyMessage)
+    expect(Some(0)) { change() }
 
-    i1.set(3)
-    i.send(EmptyMessage)
-    expect(Some(2)) { i() }
+    target.set(3)
+    list.send(EmptyMessage)
+    expect(Some(2)) { change() }
 
-    i1.history.update()
-    i.send(EmptyMessage)
-    expect(Some(0)) { i() }
+    target.history.update()
+    list.send(EmptyMessage)
+    expect(Some(0)) { change() }
 
-    i1.set(6)
-    i.send(EmptyMessage)
-    expect(Some(3)) { i() }
+    target.set(6)
+    list.send(EmptyMessage)
+    expect(Some(3)) { change() }
   }
 }

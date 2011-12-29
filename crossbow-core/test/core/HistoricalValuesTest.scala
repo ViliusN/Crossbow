@@ -71,6 +71,51 @@ class HistoricalValuesTest extends FunSuite {
     expect(false) { hw.isEmpty }
   }
 
+  test("valueAt") {
+    var value: Option[Int] = None
+    val hw = new HistoricalValues({ () => value }, { v: Option[Int] => v.toString })
+    value = Some(1)
+    hw.update
+    value = Some(2)
+    hw.update
+    value = Some(3)
+    hw.update
+    expect(Some(3)) { hw.valueAt(0) }
+    expect(Some(2)) { hw.valueAt(1) }
+    expect(Some(1)) { hw.valueAt(2) }
+  }
+
+  test("valueAt - index out of bounds") {
+    var value: Option[Int] = None
+    val hw = new HistoricalValues({ () => value }, { v: Option[Int] => v.toString })
+    value = Some(1)
+    hw.update
+    value = Some(2)
+    hw.update
+    value = Some(3)
+    hw.update
+    expect(None) { hw.valueAt(-100) }
+    expect(None) { hw.valueAt(-2) }
+    expect(None) { hw.valueAt(-1) }
+    expect(None) { hw.valueAt(3) }
+    expect(None) { hw.valueAt(4) }
+    expect(None) { hw.valueAt(100) }
+  }
+
+  test("valueAt - empty history") {
+    var value: Option[Int] = None
+    val hw = new HistoricalValues({ () => value }, { v: Option[Int] => v.toString })
+    expect(None) { hw.valueAt(-100) }
+    expect(None) { hw.valueAt(-2) }
+    expect(None) { hw.valueAt(-1) }
+    expect(None) { hw.valueAt(0) }
+    expect(None) { hw.valueAt(1) }
+    expect(None) { hw.valueAt(2) }
+    expect(None) { hw.valueAt(3) }
+    expect(None) { hw.valueAt(4) }
+    expect(None) { hw.valueAt(100) }
+  }
+
   test("last") {
     var value: Option[Int] = None
     val hw = new HistoricalValues({ () => value }, { v: Option[Int] => v.toString })
