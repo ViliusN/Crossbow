@@ -35,7 +35,10 @@ abstract class Indicator[Value : Manifest] extends BasicListener with Dependant[
 
   implicit def valueToOption(v: Value): Option[Value] = Some(v)
   implicit def emptyToCalculator(empty: Empty): PartialFunction[Message, Option[Value]] = {
-    case _ => optionalValue
+    new PartialFunction[Message, Option[Value]] {
+      def isDefinedAt(x: Message) = false
+      def apply(v1: Message) = None
+    }
   }
 
   private var _value: Option[Value] = None
