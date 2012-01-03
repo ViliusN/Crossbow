@@ -14,31 +14,20 @@
  * You should have received a copy of the GNU General Public License along with Crossbow.  If not,
  * see <http://www.gnu.org/licenses/>.
  */
-/*
+
 package lt.norma.crossbow.core
 
-import org.joda.time.DateTime
-import org.joda.time.DateTimeZone
+import org.joda.time.LocalTime
 import org.scalatest.FunSuite
 
-class TimeBarSplitterTest extends FunSuite {
-  val zone = DateTimeZone.forID("America/New_York")
-  test("creation") {
-    val tbs = new TimeBarSplitter(60000, zone)
-    expect(new DateTime(1900, 1, 1, 0, 0, 0, 0, zone) getMillis) { tbs.zeroMoment }
-    expect(true) { tbs.firstBar }
-    expect(0) { tbs.previousBarTime }
+class SessionTest extends FunSuite {
+  test("a") {
+    println(new LocalTime(0, 0, 0))
+    println(LocalTime.MIDNIGHT)
+    println(new LocalTime(1, 2, 3).isBefore(new LocalTime(0, 0, 0)))
+    println(new LocalTime(1, 2, 3).isAfter(new LocalTime(0, 0, 0)))
+    println(new LocalTime(1, 2, 3).isBefore(LocalTime.MIDNIGHT))
+    println(new LocalTime(1, 2, 3).isAfter(LocalTime.MIDNIGHT))
+    println(new LocalTime(12,0).getChronology().hourOfDay().getMaximumValue())
   }
-  test("first bar") {
-    val s = Stock("MSFT", Nasdaq, "USD")
-    var lastMessage: Option[Message] = None
-    val l = Listener {
-      case m => lastMessage = Some(m)
-    }
-    val tbs = new TimeBarSplitter(60 * 60 * 1000, zone)
-    tbs.add(l)
-    tbs.send(Quote(s, 30.05, 100000, 30.02, 500, new DateTime(2011, 3, 4, 7, 9, 8, 155, zone)))
-    l
-  }
-}*/
-// TODO
+}

@@ -17,11 +17,10 @@
 
 package lt.norma.crossbow.core
 
-/** Filters out any data between `SessionClose` and `SessionOpen` data messages. */
+/** Filters out any data between `SessionClose` and `SessionOpen` messages. */
 class SessionFilter extends DataNode {
-  var isOpen = false
-
   def dependencies = Empty
+  var isOpen = false
 
   def receive = {
     case open: SessionOpen =>
@@ -34,3 +33,5 @@ class SessionFilter extends DataNode {
       dispatch(data)
   }
 }
+
+// TODO should use session openning and closing times, instead of relying on session events

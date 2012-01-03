@@ -15,36 +15,44 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+/*package lt.norma.crossbow.core
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
 
-/** Receives market quote and trade data messages and uses them to generate `BarOpen` and `BarClose`
-  * events. All received messages are forwarded to listeners.
-  * @param barSize   size of a bar in milliseconds
-  * @param timeZone  time zone used for generated bar events */
-class TimeBarSplitter(barSize: Long, timeZone: DateTimeZone) extends DataNode {
+class TimeBarSplitter(val barSize: Duration, var sessionOpenTime: Option[DateTime] = None)
+    extends DataNode {
   def dependencies = Empty
-  val zeroMoment: Long = new DateTime(1900, 1, 1, 0, 0, 0, 0, timeZone) getMillis
+  var previousBarTime = new DateTime(0)
   var firstBar = true
-  var previousBarTime = 0L
 
   def receive = {
-    case q @ Quote(_, _, _, _, _, time) =>
-      checkBar(time)
-      dispatch(q)
-    case t @ Trade(_, _, _, time) =>
-      checkBar(time)
-      dispatch(t)
+    case so @ SessionOpen(time) =>
+      sessionOpenTime = Some(time)
+    case data: Data if(sessionOpenTime.isDefined) =>
+      val periodCount = (data.marketTime.getMillis - sessionOpenTime.getMillis) / barSize.getMillis
+      val barTime = new DateTime()
+      zeroMoment + periodCount * barSize.getMillis
+      if(firstBar) {
+        //previousBarTime =
+      }
+  }
+
+  /*
+
+  def receive = {
+    case data: Data =>
+      // On data message, check for bar open/close events and forward the data message
+      checkBar(data.marketTime)
+      dispatch(data)
     case m =>
+      // Forward all other messages
       dispatch(m)
   }
 
   def checkBar(time: DateTime) {
-    val nper: Long = (time.getMillis - zeroMoment) / barSize
-    val barTime = zeroMoment + nper * barSize
+    val barTime = zeroMoment + periodCount * barSize.getMillis
     if(firstBar) {
       previousBarTime = barTime
       firstBar = false
@@ -54,7 +62,6 @@ class TimeBarSplitter(barSize: Long, timeZone: DateTimeZone) extends DataNode {
       dispatch(BarOpen(new DateTime(barTime, timeZone)))
       previousBarTime = barTime;
     }
-  }
-}
-// TODO test
-// TODO kaip uzdaryti paskutini bara?
+  }*/
+}*/
+// TODO

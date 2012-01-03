@@ -38,6 +38,6 @@ class AsyncDataFilter(listeners: Listener*) extends DataNode with Actor {
       this ! m
   }
 
-  // Add all listeners, passed to constructor
+  // Add all listeners, passed to the constructor
   add(listeners: _*)
 }

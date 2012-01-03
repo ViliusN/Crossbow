@@ -23,6 +23,50 @@ class ListenerTest extends FunSuite {
   case class DummyMessage1(value: Int) extends Message
   case class DummyMessage2(value: Int) extends Message
 
+  test("supports") {
+    case object DemoMessage1 extends Message
+    case object DemoMessage2 extends Message
+    case object DemoMessage3 extends Message
+    val listener = new BasicListener {
+      def receive = {
+        case DemoMessage1 =>
+        case DemoMessage2 =>
+      }
+    }
+    assert { listener.supports(DemoMessage1) }
+    assert { listener.supports(DemoMessage2) }
+    assert { !listener.supports(DemoMessage3) }
+    assert { !listener.supports(new Message { }) }
+  }
+
+  test("supports - should support any message") {
+    case object DemoMessage1 extends Message
+    case object DemoMessage2 extends Message
+    val listener = new BasicListener {
+      def receive = { case _ => }
+    }
+    assert { listener.supports(DemoMessage1) }
+    assert { listener.supports(DemoMessage2) }
+    assert { listener.supports(new Message { }) }
+  }
+
+  test("supports - empty partial function as receiver") {
+    val listener = new BasicListener {
+      def receive = new PartialFunction[Message, Unit] {
+        def isDefinedAt(x: Message) = false
+        def apply(v1: Message) { }
+      }
+    }
+    assert { !listener.supports(new Message { }) }
+  }
+
+  test("supports - implicit conversion of Empty receiver") {
+    val listener = new BasicListener {
+      def receive = Empty
+    }
+    assert { !listener.supports(new Message { }) }
+  }
+
   test("creation of listeners") {
     val bl = new BasicListener { def dependencies = Empty; def receive = Empty }
     assert ( !(bl.isInstanceOf[Dependant[_]]), "BasicListener should not extend Dependant" )
