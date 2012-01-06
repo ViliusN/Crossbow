@@ -44,17 +44,17 @@ object Indicator {
   case class ValueNotSet() extends java.lang.Exception("Indicator's value has not been set")
 }
 
+trait FunctionalIndicator[Value] extends Indicator[Value] {
+  def calculate: Option[Value]
+  def optionalValue: Option[Value] = calculate
+}
+
 trait MutableIndicator[Value] extends Indicator[Value] {
   private var _value: Option[Value] = None
   def optionalValue: Option[Value] = _value
   def set(newValue: Option[Value]) { _value = newValue }
   def set(newValue: Value) { _value = Some(newValue) }
   def unset() { _value = None }
-}
-
-trait FunctionalIndicator[Value] extends Indicator[Value] {
-  def calculate: Option[Value]
-  def optionalValue: Option[Value] = calculate
 }
 
 trait ListenerIndicator[Value] extends MutableIndicator[Value] with BasicListener
