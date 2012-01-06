@@ -20,41 +20,56 @@ package lt.norma.crossbow.core
 /** Base trait for any indicator. Most custom indicators extend `MutableIndicator`,
   * `FunctionalIndicator`, or `ListenerIndicator`, instead of directly extending `Indicator`. */
 trait Indicator[Value] extends Dependant[Indicator[_]] {
+  /** Name of the indicator. */
   def name: String;
+
+  /** Optional value of the indicator. */
   def optionalValue: Option[Value]
+
+  /** Value of the indicator. If the `optionalValue` is `None`, this method returns result of
+    * `default` value method (which throws `ValueNotSet` exception, unless overridden). */
   final def value: Value = optionalValue.getOrElse(default)
+
+  /** Default value of the indicator. This method throws `ValueNotSet` exception, unless
+    * overridden. */
   def default: Value = { throw Indicator.ValueNotSet() }
+
+  /** Shorter way to access indicator's `optionalValue`. */
   final def apply() = optionalValue
+
+  /** Checks whether indicator's `optionalValue` is not `None` */
   final def isSet = optionalValue.isDefined
-  final def isEmpty = !isSet
+
+  /** Converts specified value to string. Override this method (together with `valueNotSetString`)
+    * to use custom formatting of indicator's values. */
   def valueToString(valueToConvert: Value): String = valueToConvert.toString
+
+  /** Converts specified optional value to string. */
   final def valueToString(valueToConvert: Option[Value]): String = {
     valueToConvert.map(valueToString).getOrElse(valueNotSetString)
   }
+
+  /** Result of this method is returned by `valueToString` in case of `None` value. */
   def valueNotSetString = "N/A"
-  final def valueToString(): String = valueToString(value)
+
+  /** Converts current indicator's value to string. */
+  final def valueToString(): String = valueToString(optionalValue)
+
+  /** Converts indicator to string. */
+  override def toString = name+": "+valueToString
+
+  /** Stores historical values of the indicator. */
+  final lazy val history = if(hasHistory) new HistoricalValues(optionalValue _, valueToString _)
+    else throw Exception("Indicator "+name+" does not support history")
+
+  /** Checks whether this indicator extends `History` trait. */
+  final def hasHistory = this.isInstanceOf[History]
+
+  /** Number of historic values required by this indicator to work properly. */
   def requiredHistory: Int = 0
-  def hasHistory = this.isInstanceOf[History]
-  lazy val history = if(hasHistory) new HistoricalValues(optionalValue _, valueToString _)
-    else throw new Exception("Indicator "+name+" does not support history")
-  override def toString = name+": "+valueToString()
 }
 
 object Indicator {
+  /** Exception used when requested indicator's value is not defined. */
   case class ValueNotSet() extends java.lang.Exception("Indicator's value has not been set")
 }
-
-trait FunctionalIndicator[Value] extends Indicator[Value] {
-  def calculate: Option[Value]
-  def optionalValue: Option[Value] = calculate
-}
-
-trait MutableIndicator[Value] extends Indicator[Value] {
-  private var _value: Option[Value] = None
-  def optionalValue: Option[Value] = _value
-  def set(newValue: Option[Value]) { _value = newValue }
-  def set(newValue: Value) { _value = Some(newValue) }
-  def unset() { _value = None }
-}
-
-trait ListenerIndicator[Value] extends MutableIndicator[Value] with BasicListener

@@ -21,201 +21,165 @@ import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 class IndicatorTest extends FunSuite {
-  class Dummy extends Indicator[Int] {
-    def name = "D"
-    def dependencies = Empty
-    def calculate = Empty
-  }
-
-  class DummyWithDefault extends Indicator[Int] {
-    def name = "DD"
-    def dependencies = Empty
-    def calculate = Empty
-    override def default = 5
-  }
-
-  test("Accessing value") {
-    val i = new Dummy
-    intercept[Indicator.ValueNotSet] { i.value }
-    i.set(8)
-    expect(8) { i.value }
-  }
-
-  test("Accessing optional value") {
-    val i = new Dummy
-    expect(None) { i.optionalValue }
-    i.set(9)
-    expect(Some(9)) { i.optionalValue }
-  }
-
-  test("Default value") {
-    val i = new DummyWithDefault
-    expect(5) { i.value }
-    expect(Some(5)) { i.optionalValue }
-  }
-
-  test("Setting, unset value, method isSet") {
-    val i = new Dummy
-    intercept[Indicator.ValueNotSet] { i.value }
-    expect(None) { i.optionalValue }
-    assert { !i.isSet }
-    assert { i.isEmpty }
-
-    i.set(15)
-    expect(15) { i.value }
-    expect(Some(15)) { i.optionalValue }
-    assert { i.isSet }
-    assert { !i.isEmpty }
-
-    i.set(Some(16))
-    expect(16) { i.value }
-    expect(Some(16)) { i.optionalValue }
-    assert { i.isSet }
-    assert { !i.isEmpty }
-
-    i.unset()
-    intercept[Indicator.ValueNotSet] { i.value }
-    expect(None) { i.optionalValue }
-    assert { !i.isSet }
-    assert { i.isEmpty }
-
-    i.set(17)
-    expect(17) { i.value }
-    expect(Some(17)) { i.optionalValue }
-    assert { i.isSet }
-    assert { !i.isEmpty }
-  }
-
-  test("Name") {
-    class MyIndicator extends Indicator[Int] {
-      def dependencies = Empty
-      def calculate = Empty
-      def name = "Fancy Name"
+  test("value - defined") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = Some(5)
     }
-    expect("Fancy Name") { (new MyIndicator).name }
-    expect("No Fancy Names, Please") {
-      (new MyIndicator {
-        override def name = "No Fancy Names, Please"
-      }).name
-    }
+    expect(5) { indicator.value }
   }
 
-  test("Value to string conversion") {
-    class MyIndicator extends Indicator[Int] {
-      def name = "M"
-      def dependencies = Set.empty
-      def calculate = Empty
+  test("value - undefined") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
     }
-
-    val i = new MyIndicator
-    expect("123") { i.valueToString(Some(123)) }
-    expect("N/A") { i.valueToString(None) }
-    expect("N/A") { i.valueToString }
-    expect("N/A") { i.valueToString(i.optionalValue) }
-    i.set(8)
-    expect("8") { i.valueToString }
-    expect("8") { i.valueToString(i.optionalValue) }
-    expect("N/A") { i.valueToString(123.0) }
-    expect("N/A") { i.valueToString(new Object) }
+    intercept[Indicator.ValueNotSet] { indicator.value }
   }
 
-  test("Value to string conversion - string values") {
-    class MyIndicator extends Indicator[String] {
-      def name = "M"
-      def dependencies = Set.empty
-      def calculate = Empty
+  test("default value") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
     }
-    val i = new MyIndicator
-    expect("") { i.valueToString("") }
-    expect("123") { i.valueToString("123") }
-    expect("N/A") { i.valueToString(8) }
-    expect("N/A") { i.valueToString(new Object) }
+    intercept[Indicator.ValueNotSet] { indicator.default }
   }
 
-  test("Value to string conversion - custom format") {
-    class MyIndicatorCustomFormat extends Indicator[Int] {
-      def name = "M"
-      def dependencies = Empty
-      def calculate = Empty
-      override def valueToString(v: Int): String = "["+v+"]"
-      override def valueNotSetString = "no val."
+  test("apply") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = Some(5)
     }
-
-    val i = new MyIndicatorCustomFormat
-    expect("[555]") { i.valueToString(Some(555)) }
-    expect("no val.") { i.valueToString(None) }
-    expect("no val.") { i.valueToString() }
-    expect("no val.") { i.valueToString(i.optionalValue) }
-    i.set(123)
-    expect("[123]") { i.valueToString() }
-    expect("[123]") { i.valueToString(i.optionalValue) }
-    expect("no val.") { i.valueToString(123.0) }
-    expect("no val.") { i.valueToString(new Object) }
+    expect(Some(5)) { indicator() }
   }
 
-  test("Indicator to string") {
-    class MyIndicator extends Indicator[Int] {
-      def name = "M"
-      def dependencies = Set.empty
-      def calculate = Empty
+  test("isSet - defined") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = Some(5)
     }
-    val i = new MyIndicator
-    expect("M: N/A") { i.toString }
-    i.set(123)
-    expect("M: 123") { i.toString }
+    assert(indicator.isSet)
   }
 
-  test("Empty dependencies") {
-    class MyIndicator extends Indicator[Int] {
-      def name = "M"
-      def dependencies = Empty
-      def calculate = Empty
+  test("isSet - undefined") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
     }
-    val i = new MyIndicator
-    expect(Set()) { i.dependencies }
-    i.send(EmptyMessage)
+    assert(!indicator.isSet)
+  }
+
+  test("valueToString") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
+    }
+    expect("5") { indicator.valueToString(5) }
+  }
+
+  test("valueToString - defined optional value") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
+    }
+    expect("5") { indicator.valueToString(Some(5)) }
+  }
+
+  test("valueToString - undefined optional value") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
+    }
+    expect(indicator.valueNotSetString) { indicator.valueToString(None) }
+  }
+
+  test("valueNotSetString") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
+    }
+    expect("N/A") { indicator.valueNotSetString }
+  }
+
+  test("valueToString - defined current value") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = Some(88)
+    }
+    expect("88") { indicator.valueToString }
+  }
+
+  test("valueToString - undefined current value") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
+    }
+    expect(indicator.valueNotSetString) { indicator.valueToString }
+  }
+
+  test("toString") {
+    val indicator = new Indicator[Int] {
+      val name = "ABC"
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = Some(123)
+    }
+    expect("ABC: 123") { indicator.toString }
+  }
+
+  test("history - with history") {
+    val indicator = new Indicator[Int] with History {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
+    }
+    assert(indicator.history != null)
+  }
+
+  test("history - without history") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
+    }
+    intercept[Exception] { indicator.history }
+  }
+
+  test("hasHistory - with history") {
+    val indicator = new Indicator[Int] with History {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
+    }
+    assert(indicator.hasHistory)
+  }
+
+  test("hasHistory - without history") {
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
+    }
+    assert(!indicator.hasHistory)
   }
 
   test("requiredHistory") {
-    val i = new Indicator[Int] {
-      def name = ""
-      def dependencies = Empty
-      def calculate = Empty
+    val indicator = new Indicator[Int] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      val optionalValue = None
     }
-    expect(0) { i.requiredHistory }
-  }
-
-  test("hasHistory") {
-    class Dummy extends Indicator[Int] {
-      def name = "D"
-      def dependencies = Empty
-      def calculate = Empty
-    }
-    val ih = new Dummy with History
-    val i = new Dummy
-    assert { ih.hasHistory }
-    assert { i.hasHistory == false }
-  }
-
-  test("history") {
-    class Dummy extends Indicator[Int] {
-      def name = "D"
-      def dependencies = Empty
-      def calculate = Empty
-    }
-    val ih = new Dummy with History
-    val h = ih.history
-    expect(0) { h.size }
-    assert { h eq ih.history }
-  }
-
-  test("history - exception") {
-    class Dummy extends Indicator[Int] {
-      def name = "D"
-      def dependencies = Empty
-      def calculate = Empty
-    }
-    val i = new Dummy
-    intercept[Exception] { i.history }
+    expect(0) { indicator.requiredHistory }
   }
 }

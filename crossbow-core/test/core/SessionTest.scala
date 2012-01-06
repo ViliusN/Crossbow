@@ -21,13 +21,14 @@ import org.joda.time.LocalTime
 import org.scalatest.FunSuite
 
 class SessionTest extends FunSuite {
-  test("a") {
-    println(new LocalTime(0, 0, 0))
+  test("session") {
+    pending
+    /*println(new LocalTime(0, 0, 0))
     println(LocalTime.MIDNIGHT)
     println(new LocalTime(1, 2, 3).isBefore(new LocalTime(0, 0, 0)))
     println(new LocalTime(1, 2, 3).isAfter(new LocalTime(0, 0, 0)))
     println(new LocalTime(1, 2, 3).isBefore(LocalTime.MIDNIGHT))
     println(new LocalTime(1, 2, 3).isAfter(LocalTime.MIDNIGHT))
-    println(new LocalTime(12,0).getChronology().hourOfDay().getMaximumValue())
+    println(new LocalTime(12,0).getChronology().hourOfDay().getMaximumValue())*/
   }
 }

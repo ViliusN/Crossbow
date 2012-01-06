@@ -17,22 +17,17 @@
 
 package lt.norma.crossbow.core
 
-/** Extend this trait to create trading signals. */
-trait Signal extends Indicator[Direction] {
-  /** Returns true if signal's value is set to `Long`. */
-  def isLong = optionalValue exists { _ == Direction.Long }
+/** Indicator, whose value can be set and unset from the outside. */
+trait MutableIndicator[Value] extends Indicator[Value] {
+  private var _value: Option[Value] = None
+  final def optionalValue: Option[Value] = _value
 
-  /** Returns true if signal's value is set to `Short`. */
-  def isShort = optionalValue exists { _ == Direction.Short }
+  /** Sets current value of the indicator. */
+  final def set(newValue: Option[Value]) { _value = newValue }
 
-  /** Returns true if signal's value is not set. */
-  def isFlat = !isSet
+  /** Sets current value of the indicator. */
+  final def set(newValue: Value) { _value = Some(newValue) }
 
-  override def valueNotSetString = "Flat"
+  /** Unsets current value of the indicator. */
+  final def unset() { _value = None }
 }
-
-trait FunctionalSignal extends FunctionalIndicator[Direction]
-
-trait MutableSignal extends MutableIndicator[Direction]
-
-trait ListenerSignal extends ListenerIndicator[Direction]

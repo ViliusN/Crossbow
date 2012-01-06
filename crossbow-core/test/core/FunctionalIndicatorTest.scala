@@ -17,22 +17,25 @@
 
 package lt.norma.crossbow.core
 
-/** Extend this trait to create trading signals. */
-trait Signal extends Indicator[Direction] {
-  /** Returns true if signal's value is set to `Long`. */
-  def isLong = optionalValue exists { _ == Direction.Long }
+import org.joda.time.DateTime
+import org.scalatest.FunSuite
 
-  /** Returns true if signal's value is set to `Short`. */
-  def isShort = optionalValue exists { _ == Direction.Short }
+class FunctionalIndicatorTest extends FunSuite {
+  test("defined") {
+    val indicator = new FunctionalIndicator[String] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      def calculate = Some("ABC")
+    }
+    expect(Some("ABC")) { indicator() }
+  }
 
-  /** Returns true if signal's value is not set. */
-  def isFlat = !isSet
-
-  override def valueNotSetString = "Flat"
+  test("undefined") {
+    val indicator = new FunctionalIndicator[String] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      def calculate = None
+    }
+    expect(None) { indicator() }
+  }
 }
-
-trait FunctionalSignal extends FunctionalIndicator[Direction]
-
-trait MutableSignal extends MutableIndicator[Direction]
-
-trait ListenerSignal extends ListenerIndicator[Direction]
