@@ -21,43 +21,93 @@ import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 class SignalTest extends FunSuite {
-  test("SignalTest") { pending }
-  /*test("Signal") {
-    import Direction._
-
-    val s = new Signal { def name = "s1"; def dependencies = Empty; def receive = Empty }
-    expect(None) { s() }
-    assert { !s.isLong }
-    assert { !s.isShort }
-    assert { s.isFlat }
-
-    s.set(Long)
-    expect(Long) { s.value }
-    assert { s.isLong }
-    assert { !s.isShort }
-    assert { !s.isFlat }
-
-    s.set(Short)
-    expect(Short) { s.value }
-    assert { !s.isLong }
-    assert { s.isShort }
-    assert { !s.isFlat }
-
-    s.unset()
-    expect(None) { s() }
-    assert { !s.isLong }
-    assert { !s.isShort }
-    assert { s.isFlat }
+  test("isLong - long") {
+    val signal = new Signal {
+      def name = ""
+      def dependencies = Set[Indicator[_]]()
+      def optionalValue = Some(Direction.Long)
+    }
+    assert(signal.isLong)
   }
-  test("Conversion to string") {
-    val s1 = new Signal { def name = "S1"; def dependencies = Empty; def receive = Empty }
-    expect("Flat") { s1.valueToString }
-    expect("S1: Flat") { s1.toString }
-    s1.set(Direction.Long)
-    expect("Long") { s1.valueToString }
-    expect("S1: Long") { s1.toString }
-    s1.set(Direction.Short)
-    expect("Short") { s1.valueToString }
-    expect("S1: Short") { s1.toString }
-  }*/
+
+  test("isLong - short") {
+    val signal = new Signal {
+      def name = ""
+      def dependencies = Set[Indicator[_]]()
+      def optionalValue = Some(Direction.Short)
+    }
+    assert(!signal.isLong)
+  }
+
+  test("isLong - undefined") {
+    val signal = new Signal {
+      def name = ""
+      def dependencies = Set[Indicator[_]]()
+      def optionalValue = None
+    }
+    assert(!signal.isLong)
+  }
+
+  test("isShort - long") {
+    val signal = new Signal {
+      def name = ""
+      def dependencies = Set[Indicator[_]]()
+      def optionalValue = Some(Direction.Long)
+    }
+    assert(!signal.isShort)
+  }
+
+  test("isShort - short") {
+    val signal = new Signal {
+      def name = ""
+      def dependencies = Set[Indicator[_]]()
+      def optionalValue = Some(Direction.Short)
+    }
+    assert(signal.isShort)
+  }
+
+  test("isShort- undefined") {
+    val signal = new Signal {
+      def name = ""
+      def dependencies = Set[Indicator[_]]()
+      def optionalValue = None
+    }
+    assert(!signal.isShort)
+  }
+
+  test("isFlat - long") {
+    val signal = new Signal {
+      def name = ""
+      def dependencies = Set[Indicator[_]]()
+      def optionalValue = Some(Direction.Long)
+    }
+    assert(!signal.isFlat)
+  }
+
+  test("isFlat - short") {
+    val signal = new Signal {
+      def name = ""
+      def dependencies = Set[Indicator[_]]()
+      def optionalValue = Some(Direction.Short)
+    }
+    assert(!signal.isFlat)
+  }
+
+  test("isFlat- undefined") {
+    val signal = new Signal {
+      def name = ""
+      def dependencies = Set[Indicator[_]]()
+      def optionalValue = None
+    }
+    assert(signal.isFlat)
+  }
+
+  test("valueNotSetString") {
+    val signal = new Signal {
+      def name = ""
+      def dependencies = Set[Indicator[_]]()
+      def optionalValue = None
+    }
+    expect("Flat") { signal.valueNotSetString }
+  }
 }
