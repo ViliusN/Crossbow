@@ -35,21 +35,30 @@ class IndicatorList(indicators: Indicator[_]*) extends Listener {
     indicators.toList.distinct.filter { root.shallowDependencies contains }
   /** Contents of the list including dependencies in full depth. */
   lazy val deep: List[Indicator[_]] = root.deepDependencies
+
   /** Indicators of the deep list, which collect historical values. */
-  lazy val deepWithHistory: List[Indicator[_]] = deep.filter(_.hasHistory)
+  lazy val deepWithHistory: List[Indicator[_] with History] =
+    deep.collect { case ih: Indicator[_] with History => ih }
+
+  /** Indicators of the deep list, which listen to data messages. */
+  lazy val deepWithBasicListener: List[Indicator[_] with BasicListener] =
+    deep.collect { case il: Indicator[_] with BasicListener => il }
+
   /** Forwards all messages to the indicators in `deep` list. On `BarClose` message, indicators'
     * histories are updated. Historical values are collected '''after''' dispatching `BarClose`
     * messages, so that indicators could update their values, before historical value is
     * recorded. */
   def receive = {
     case bc: BarClose =>
-      deep.foreach(_.send(bc))
+      dispatchMessage(bc)
       deepWithHistory.foreach(_.history.update())
     case m =>
-      deep.foreach(_.send(m))
+      dispatchMessage(m)
   }
+
   /** Forwards the specified message to al indicators in `deep` list. */
-  private def updateIndicators(message: Message) { deep.foreach(_.send(message)) }
+  private def dispatchMessage(message: Message) { deepWithBasicListener.foreach(_.send(message)) }
+
   /** Finds largest required history of all indicators. */
   def maxRequiredHistory: Int = (0 :: deep.map(_.requiredHistory)).max
   /** Truncates history of all indicators to the amount specified by `leave` or the result of
@@ -59,5 +68,9 @@ class IndicatorList(indicators: Indicator[_]*) extends Listener {
   }
 
   // Send IndicatorCreated message to all indicators on creation of the list.
-  updateIndicators(IndicatorCreated)
+  dispatchMessage(IndicatorList.IndicatorCreated)
+}
+
+object IndicatorList {
+  case object IndicatorCreated extends Message
 }

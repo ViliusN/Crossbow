@@ -44,8 +44,10 @@ object CsvReport {
   object Values extends Report {
     def generate(writer: BufferedWriter, indicators: Indicator[_]*) {
       try {
-        writer.write(indicators map { i => i.name+delimiter+i.valueToString } mkString("\n"))
-      } finally { writer.close() }
+        writer.write(indicators.map(i => i.name+delimiter+i.valueToString).mkString("\n"))
+      } finally {
+        writer.close()
+      }
     }
   }
 
@@ -54,23 +56,20 @@ object CsvReport {
     * match an exception is thrown. */
   object History extends HistoryReport {
     def generate(writer: BufferedWriter, indicators: Indicator[_] with History*) {
-      val withHistory = indicators filter { _.hasHistory }
-      if(withHistory.size > 0) {
-        val firstSize = withHistory.head.history.size
-        if(withHistory exists { _.history.size != firstSize }) {
-          throw new Exception("History sizes of all indicators must be the same")
+      if(indicators.size > 0) {
+        val firstSize = indicators.head.history.size
+        if(indicators.exists(_.history.size != firstSize)) {
+          throw Exception("History sizes of all indicators must be the same")
         }
         try {
           // Write header line
-          withHistory map { _.name } mkString(delimiter) foreach { l => writer.write(l) }
+          writer.write(indicators.map(_.name).mkString(delimiter)+"\n")
           // Write data lines
-          val valueGrid =
-            withHistory map { i => i.history.values map { v => i.valueToString(v) } } transpose;
-          valueGrid foreach { row =>
-            writer.write("\n")
-            writer.write(row.mkString(delimiter))
-          }
-        } finally { writer.close() }
+          writer.write(indicators.map(_.history.valuesToStrings).transpose
+            .map(_.mkString(delimiter)).mkString("\n"))
+        } finally {
+          writer.close()
+        }
       }
     }
   }

@@ -17,113 +17,26 @@
 
 package lt.norma.crossbow.core
 
-/** Extend this class to create custom indicators.
-  *
-  * Examples: {{{
-  * // This indicator does not update it's value and has no dependencies, but can hold a value if
-  * // it is set from outside via `set`/`unset` methods. This is useful as a replacement for mutable
-  * // variables inside other indicators.
-  * class EmptyIndicator extends Indicator[Int] {
-  *   def name = "Holds mutable value"
-  *   def dependencies = Empty
-  *   def calculate = Empty
-  * }
-  * }}}*/
-abstract class Indicator[Value : Manifest] extends BasicListener with Dependant[Indicator[_]]
-    with Name {
-  import Indicator._
-
-  implicit def valueToOption(v: Value): Option[Value] = Some(v)
-  implicit def emptyToCalculator(empty: Empty): PartialFunction[Message, Option[Value]] = {
-    new PartialFunction[Message, Option[Value]] {
-      def isDefinedAt(x: Message) = false
-      def apply(v1: Message) = None
-    }
-  }
-
-  private var _value: Option[Value] = None
-  private var _manifest = manifest[Value]
-  private var _optionManifest = manifest[Option[Value]]
-
-  /** Attempts to obtain value of the indicator. If the value is not set, returns the result of
-    *  `default` method, which throws `ValueNotSet` unless overridden. */
-  def value: Value = _value getOrElse default
-
-  /** Returns optional value of the indicator. If the value is not set, returns optional result of
-    *  `default` method, unless it throws `ValueNotSet`, in which case returns `None`. */
-  def optionalValue: Option[Value] =
-    try { Some(value) } catch { case _: ValueNotSet => None }
-
-  /** Returns optional value of the indicator. If the value is not set, returns optional result of
-    *  `default` method, unless it throws `ValueNotSet`, in which case returns `None`. */
-  def apply() = optionalValue
-
-  /** Result of this method is returned by `value` and `optionalValue` methods if the value of this
-    * indicator is not set. Unless overridden, `default` method throws `ValueNotSet`. */
-  def default: Value = { throw ValueNotSet() }
-
-  /** Sets value of the indicator. */
-  def set(newValue: Option[Value]) { _value = newValue }
-
-  /** Sets value of the indicator. */
-  def set(newValue: Value) { set(Some(newValue)) }
-
-  /** Unsets value of the indicator. */
-  def unset() { _value = None }
-
-  /** Checks if indicator's value is set. */
-  def isSet = _value.isDefined
-
-  /** Checks if indicator's value is not set. */
-  def isEmpty = !isSet
-
-  /** Converts the specified value to string. Override this method if custom formatting is
-    * needed. */
-  def valueToString(valueToConvert: Value): String = {
-    valueToConvert.toString
-  }
-
-  /** Converts the specified value to string. Override this method if custom formatting is
-    * needed. */
+/** Base trait for any indicator. Most custom indicators extend `MutableIndicator`,
+  * `FunctionalIndicator`, or `ListenerIndicator`, instead of directly extending `Indicator`. */
+trait Indicator[Value] extends Dependant[Indicator[_]] {
+  def name: String;
+  def optionalValue: Option[Value]
+  final def value: Value = optionalValue.getOrElse(default)
+  def default: Value = { throw Indicator.ValueNotSet() }
+  final def apply() = optionalValue
+  final def isSet = optionalValue.isDefined
+  final def isEmpty = !isSet
+  def valueToString(valueToConvert: Value): String = valueToConvert.toString
   final def valueToString(valueToConvert: Option[Value]): String = {
-    valueToConvert map { v => valueToString(v) } getOrElse(valueNotSetString)
+    valueToConvert.map(valueToString).getOrElse(valueNotSetString)
   }
-
-  /** Converts the specified value to string if it's type matches the type of indicator's
-    * value. Otherwise returns the returns result of `notAvailableString`. */
-  final def valueToString[T : Manifest](valueToConvert: T): String = {
-    if(manifest[T].erasure == _manifest.erasure) {
-      valueToString(valueToConvert.asInstanceOf[Value])
-    } else if(manifest[T].erasure == _optionManifest.erasure) {
-      valueToString(valueToConvert.asInstanceOf[Option[Value]])
-    } else {
-      valueNotSetString
-    }
-  }
-
-  /** Converts current value to string. */
-  final def valueToString(): String = valueToString(_value)
-
   def valueNotSetString = "N/A"
-
-  final def receive = {
-    case message if(calculate.isDefinedAt(message)) => set(calculate(message))
-  }
-
-  /** Override this method to update indicator's value on data update. Use object `Empty` when there
-    * is no need to calculate value on data updates, for example when indicator's value is assigned
-    * externally via `set` method. */
-  protected def calculate: PartialFunction[Message, Option[Value]]
-
-  /** Number of historical values required by this indicator. Override the default value (0) to make
-    * sure that the required amount of history remains after truncating. */
+  final def valueToString(): String = valueToString(value)
   def requiredHistory: Int = 0
-  /** Checks whether this indicator collects historical values. */
   def hasHistory = this.isInstanceOf[History]
-  /** Holds historical values. */
   lazy val history = if(hasHistory) new HistoricalValues(optionalValue _, valueToString _)
     else throw new Exception("Indicator "+name+" does not support history")
-
   override def toString = name+": "+valueToString()
 }
 
@@ -131,8 +44,17 @@ object Indicator {
   case class ValueNotSet() extends java.lang.Exception("Indicator's value has not been set")
 }
 
-case object IndicatorCreated extends Message
-
-trait Name {
-  def name: String
+trait MutableIndicator[Value] extends Indicator[Value] {
+  private var _value: Option[Value] = None
+  def optionalValue: Option[Value] = _value
+  def set(newValue: Option[Value]) { _value = newValue }
+  def set(newValue: Value) { _value = Some(newValue) }
+  def unset() { _value = None }
 }
+
+trait FunctionalIndicator[Value] extends Indicator[Value] {
+  def calculate: Option[Value]
+  def optionalValue: Option[Value] = calculate
+}
+
+trait ListenerIndicator[Value] extends MutableIndicator[Value] with BasicListener

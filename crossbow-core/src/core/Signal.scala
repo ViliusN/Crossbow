@@ -30,3 +30,9 @@ trait Signal extends Indicator[Direction] {
 
   override def valueNotSetString = "Flat"
 }
+
+trait FunctionalSignal extends FunctionalIndicator[Direction]
+
+trait MutableSignal extends MutableIndicator[Direction]
+
+trait ListenerSignal extends ListenerIndicator[Direction]
