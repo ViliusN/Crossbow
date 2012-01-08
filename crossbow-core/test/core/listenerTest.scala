@@ -73,6 +73,7 @@ class ListenerTest extends FunSuite {
     val l = new Listener { def dependencies = Empty; def receive = Empty }
     assert ( l.isInstanceOf[Dependant[_]], "Listener should extend Dependant" )
   }
+
   test("receiving a message") {
     class DummyListener extends Listener {
       def dependencies = Empty
@@ -90,6 +91,20 @@ class ListenerTest extends FunSuite {
     l.send(EmptyMessage)
     expect(Some(m1)) { l.lastMessage }
   }
+
+  test("send - checking for result type") {
+    val listenerOk = new Listener {
+      def dependencies = Empty
+      def receive = { case _ => }
+    }
+    val listenerWrong = new Listener {
+      def dependencies = Empty
+      def receive = { case _ => 8 }
+    }
+    listenerOk.send(EmptyMessage)
+    intercept[Warning] { listenerWrong.send(EmptyMessage) }
+  }
+
   test("testing for supported messages") {
     class DummyListener extends Listener {
       def dependencies = Empty
@@ -100,6 +115,7 @@ class ListenerTest extends FunSuite {
     assert ( !(l supports DummyMessage2(5)), "DummyMessage2 should not be supported" )
     assert ( !(l supports EmptyMessage), "EmptyMessage should not be supported" )
   }
+
   test("empty receiver") {
     class DummyListener extends Listener {
       def dependencies = Empty
@@ -109,6 +125,7 @@ class ListenerTest extends FunSuite {
     l.send(DummyMessage1(0))
     l.send(EmptyMessage)
   }
+
   test("inline creation of listeners") {
     var lastMessage: Option[Message] = None
     val l = Listener { case m => lastMessage = Some(m) }

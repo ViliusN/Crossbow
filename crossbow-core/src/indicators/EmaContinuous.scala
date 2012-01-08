@@ -34,6 +34,7 @@ class EmaContinuous(period: Int, indicator: Indicator[Double]) extends ListenerI
     case BarClose(_) => (optionalValue, indicator()) match {
       case (Some(v), Some(t)) => set(e * t + (1.0 - e) * v)
       case (None, Some(t)) => set(t)
+      case _ =>
     }
   }
 }

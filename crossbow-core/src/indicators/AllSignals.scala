@@ -23,7 +23,8 @@ class AllSignals(signals: Signal*) extends FunctionalSignal {
   def name = "AllSignals("+(signals map { _.name } mkString("; "))+")"
   def dependencies = signals.toSet
   def calculate = {
-    if(signals.forall(_.isLong)) { Some(Direction.Long) }
+    if(signals.size == 0) { None }
+    else if(signals.forall(_.isLong)) { Some(Direction.Long) }
     else if(signals.forall(_.isShort)) { Some(Direction.Short) }
     else { None }
   }

@@ -30,7 +30,7 @@ class FirstValueTest extends FunSuite {
   test("dependency") {
     val target = new Variable[Int] { override def name = "T" }
     val indicator = new FirstValue(target)
-    expect(Set(target)) { indicator.dependencies }
+    expect(2) { indicator.dependencies.size }
   }
 
   test("value - Int") {

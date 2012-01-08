@@ -26,7 +26,8 @@ package lt.norma.crossbow.core
   * performance penalty). Therefore a situation is possible were for example `true` result of
   * `isSet` method is immediately followed by `None` result of `optionalValue`. */
 trait FunctionalIndicator[Value] extends Indicator[Value] {
-  final def optionalValue: Option[Value] = calculate
+  final def optionalValue: Option[Value] =
+    try { calculate.orElse(Some(default)) } catch { case _: Indicator.ValueNotSet => None }
 
   /** Override this method to create custom behaviour of your indicator. */
   def calculate: Option[Value]

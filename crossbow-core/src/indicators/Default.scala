@@ -21,7 +21,7 @@ import lt.norma.crossbow.core._
 
 /** Holds value of the specified indicator or the specified default value if the indicator is
   * empty. */
-class Default[Value : Manifest](indicator: Indicator[Value], defaultValue: Value)
+class Default[Value](indicator: Indicator[Value], defaultValue: Value)
     extends Alternative[Value](indicator, new Variable(defaultValue)) {
   override def name = indicator.name+" with default "+defaultValue
 }

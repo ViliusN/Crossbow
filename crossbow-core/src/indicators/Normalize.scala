@@ -27,7 +27,7 @@ class Normalize(target: Indicator[Double]) extends FunctionalIndicator[Double] {
   private val target0 = new FirstValue(target)
   def dependencies = Set(target, target0)
   def calculate = (target(), target0()) match {
-    case (Some(t), Some(t0)) => Some((t / t0 - 1) * 100)
+    case (Some(t), Some(t0)) => (t / t0 - 1) * 100
     case _ => None
   }
 }

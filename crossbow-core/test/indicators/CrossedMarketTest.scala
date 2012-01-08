@@ -23,42 +23,22 @@ import org.scalatest.FunSuite
 
 class CrossedMarketTest extends FunSuite {
   test("CrossedMarket test") {
-    pending
-    /*val s = new Stock("AA", Nasdaq, "USD")
+    val s = new Stock("AA", Nasdaq, "USD")
     val lq = new LastQuote(s)
     val ask = new Ask(lq)
     val bid = new Bid(lq)
     val i = new CrossedMarket(ask, bid)
+    val list = new IndicatorList(i)
     expect("Crossed Market") { i.name }
     expect(Set(ask, bid)) { i.dependencies }
     expect(None) { i() }
-
-    ask.set(5)
-    expect(None) { i() }
-    ask.unset()
-    bid.set(3)
-    expect(None) { i() }
-
-    ask.set(5)
-    bid.set(4.5)
-    expect(false) { i.value }
-
-    ask.set(4.49)
-    bid.set(4.5)
-    expect(true) { i.value }
-
-    ask.unset()
-    expect(None) { i() }
-
-    ask.set(8)
-    bid.set(8)
-    expect(false) { i.value }
-
-    bid.unset()
-    expect(None) { i() }
-
-    ask.set(0)
-    bid.set(0.000001)
-    expect(true) { i.value }*/
+    list.send(new Quote(s, 5, 0, 4.5, 0, new DateTime))
+    expect(Some(false)) { i() }
+    list.send(new Quote(s, 4.49, 0, 4.5, 0, new DateTime))
+    expect(Some(true)) { i() }
+    list.send(new Quote(s, 8, 0, 8, 0, new DateTime))
+    expect(Some(false)) { i() }
+    list.send(new Quote(s, 0, 0, 0.000001, 0, new DateTime))
+    expect(Some(true)) { i() }
   }
 }

@@ -24,17 +24,19 @@ package lt.norma.crossbow.core
   * belong to. */
 trait BasicListener {
   /** Implicitly converts object `Empty` to an empty receiver. */
-  implicit def emptyToReceiver(empty: Empty) = new PartialFunction[Message, Unit] {
+  implicit def emptyToReceiver(empty: Empty) = new PartialFunction[Message, Any] {
     def isDefinedAt(x: Message) = false
     def apply(v1: Message) { }
   }
+
   /** Send data to this listener. */
-  final def send(message: Message) { if(this supports message) receive(message) }
-  // TODO private def send(message: Message) {
-  //  if(this supports message) {
-  //    val result = receive(message) }
-  //    check type of result, it must be Unit. In perfect case do this on compile time
-  //  }
+  final def send(message: Message) = if(supports(message)) {
+    if(!receive(message).isInstanceOf[Unit]) {
+      throw Warning("Receivers should always return Unit")
+    }
+  }
+  //final def send(message: Message) { if(this supports message) receive(message) }
+
   /** Checks if the specified message is supported by this listener without actually sending the
     * message. */
   final def supports(message: Message): Boolean = receive.isDefinedAt(message)
@@ -42,7 +44,7 @@ trait BasicListener {
     * only when a message is received via `send` method and only if the receiver is defined for that
     * particular message. Therefore there is no need to provide the default `case _ =>` option in
     * receivers - unsupported messages will be ignored. */
-  protected def receive: PartialFunction[Message, Unit]
+  protected def receive: PartialFunction[Message, Any]
 }
 
 /** Extend this trait to create custom listeners. */
@@ -51,7 +53,7 @@ trait Listener extends BasicListener with Dependant[Listener]
 /** Contains factory method for inline creation of listeners. */
 object Listener {
   /** Enables inline creation of data listeners. */
-  def apply(action: PartialFunction[Message, Unit]) = new Listener {
+  def apply(action: PartialFunction[Message, Any]) = new Listener {
     def dependencies = Empty
     def receive = action
   }

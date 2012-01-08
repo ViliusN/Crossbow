@@ -28,6 +28,7 @@ class HighSoFar(indicator: Indicator[Double]) extends ListenerIndicator[Double] 
     case _ => (optionalValue, indicator()) match {
       case (None, _) => set(indicator())
       case (Some(v), Some(t)) if(t > v) => set(indicator())
+      case _ =>
     }
   }
 }
@@ -53,6 +54,7 @@ class LowSoFar(indicator: Indicator[Double]) extends ListenerIndicator[Double] {
     case _ => (optionalValue, indicator()) match {
       case (None, _) => set(indicator())
       case (Some(v), Some(t)) if(t < v) => set(indicator())
+      case _ =>
     }
   }
 }

@@ -21,7 +21,7 @@ import lt.norma.crossbow.core._
 
 /** Wraps the specified indicator and collects it's historical values. This is useful when there is
   * need to add history to an indicator at run-time. */
-class WithHistory[Value : Manifest](indicator: Indicator[Value]) extends FunctionalIndicator[Value]
+class WithHistory[Value](indicator: Indicator[Value]) extends FunctionalIndicator[Value]
     with History {
   def name = "WithHistory("+indicator.name+")"
   def dependencies = Set(indicator)

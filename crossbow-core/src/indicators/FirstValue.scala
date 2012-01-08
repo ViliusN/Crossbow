@@ -20,11 +20,15 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 
 /** Stores first known value of the target indicator. */
-class FirstValue[Value : Manifest](target: Indicator[Value]) extends FunctionalIndicator[Value] {
+class FirstValue[Value](target: Indicator[Value]) extends FunctionalIndicator[Value] {
   def name = "First value of "+target.name
-  def dependencies = Set(target)
-  def calculate = (optionalValue, target()) match {
-    case (None, Some(t)) => t
-    case _ => None
+  val firstValue = new Variable[Value]
+  def dependencies = Set(firstValue, target)
+  def calculate = {
+    (firstValue(), target()) match {
+      case (None, Some(t)) => firstValue.set(target())
+      case _ =>
+    }
+    firstValue()
   }
 }

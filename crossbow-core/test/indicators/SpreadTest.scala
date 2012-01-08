@@ -33,7 +33,7 @@ class SpreadTest extends FunSuite {
     val i = new Spread(ask, bid)
     val l = new IndicatorList(i)
     expect("Spread") { i.name }
-    expect(1) { i.dependencies.size }
+    expect(Set(ask, bid)) { i.dependencies }
 
     expect(None) { i() }
 
