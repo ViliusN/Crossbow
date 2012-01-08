@@ -22,16 +22,16 @@ import org.joda.time.DateTime
 
 /** Records last quote received for the specified instrument. */
 class LastQuote(val instrument: InstrumentWrapper = new InstrumentWrapper())
-    extends Indicator[Quote] {
+    extends ListenerIndicator[Quote] {
   def this(_instrument: Instrument) = this(new InstrumentWrapper(_instrument))
 
   def name = "Last Quote"
   def dependencies = Set(instrument)
 
-  def calculate = {
+  def receive = {
     // Unset last quote if the instrument is empty.
-    case _ if(instrument.isEmpty) => None
+    case _ if(!instrument.isSet) => set(None)
     // Capture the quote if instrument matches.
-    case q @ Quote(i, _, _, _, _, _) if(i == instrument.value) => q
+    case q @ Quote(i, _, _, _, _, _) if(i == instrument.value) => set(q)
   }
 }

@@ -18,11 +18,8 @@
 package lt.norma.crossbow.core
 
 /** Holds value, opposite to that of the specified signal. */
-class ReversedSignal(signal: Signal) extends Signal {
-  def name = "Reversed("+signal.name+")"
-  def dependencies = Set(signal)
-  def calculate = {
-    case _ =>
-      signal() map { _.reversed }
-  }
+class ReversedSignal(target: Signal) extends FunctionalSignal {
+  def name = "Reversed("+target.name+")"
+  def dependencies = Set(target)
+  def calculate = target().map(_.reversed)
 }

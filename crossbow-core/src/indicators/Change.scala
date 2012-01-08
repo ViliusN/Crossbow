@@ -23,16 +23,15 @@ import lt.norma.crossbow.core._
   * the change is calculated between current target's value and the most recent historical value.
   *
   * `period` cannot be less than 1. */
-class Change(period: Int, target: Indicator[Double] with History) extends Indicator[Double] {
+class Change(period: Int, target: Indicator[Double] with History)
+    extends FunctionalIndicator[Double] {
   def name = "Change("+period+"; "+target.name+")"
   private val historicalValue = new HistoryAt(period - 1, target)
   def dependencies = Set(target, historicalValue)
 
-  def calculate = {
-    case _ => (target(), historicalValue()) match {
-      case (Some(v), Some(hv)) => v - hv
-      case _ => None
-    }
+  def calculate = (target(), historicalValue()) match {
+    case (Some(v), Some(hv)) => Some(v - hv)
+    case _ => None
   }
 
   if(period < 1) throw Exception("Period of "+name+" indicator cannot be less than 1")

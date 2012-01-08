@@ -23,10 +23,10 @@ import org.scalatest.FunSuite
 class MostSignalsTest extends FunSuite {
   import Direction._
   test("MostSignals") {
-    val s1 = new Signal { def name = "S1"; def dependencies = Empty; def calculate = Empty }
-    val s2 = new Signal { def name = "S2"; def dependencies = Empty; def calculate = Empty }
-    val s3 = new Signal { def name = "S3"; def dependencies = Empty; def calculate = Empty }
-    val s4 = new Signal { def name = "S4"; def dependencies = Empty; def calculate = Empty }
+    val s1 = new MutableSignal { def name = "S1"; def dependencies = Empty }
+    val s2 = new MutableSignal { def name = "S2"; def dependencies = Empty }
+    val s3 = new MutableSignal { def name = "S3"; def dependencies = Empty }
+    val s4 = new MutableSignal { def name = "S4"; def dependencies = Empty }
     val s = new MostSignals(s1, s2, s3, s4)
     val l = new IndicatorList(s)
     expect("MostSignals(S1; S2; S3; S4)") { s.name }
@@ -58,7 +58,7 @@ class MostSignalsTest extends FunSuite {
     assert { s.isFlat }
   }
   test("one signal") {
-    val s1 = new Signal { def name = "S1"; def dependencies = Empty; def calculate = Empty }
+    val s1 = new MutableSignal { def name = "S1"; def dependencies = Empty }
     val s = new MostSignals(s1)
     val l = new IndicatorList(s)
     expect("MostSignals(S1)") { s.name }

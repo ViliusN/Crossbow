@@ -21,21 +21,21 @@ import lt.norma.crossbow.core._
 
 /** Calculates cumulative value of the specified indicator.
   * {{{Cumulative = Cumulative[-1] + Indicator}}} */
-class CumulativeValue(indicator: Indicator[Double]) extends Indicator[Double] {
+class CumulativeValue(indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   def name = "Cumulative("+indicator.name+")"
 
-  val math = new Indicator[Double] {
+  val math = new ListenerIndicator[Double] {
     val name = "CumulativeValueMath"
     def dependencies = Set(indicator)
     override def default = 0
-    def calculate = {
-      case BarClose(_) => value + indicator().getOrElse(0.0)
+    def receive = {
+      case BarClose(_) => set(value + indicator().getOrElse(0.0))
     }
   }
 
   def dependencies = Set(math)
-  def calculate = {
-    case BarClose(_) if(indicator.isSet) => math()
-    case BarClose(_) => None
+  def receive = {
+    case BarClose(_) if(indicator.isSet) => set(math())
+    case BarClose(_) => set(None) // TODO why?
   }
 }

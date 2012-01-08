@@ -21,11 +21,11 @@ import lt.norma.crossbow.core._
 
 /** Checks if bid and ask prices are crossed.
   * {{{CrossedMarket = Ask < Bid }}} */
-class CrossedMarket(ask: Ask, bid: Bid) extends Indicator[Boolean] {
+class CrossedMarket(ask: Ask, bid: Bid) extends FunctionalIndicator[Boolean] {
   def name = "Crossed Market"
   def dependencies = Set(ask, bid)
-  def calculate = {
-    case _ if(ask.isSet && bid.isSet) => ask.value < bid.value
+  def calculate = (ask(), bid()) match {
+    case (Some(a), Some(b)) => Some(a < b)
     case _ => None
   }
 }

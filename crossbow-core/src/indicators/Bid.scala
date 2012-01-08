@@ -20,10 +20,8 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 
 /** Bid price of the last quote. */
-class Bid(quote: LastQuote) extends Indicator[Double] {
+class Bid(quote: LastQuote) extends FunctionalIndicator[Double] {
   def name = "Bid Price"
   def dependencies = Set(quote)
-  def calculate = {
-    case _ => quote() map { _.bidPrice.doubleValue }
-  }
+  def calculate = quote().map(_.bidPrice.doubleValue)
 }

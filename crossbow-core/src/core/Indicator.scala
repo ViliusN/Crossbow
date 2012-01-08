@@ -20,6 +20,9 @@ package lt.norma.crossbow.core
 /** Base trait for any indicator. Most custom indicators extend `MutableIndicator`,
   * `FunctionalIndicator`, or `ListenerIndicator`, instead of directly extending `Indicator`. */
 trait Indicator[Value] extends Dependant[Indicator[_]] {
+  /** Implicitly convert specified value to `Some(value)` */
+  implicit def valueToOption(v: Value): Option[Value] = Some(v)
+
   /** Name of the indicator. */
   def name: String;
 

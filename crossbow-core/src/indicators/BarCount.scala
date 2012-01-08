@@ -20,13 +20,12 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 
 /** Number of complete bars. */
-class BarCount extends Indicator[Int] {
+class BarCount extends ListenerIndicator[Int] {
   def name = "Bar Count"
   def dependencies = Empty
 
   override def default = 0
-
-  def calculate = {
-    case BarClose(_) => value + 1
+  def receive = {
+    case BarClose(_) => set(value + 1)
   }
 }

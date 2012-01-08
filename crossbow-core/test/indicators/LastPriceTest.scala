@@ -32,21 +32,23 @@ class LastPriceTest extends FunSuite {
 
     val t1 = Trade(s, 5, 100, new DateTime)
     lt.send(t1)
-    i.send(t1)
+    //i.send(t1)
     expect(5) { i.value }
 
     val t2 = Trade(s, 6.5, 100, new DateTime)
     lt.send(t2)
-    i.send(t2)
+    //i.send(t2)
     expect(6.5) { i.value }
 
     lt.unset()
-    i.send(EmptyMessage)
+    //i.send(EmptyMessage)
     expect(None) { i() }
 
     val t3 = Trade(s, 8, 100, new DateTime)
     lt.send(t3)
-    i.send(t3)
+    //i.send(t3)
     expect(8) { i.value }
   }
 }
+
+// TODO update

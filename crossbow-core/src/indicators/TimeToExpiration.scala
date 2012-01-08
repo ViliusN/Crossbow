@@ -21,15 +21,18 @@ import lt.norma.crossbow.core._
 import org.joda.time.{ Duration }
 
 /** Calculates time to expiration of the specified derivative instrument. */
-class TimeToExpiration(val derivative: InstrumentWrapper) extends Indicator[Duration] {
+class TimeToExpiration(val derivative: InstrumentWrapper) extends ListenerIndicator[Duration] {
   def this(derivativeInstrument: Derivative) = this(new InstrumentWrapper(derivativeInstrument))
   def name = "TimeToExpiration"
   def dependencies = Set(derivative)
-  def calculate = {
+  def receive = {
     case _ if(!checkDerivative) =>
-      None
+      set(None)
     case data: Data if(checkDerivative) =>
-      derivative.value.asInstanceOf[Derivative].timeToExpiration(data.marketTime.toDateMidnight)
+      set(derivative.value.asInstanceOf[Derivative].timeToExpiration(
+        data.marketTime.toDateMidnight))
   }
   private def checkDerivative = derivative.isSet && derivative.value.isInstanceOf[Derivative]
 }
+
+// TODO use MarketTime indicator

@@ -19,15 +19,11 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 
-/** Holds value of the first indicator if it is not empty. Otherwise the holds value of the second
-  * indicator. */
-class Alternative[Value : Manifest](indicator: Indicator[Value], val alternative: Indicator[Value])
-    extends Indicator[Value] {
-  def name = indicator.name+" or alternative "+alternative.name
-  def dependencies = Set(indicator, alternative)
-
-  def calculate = {
-    case _ if(indicator.isEmpty) => alternative()
-    case _ => indicator.value
-  }
+/** Gets value of the target indicator if it is not `None`. Otherwise the gets value of the
+  * alternative indicator. */
+class Alternative[Value](target: Indicator[Value], val alternative: Indicator[Value])
+    extends FunctionalIndicator[Value] {
+  def name = target.name+" or alternative "+alternative.name
+  def dependencies = Set(target, alternative)
+  def calculate = target().orElse(alternative())
 }

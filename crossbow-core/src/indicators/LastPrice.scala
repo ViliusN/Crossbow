@@ -20,10 +20,8 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 
 /** Price of the last trade. */
-class LastPrice(trade: LastTrade) extends Indicator[Double] {
+class LastPrice(trade: LastTrade) extends FunctionalIndicator[Double] {
   def name = "Last Price"
   def dependencies = Set(trade)
-  def calculate = {
-    case _ => trade.optionalValue map { _.price.doubleValue }
-  }
+  def calculate = trade().map(_.price.doubleValue)
 }

@@ -30,6 +30,11 @@ trait BasicListener {
   }
   /** Send data to this listener. */
   final def send(message: Message) { if(this supports message) receive(message) }
+  // TODO private def send(message: Message) {
+  //  if(this supports message) {
+  //    val result = receive(message) }
+  //    check type of result, it must be Unit. In perfect case do this on compile time
+  //  }
   /** Checks if the specified message is supported by this listener without actually sending the
     * message. */
   final def supports(message: Message): Boolean = receive.isDefinedAt(message)

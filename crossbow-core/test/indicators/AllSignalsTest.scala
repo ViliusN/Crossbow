@@ -161,7 +161,5 @@ class AllSignalsTest extends FunSuite {
     val signal = new AllSignals()
     val list = new IndicatorList(signal)
     expect(None) { signal() }
-    signal.send(EmptyMessage)
-    expect(None) { signal() }
   }
 }

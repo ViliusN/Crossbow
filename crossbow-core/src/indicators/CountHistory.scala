@@ -20,13 +20,12 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 
 /** Counts number of bars where the specified indicator was set to a value. */
-class CountHistory(indicator: Indicator[_]) extends Indicator[Int] {
+class CountHistory(indicator: Indicator[_]) extends ListenerIndicator[Int] {
   def name = "Count History("+indicator.name+")"
   def dependencies = Set(indicator)
 
   override def default = 0
-
-  def calculate = {
-    case BarClose(_) if(indicator.isSet) => value + 1
+  def receive = {
+    case BarClose(_) if(indicator.isSet) => set(value + 1)
   }
 }

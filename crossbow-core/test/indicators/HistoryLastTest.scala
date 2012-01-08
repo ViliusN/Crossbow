@@ -22,44 +22,38 @@ import org.scalatest.FunSuite
 
 class HistoryLastTest extends FunSuite {
   test("name") {
-    val target = new Indicator[Double] with History {
+    val target = new MutableIndicator[Double] with History {
       def name = "T"
       def dependencies = Empty
-      def calculate = Empty
     }
     val historyLast = new HistoryLast(target)
     expect("HistoryLast(T)") { historyLast.name }
   }
 
   test("dependencies") {
-    val target = new Indicator[Double] with History {
+    val target = new MutableIndicator[Double] with History {
       def name = "T"
       def dependencies = Empty
-      def calculate = Empty
     }
     val historyLast = new HistoryLast(target)
     expect(Set(target)) { historyLast.dependencies }
   }
 
   test("calculation") {
-    val target = new Indicator[Int] with History {
+    val target = new MutableIndicator[Int] with History {
       def name = "T"
       def dependencies = Empty
-      def calculate = Empty
     }
     val historyLast = new HistoryLast(target)
     expect(None) { historyLast() }
     target.set(1)
     target.history.update()
-    historyLast.send(EmptyMessage)
     expect(Some(1)) { historyLast() }
     target.set(2)
     target.history.update()
-    historyLast.send(EmptyMessage)
     expect(Some(2)) { historyLast() }
     target.unset()
     target.history.update()
-    historyLast.send(EmptyMessage)
     expect(None) { historyLast() }
   }
 }

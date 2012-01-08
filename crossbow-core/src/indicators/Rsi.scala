@@ -25,42 +25,42 @@ import lt.norma.crossbow.core._
   * RS = EMA(Period, UpValues) / EMA(Period, DownValues)
   * RSI = 100 - 100 / (1 + RS)
   * }}} */
-class Rsi(period: Int, indicator: Indicator[Double] with History) extends Indicator[Double] {
+class Rsi(period: Int, indicator: Indicator[Double] with History)
+    extends ListenerIndicator[Double] {
   def name = "RSI("+period+"; "+indicator.name+")"
 
   if(period < 1)
     throw new IllegalArgumentException("Period of "+name+" indicator cannot be less than 1")
 
-  private val upEma = new Ema(period, new Indicator[Double] {
+  private val upEma = new Ema(period, new ListenerIndicator[Double] {
     def name = "RSI_UP("+indicator.name+")"
     def dependencies = Set(indicator)
-    def calculate = {
+    def receive = {
       case BarClose(_) => (indicator(), indicator.history.lastSet) match {
-        case (Some(v), Some(l)) if(v > l) => v - l
-        case (Some(v), Some(l)) => 0.0
-        case _ => None
+        case (Some(v), Some(l)) if(v > l) => set(v - l)
+        case (Some(v), Some(l)) => set(0.0)
+        case _ => set(None)
       }
     }
   })
-  private val downEma = new Ema(period, new Indicator[Double] {
+  private val downEma = new Ema(period, new ListenerIndicator[Double] {
     def name = "RSI_DOWN("+indicator.name+")"
     def dependencies = Set(indicator)
-    def calculate = {
+    def receive = {
       case BarClose(_) => (indicator(), indicator.history.lastSet) match {
-        case (Some(v), Some(l)) if(v < l) => l - v
-        case (Some(v), Some(l)) => 0.0
-        case _ => None
+        case (Some(v), Some(l)) if(v < l) => set(l - v)
+        case (Some(v), Some(l)) => set(0.0)
+        case _ => set(None)
       }
     }
   })
 
   def dependencies = Set(upEma, downEma)
-
-  def calculate = {
+  def receive = {
     case BarClose(_) => (upEma(), downEma()) match {
-      case (Some(up), Some(0.0)) => 100.0
-      case (Some(up), Some(down)) => 100.0 - 100.0 / (1.0 + up / down)
-      case _ => None
+      case (Some(up), Some(0.0)) => set(100.0)
+      case (Some(up), Some(down)) => set(100.0 - 100.0 / (1.0 + up / down))
+      case _ => set(None)
     }
   }
 }

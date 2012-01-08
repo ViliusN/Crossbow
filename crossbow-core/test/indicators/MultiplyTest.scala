@@ -21,10 +21,9 @@ import lt.norma.crossbow.core._
 import org.scalatest.FunSuite
 
 class MultiplyTest extends FunSuite {
-  class I(n: String) extends Indicator[Double] {
+  class I(n: String) extends MutableIndicator[Double] {
     def name = n
     def dependencies = Empty
-    def calculate = Empty
   }
 
   test("indicator") {

@@ -23,15 +23,14 @@ import lt.norma.crossbow.core._
   * `Divide` results in `None` value.
   * {{{Divide = I1 / I2}}} */
 class Divide(indicator1: Indicator[Double], indicator2: Indicator[Double])
-    extends Indicator[Double] {
+    extends FunctionalIndicator[Double] {
   def this(indicator: Indicator[Double], constant: Double) =
     this(indicator, new Variable(constant) { override def name = constant.toString })
 
   def name = indicator1.name+" / "+indicator2.name
   def dependencies = Set(indicator1, indicator2)
-  def calculate = {
-    case _ if(indicator1.isSet && indicator2.isSet && indicator2.value != 0) =>
-      indicator1.value / indicator2.value
+  def calculate = (indicator1(), indicator2()) match {
+    case (Some(t1), Some(t2)) if(t2 != 0) => t1 / t2
     case _ => None
   }
 }

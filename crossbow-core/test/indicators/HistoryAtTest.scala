@@ -22,80 +22,66 @@ import org.scalatest.FunSuite
 
 class HistoryAtTest extends FunSuite {
   test("name") {
-    val target = new Indicator[Double] with History {
+    val target = new MutableIndicator[Double] with History {
       def name = "T"
       def dependencies = Empty
-      def calculate = Empty
     }
     val historyAt = new HistoryAt(0, target)
     expect("HistoryAt(0; T)") { historyAt.name }
   }
 
   test("dependencies") {
-    val target = new Indicator[Double] with History {
+    val target = new MutableIndicator[Double] with History {
       def name = "T"
       def dependencies = Empty
-      def calculate = Empty
     }
     val historyAt = new HistoryAt(0, target)
     expect(Set(target)) { historyAt.dependencies }
   }
 
   test("calculation") {
-    val target = new Indicator[Int] with History {
+    val target = new MutableIndicator[Int] with History {
       def name = "T"
       def dependencies = Empty
-      def calculate = Empty
     }
     val historyAt = new HistoryAt(2, target)
     expect(None) { historyAt() }
     target.set(1)
     target.history.update()
-    historyAt.send(EmptyMessage)
     expect(None) { historyAt() }
     target.set(2)
     target.history.update()
-    historyAt.send(EmptyMessage)
     expect(None) { historyAt() }
     target.set(3)
     target.history.update()
-    historyAt.send(EmptyMessage)
     expect(Some(1)) { historyAt() }
     target.set(4)
     target.history.update()
-    historyAt.send(EmptyMessage)
     expect(Some(2)) { historyAt() }
     target.unset()
     target.history.update()
-    historyAt.send(EmptyMessage)
     expect(Some(3)) { historyAt() }
     target.history.update()
-    historyAt.send(EmptyMessage)
     expect(Some(4)) { historyAt() }
     target.history.update()
-    historyAt.send(EmptyMessage)
     expect(None) { historyAt() }
   }
 
   test("calculation - last value") {
-    val target = new Indicator[Int] with History {
+    val target = new MutableIndicator[Int] with History {
       def name = "T"
       def dependencies = Empty
-      def calculate = Empty
     }
     val historyAt = new HistoryAt(0, target)
     expect(None) { historyAt() }
     target.set(1)
     target.history.update()
-    historyAt.send(EmptyMessage)
     expect(Some(1)) { historyAt() }
     target.set(2)
     target.history.update()
-    historyAt.send(EmptyMessage)
     expect(Some(2)) { historyAt() }
     target.unset()
     target.history.update()
-    historyAt.send(EmptyMessage)
     expect(None) { historyAt() }
   }
 }

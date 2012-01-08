@@ -22,12 +22,12 @@ import lt.norma.crossbow.core._
 /** Calculates normalized value of the indicator. If the first value of the target indicator is 0,
   * `Normalized` will always result to `NaN` or `Infinity` values.
   * {{{ Normalize = (Target[i] / Target[0] - 1) * 100 }}} */
-class Normalize(target: Indicator[Double]) extends Indicator[Double] {
+class Normalize(target: Indicator[Double]) extends FunctionalIndicator[Double] {
   def name = "Normalize("+target.name+")"
   private val target0 = new FirstValue(target)
   def dependencies = Set(target, target0)
-  def calculate = {
-    case _ if(target.isSet && target0.isSet) => (target.value / target0.value - 1) * 100
+  def calculate = (target(), target0()) match {
+    case (Some(t), Some(t0)) => Some((t / t0 - 1) * 100)
     case _ => None
   }
 }

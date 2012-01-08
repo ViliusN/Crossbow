@@ -23,10 +23,9 @@ import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 class EmaContinuousTest extends FunSuite {
-  class I(n: String) extends Indicator[Double] {
+  class I(n: String) extends MutableIndicator[Double] {
     def name = n
     def dependencies = Empty
-    def calculate = Empty
   }
   test("EmaContinuous indicator") {
     val i1 = new I("A")

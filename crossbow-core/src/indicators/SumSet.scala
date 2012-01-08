@@ -22,12 +22,15 @@ import lt.norma.crossbow.core._
 /** Calculates sum of the specified indicators of `Double` type. Empty indicators are ignored.
   * `SumSet` results in `None` if all of the target indicators are empty.
   * {{{SumSet = I1 + I2 + ... + In}}} */
-class SumSet(indicators: Indicator[Double]*) extends Indicator[Double] {
+class SumSet(indicators: Indicator[Double]*) extends FunctionalIndicator[Double] {
   def name = "SumSet("+(indicators map { _.name } mkString("; "))+")"
-  private val defSum = new Sum(indicators map { i => new Default(i, 0.0) } : _*)
+  private val defSum = new Sum(indicators.map(i => new Default(i, 0.0)): _*)
   def dependencies = Set(defSum)
   def calculate = {
-    case _ if(indicators.exists(_.isSet)) => defSum()
-    case _ => None
+    if(indicators.exists(_.isSet)) {
+      defSum()
+    } else {
+      None
+    }
   }
 }

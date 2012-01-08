@@ -20,14 +20,12 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 
 /** Number of complete bars during current session. */
-class SessionBarCount extends Indicator[Int] {
+class SessionBarCount extends ListenerIndicator[Int] {
   def name = "Session Bar Count"
   def dependencies = Empty
-
   override def default = 0
-
-  def calculate = {
-    case _: SessionOpen => 0
-    case _: BarClose => value + 1
+  def receive = {
+    case _: SessionOpen => unset()
+    case _: BarClose => set(value + 1)
   }
 }

@@ -22,11 +22,9 @@ import lt.norma.crossbow.core._
 /** Calculates average of the values of the specified indicators of `Double` type. Empty indicators
   * are ignored.`AverageSet` results in `None` if all of the target indicators are empty.
   * {{{AverageSet = (I1 + I2 + ... + In) / n}}} */
-class AverageSet(indicators: Indicator[Double]*) extends Indicator[Double] {
+class AverageSet(indicators: Indicator[Double]*) extends FunctionalIndicator[Double] {
   def name = "AverageSet("+(indicators map { _.name } mkString("; "))+")"
   private val sum = new SumSet(indicators: _*)
   def dependencies = Set(sum)
-  def calculate = {
-    case _ => sum() map { _ / indicators.count(_.isSet) }
-  }
+  def calculate = sum().map(_ / indicators.count(_.isSet))
 }

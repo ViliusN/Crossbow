@@ -22,10 +22,9 @@ import lt.norma.crossbow.testutils._
 import org.scalatest.FunSuite
 
 class AverageTest extends FunSuite {
-  class I(n: String) extends Indicator[Double] {
+  class I(n: String) extends MutableIndicator[Double] {
     def name = n
     def dependencies = Empty
-    def calculate = Empty
   }
 
   test("Average indicator") {

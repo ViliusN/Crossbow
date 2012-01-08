@@ -23,3 +23,5 @@ import lt.norma.crossbow.core._
 class Sqrt(target: Indicator[Double]) extends Power(target, 0.5) {
   override def name = "Sqrt("+target.name+")"
 }
+
+// TODO use Math.sqrt

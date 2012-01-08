@@ -23,12 +23,12 @@ import org.scalatest.FunSuite
 class ReversedSignalTest extends FunSuite {
   import Direction._
   test("ReversedSignal") {
-    val s1 = new Signal { def name = "S1"; def dependencies = Empty; def calculate = Empty }
+    val s1 = new MutableSignal { def name = "S1"; def dependencies = Empty }
     val s = new ReversedSignal(s1)
     val l = new IndicatorList(s)
     expect("Reversed(S1)") { s.name }
     expect(Set(s1)) { s.dependencies }
-    assert { s.isEmpty }
+    assert { !s.isSet }
 
     l.send(EmptyMessage)
     expect(None) { s() }

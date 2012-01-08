@@ -21,11 +21,8 @@ import lt.norma.crossbow.core._
 
 /** Holds value of the specified indicator if `condition` results in `true` value. */
 class Conditional[Value : Manifest](indicator: Indicator[Value])(condition: Value => Boolean)
-    extends Indicator[Value] {
+    extends FunctionalIndicator[Value] {
   def name = "Conditional "+indicator.name
   def dependencies = Set(indicator)
-  def calculate = {
-    case _ if(indicator.isSet && condition(indicator.value)) => indicator.value
-    case _ => None
-  }
+  def calculate = indicator().filter(v => condition(v))
 }

@@ -22,16 +22,16 @@ import org.joda.time.DateTime
 
 /** Records last trade received for the specified instrument. */
 class LastTrade(val instrument: InstrumentWrapper = new InstrumentWrapper())
-    extends Indicator[Trade] {
+    extends ListenerIndicator[Trade] {
   def this(_instrument: Instrument) = this(new InstrumentWrapper(_instrument))
 
   def name = "Last Trade"
   def dependencies = Set(instrument)
 
-  def calculate = {
+  def receive = {
     // Unset last trade if the instrument is empty.
-    case _ if(instrument.isEmpty) => None
+    case _ if(!instrument.isSet) => set(None)
     // Capture the trade if instrument matches.
-    case t @ Trade(i, _, _, _) if(i == instrument.value) => t
+    case t @ Trade(i, _, _, _) if(i == instrument.value) => set(t)
   }
 }

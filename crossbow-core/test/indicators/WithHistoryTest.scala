@@ -41,7 +41,7 @@ class WithHistoryTest extends FunSuite {
     val target = new Variable[Int]
     val indicator = new WithHistory(target)
     val list = new IndicatorList(indicator)
-    assert ( indicator.isEmpty, "should be empty as target is empty" )
+    assert ( !indicator.isSet, "should be empty as target is empty" )
   }
   test("initial value") {
     val target = new Variable[Int]

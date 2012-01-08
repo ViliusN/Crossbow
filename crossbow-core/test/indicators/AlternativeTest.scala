@@ -30,19 +30,14 @@ class AlternativeTest extends FunSuite {
     expect(Set(target1, target2)) { i.dependencies }
     expect(None) { i() }
 
-    i.send(EmptyMessage)
     expect(None) { i() }
     target2.set(1)
-    i.send(EmptyMessage)
     expect(1) { i.value }
     target1.set(2)
-    i.send(EmptyMessage)
     expect(2) { i.value }
     target1.unset()
-    i.send(EmptyMessage)
     expect(1) { i.value }
     target2.unset()
-    i.send(EmptyMessage)
     expect(None) { i() }
   }
   test("initialization") {

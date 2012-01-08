@@ -19,14 +19,12 @@ package lt.norma.crossbow.core
 
 /** Holds `Direction.Long` value if all of the target signals are long. Holds `Direction.Short`
   * value if all of the target signals are short. Otherwise the values is `None`. */
-class AllSignals(signals: Signal*) extends Signal {
+class AllSignals(signals: Signal*) extends FunctionalSignal {
   def name = "AllSignals("+(signals map { _.name } mkString("; "))+")"
   def dependencies = signals.toSet
-  def calculate = if(signals.size > 0) {
-    case _ if(signals.forall(_.isLong)) => Direction.Long
-    case _ if(signals.forall(_.isShort)) => Direction.Short
-    case _ => None
-  } else {
-    case _ => None
+  def calculate = {
+    if(signals.forall(_.isLong)) { Some(Direction.Long) }
+    else if(signals.forall(_.isShort)) { Some(Direction.Short) }
+    else { None }
   }
 }

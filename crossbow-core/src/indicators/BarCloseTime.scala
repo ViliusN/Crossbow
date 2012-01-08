@@ -21,11 +21,11 @@ import lt.norma.crossbow.core._
 import org.joda.time.DateTime
 
 /** Last bar's closing time. */
-class BarCloseTime extends Indicator[DateTime] {
+class BarCloseTime extends ListenerIndicator[DateTime] {
   def name = "Bar Close Time"
   def dependencies = Set.empty
-  def calculate = {
-    case BarClose(time) => time
+  def receive = {
+    case BarClose(time) => set(time)
   }
   def formatter = Settings.dateTimeFormatter
   override def valueToString(valueToConvert: DateTime): String = formatter.print(valueToConvert)

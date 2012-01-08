@@ -21,7 +21,7 @@ import lt.norma.crossbow.core._
 
 /** Calculates exponential moving average of the specified indicator. Indicator's value is not set
   * until there are at least `period` bars collected. */
-class Ema(period: Int, indicator: Indicator[Double]) extends Indicator[Double] {
+class Ema(period: Int, indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   def name = "EMA("+period+"; "+indicator.name+")"
 
   if(period < 1)
@@ -32,8 +32,10 @@ class Ema(period: Int, indicator: Indicator[Double]) extends Indicator[Double] {
 
   def dependencies = Set(calculator, counter)
 
-  def calculate = {
-    case BarClose(_) if(indicator.isSet && counter.value >= period) => calculator.value
-    case BarClose(_) => None
+  def receive = {
+    case BarClose(_) => (indicator()) match {
+      case Some(_) if(counter.value >= period) => set(calculator())
+      case _ => set(None)
+    }
   }
 }
