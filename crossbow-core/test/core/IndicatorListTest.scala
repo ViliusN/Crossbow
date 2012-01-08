@@ -21,36 +21,33 @@ import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 class IndicatorListTest  extends FunSuite {
-  test("IndicatorListTest") { pending }
-  /*test("dependencies") { TODO
-    class Dummy extends Indicator[Int] {
-      def name = "D"
+  test("dependencies") {
+    class DemoIndicator extends Indicator[Int] {
+      def name = ""
       def dependencies = Empty
-      def receive = Empty
+      def optionalValue = None
     }
-    expect(Set()) {
-      val target1 = new Dummy
-      val target2 = new Dummy
-      val list = new IndicatorList(target1, target2)
-      list.dependencies
-    }
+    val target1 = new DemoIndicator
+    val target2 = new DemoIndicator
+    val list = new IndicatorList(target1, target2)
+    expect(Set()) { list.dependencies }
   }
 
   test("shallow") {
-    class Dummy(deps: Dummy*) extends Indicator[Int] {
-      def name = "D"
+    class DemoIndicator(deps: Indicator[_]*) extends Indicator[Int] {
+      def name = ""
       def dependencies = deps.toSet
-      def receive = Empty
+      def optionalValue = None
     }
-    val g = new Dummy()
-    val h = new Dummy()
-    val i = new Dummy()
-    val d = new Dummy(g)
-    val e = new Dummy(h)
-    val f = new Dummy(i)
-    val a = new Dummy(d)
-    val b = new Dummy(d, e, f)
-    val c = new Dummy(i)
+    val g = new DemoIndicator()
+    val h = new DemoIndicator()
+    val i = new DemoIndicator()
+    val d = new DemoIndicator(g)
+    val e = new DemoIndicator(h)
+    val f = new DemoIndicator(i)
+    val a = new DemoIndicator(d)
+    val b = new DemoIndicator(d, e, f)
+    val c = new DemoIndicator(i)
     expect(Nil) { (new IndicatorList()).shallow }
     expect(List(g)) { (new IndicatorList(g)).shallow }
     expect(List(g, c)) { (new IndicatorList(g, c)).shallow }
@@ -59,20 +56,20 @@ class IndicatorListTest  extends FunSuite {
   }
 
   test("deep") {
-    class Dummy(deps: Dummy*) extends Indicator[Int] {
-      def name = "D"
+    class DemoIndicator(deps: Indicator[_]*) extends Indicator[Int] {
+      def name = ""
       def dependencies = deps.toSet
-      def receive = Empty
+      def optionalValue = None
     }
-    val g = new Dummy()
-    val h = new Dummy()
-    val i = new Dummy()
-    val d = new Dummy(g)
-    val e = new Dummy(h)
-    val f = new Dummy(i)
-    val a = new Dummy(d)
-    val b = new Dummy(d, e, f)
-    val c = new Dummy(i)
+    val g = new DemoIndicator()
+    val h = new DemoIndicator()
+    val i = new DemoIndicator()
+    val d = new DemoIndicator(g)
+    val e = new DemoIndicator(h)
+    val f = new DemoIndicator(i)
+    val a = new DemoIndicator(d)
+    val b = new DemoIndicator(d, e, f)
+    val c = new DemoIndicator(i)
     expect(Nil) { (new IndicatorList()).deep }
     expect(List(g)) { (new IndicatorList(g)).deep }
     expect(List(g, i, c)) { (new IndicatorList(g, c)).deep }
@@ -81,20 +78,20 @@ class IndicatorListTest  extends FunSuite {
   }
 
   test("deepWithHistory") {
-    class Dummy(deps: Dummy*) extends Indicator[Int] {
-      def name = "D"
+    class DemoIndicator(deps: Indicator[_]*) extends Indicator[Int] {
+      def name = ""
       def dependencies = deps.toSet
-      def receive = Empty
+      def optionalValue = None
     }
-    val g = new Dummy()
-    val h = new Dummy()
-    val i = new Dummy() with History
-    val d = new Dummy(g) with History
-    val e = new Dummy(h)
-    val f = new Dummy(i) with History
-    val a = new Dummy(d)
-    val b = new Dummy(d, e, f)
-    val c = new Dummy(i)
+    val g = new DemoIndicator()
+    val h = new DemoIndicator()
+    val i = new DemoIndicator() with History
+    val d = new DemoIndicator(g) with History
+    val e = new DemoIndicator(h)
+    val f = new DemoIndicator(i) with History
+    val a = new DemoIndicator(d)
+    val b = new DemoIndicator(d, e, f)
+    val c = new DemoIndicator(i)
     expect(Nil) { (new IndicatorList()).deepWithHistory }
     expect(Nil) { (new IndicatorList(g)).deepWithHistory }
     expect(List(i)) { (new IndicatorList(g, c)).deepWithHistory }
@@ -102,10 +99,38 @@ class IndicatorListTest  extends FunSuite {
     expect(List(i, d, f)) { (new IndicatorList(g, c, a, b)).deepWithHistory }
   }
 
+  test("deepWithBasicListener") {
+    class DemoIndicator(deps: Indicator[_]*) extends Indicator[Int] {
+      def name = ""
+      def dependencies = deps.toSet
+      def optionalValue = None
+    }
+    class DemoListenerIndicator(deps: Indicator[_]*) extends ListenerIndicator[Int] {
+      def name = ""
+      def dependencies = deps.toSet
+      def receive = Empty
+    }
+    val g = new DemoIndicator()
+    val h = new DemoIndicator()
+    val i = new DemoListenerIndicator()
+    val d = new DemoListenerIndicator(g)
+    val e = new DemoIndicator(h)
+    val f = new DemoListenerIndicator(i)
+    val a = new DemoIndicator(d)
+    val b = new DemoIndicator(d, e, f)
+    val c = new DemoIndicator(i)
+    expect(Nil) { (new IndicatorList()).deepWithBasicListener }
+    expect(Nil) { (new IndicatorList(g)).deepWithBasicListener }
+    expect(List(i)) { (new IndicatorList(g, c)).deepWithBasicListener }
+    expect(List(i, d)) { (new IndicatorList(g, c, a)).deepWithBasicListener }
+    expect(List(i, d, f)) { (new IndicatorList(g, c, a, b)).deepWithBasicListener }
+  }
+
   test("data forwarding") {
     var counter = 0
-    class UpdateOrder(val dependencies: Set[Indicator[_]] = Set.empty) extends Indicator[Double] {
-      def name = "D"
+    class UpdateOrder(deps: Indicator[_]*) extends ListenerIndicator[Int] {
+      def name = ""
+      def dependencies = deps.toSet
       def receive = {
         case EmptyMessage =>
           counter += 1
@@ -115,13 +140,13 @@ class IndicatorListTest  extends FunSuite {
     }
     val g = new UpdateOrder()
     val h = new UpdateOrder()
-    val i = new UpdateOrder(Set())
-    val d = new UpdateOrder(Set(g))
-    val e = new UpdateOrder(Set(h))
-    val f = new UpdateOrder(Set(i))
-    val a = new UpdateOrder(Set(d))
-    val b = new UpdateOrder(Set(d, e, f))
-    val c = new UpdateOrder(Set(i))
+    val i = new UpdateOrder()
+    val d = new UpdateOrder(g)
+    val e = new UpdateOrder(h)
+    val f = new UpdateOrder(i)
+    val a = new UpdateOrder(d)
+    val b = new UpdateOrder(d, e, f)
+    val c = new UpdateOrder(i)
     val lst = new IndicatorList(g, c, a, b)
     lst.send(EmptyMessage)
     expect(0) { g.value }
@@ -137,8 +162,9 @@ class IndicatorListTest  extends FunSuite {
 
   test("data forwarding - BarClose") {
     var counter = 0
-    class UpdateOrder(val dependencies: Set[Indicator[_]] = Set.empty) extends Indicator[Double] {
-      def name = "D"
+    class UpdateOrder(deps: Indicator[_]*) extends ListenerIndicator[Int] {
+      def name = ""
+      def dependencies = deps.toSet
       def receive = {
         case _: BarClose =>
           counter += 1
@@ -148,13 +174,13 @@ class IndicatorListTest  extends FunSuite {
     }
     val g = new UpdateOrder()
     val h = new UpdateOrder()
-    val i = new UpdateOrder(Set())
-    val d = new UpdateOrder(Set(g))
-    val e = new UpdateOrder(Set(h))
-    val f = new UpdateOrder(Set(i))
-    val a = new UpdateOrder(Set(d))
-    val b = new UpdateOrder(Set(d, e, f))
-    val c = new UpdateOrder(Set(i))
+    val i = new UpdateOrder()
+    val d = new UpdateOrder(g)
+    val e = new UpdateOrder(h)
+    val f = new UpdateOrder(i)
+    val a = new UpdateOrder(d)
+    val b = new UpdateOrder(d, e, f)
+    val c = new UpdateOrder(i)
     val lst = new IndicatorList(g, c, a, b)
     lst.send(new BarClose(new DateTime))
     expect(0) { g.value }
@@ -170,82 +196,57 @@ class IndicatorListTest  extends FunSuite {
 
   test("collecting history") {
     case class DummyData(val value: Int) extends Data { def marketTime = DateTime.now }
-    class HistoryIndicator extends Indicator[Int] {
-      def name = "HI"
+    val li = new ListenerIndicator[Int] with History {
+      def name = ""
       def dependencies = Empty
-      var lastData: Option[Data] = None
       def receive = {
         case DummyData(dd) => set(dd)
-        case d: Data => lastData = Some(d)
       }
     }
-    val ih = new HistoryIndicator with History
-    val i = new HistoryIndicator
-    val l = new IndicatorList(ih, i)
-
-    expect(Nil) { ih.history.values }
-    expect(None) { i.lastData }
-    expect(None) { ih.lastData }
-    expect(None) { i.optionalValue }
-    expect(None) { ih.optionalValue }
-
-    val bc1 = BarClose(new DateTime(1000))
-    l.send(bc1)
-    expect(List(None)) { ih.history.values }
-    expect(Some(bc1)) { i.lastData }
-    expect(Some(bc1)) { ih.lastData }
-    expect(None) { i.optionalValue }
-    expect(None) { ih.optionalValue }
-
-    l.send(DummyData(8))
-    expect(List(None)) { ih.history.values }
-    expect(Some(bc1)) { i.lastData }
-    expect(Some(bc1)) { ih.lastData }
-    expect(Some(8)) { i.optionalValue }
-    expect(Some(8)) { ih.optionalValue }
-
-    val bc2 = BarClose(new DateTime(2000))
-    l.send(bc2)
-    expect(List(None, Some(8))) { ih.history.values }
-    expect(Some(bc2)) { i.lastData }
-    expect(Some(bc2)) { ih.lastData }
-    expect(Some(8)) { i.optionalValue }
-    expect(Some(8)) { ih.optionalValue }
-  }
-
-  test("collecting history - update order at BarClose") {
-    class Dummy extends Indicator[DateTime] {
-      def name = "D"
+    val fi = new FunctionalIndicator[Int] with History {
+      def name = ""
       def dependencies = Empty
-      def receive = {
-        case bc: BarClose => set(bc.marketTime)
-      }
+      var i = 0
+      def calculate = { i += 1; Some(i - 1) }
     }
-    val i = new Dummy with History
-    val l = new IndicatorList(i)
-    val t = new DateTime(2000)
-    l.send(BarClose(t))
-    expect(Some(t)) { i() }
-    expect(Some(t)) { i.history.last }
+    val list = new IndicatorList(li, fi)
+    expect(Nil) { li.history.values }
+    expect(None) { li() }
+    expect(Nil) { fi.history.values }
+    expect(Some(0)) { fi() }
+
+    list.send(BarClose(new DateTime(0)))
+    expect(List(None)) { li.history.values }
+    expect(None) { li() }
+    expect(List(Some(1))) { fi.history.values }
+    expect(Some(2)) { fi() }
+
+    list.send(DummyData(8))
+    list.send(BarClose(new DateTime(1000)))
+    expect(List(None, Some(8))) { li.history.values }
+    expect(Some(8)) { li() }
+    expect(List(Some(1), Some(3))) { fi.history.values }
+    expect(Some(4)) { fi() }
   }
 
   test("maxRequiredHistory") {
-    class Dummy(rh: Int) extends Indicator[Int] {
-      def name = "D"
+    class DemoIndicator(rh: Int) extends Indicator[Int] {
+      def name = ""
       def dependencies = Empty
-      def receive = Empty
+      def optionalValue = None
       override def requiredHistory = rh
     }
     expect(8) {
-      val l = new IndicatorList(new Dummy(5), new Dummy(-1), new Dummy(0), new Dummy(8))
+      val l = new IndicatorList(new DemoIndicator(5), new DemoIndicator(-1), new DemoIndicator(0),
+        new DemoIndicator(8))
       l.maxRequiredHistory
     }
     expect(0, "negative values") {
-      val l = new IndicatorList(new Dummy(-5), new Dummy(-1))
+      val l = new IndicatorList(new DemoIndicator(-5), new DemoIndicator(-1))
       l.maxRequiredHistory
     }
     expect(5, "one indicator") {
-      val l = new IndicatorList(new Dummy(5))
+      val l = new IndicatorList(new DemoIndicator(5))
       l.maxRequiredHistory
     }
     expect(0, "empty list") {
@@ -254,16 +255,35 @@ class IndicatorListTest  extends FunSuite {
     }
   }
 
-  test("truncateHistory") {
-    class Dummy(rh: Int) extends Indicator[Int] {
-      def name = "D"
+  test("collecting history - update order at BarClose") {
+    var order = 0
+    class DemoIndicator extends ListenerIndicator[Int] {
+      def name = ""
       def dependencies = Empty
-      def receive = Empty
+      def receive = {
+        case bc: BarClose =>
+          order += 1
+          set(order)
+      }
+      set(0)
+    }
+    val indicator = new DemoIndicator with History
+    val list = new IndicatorList(indicator)
+
+    list.send(BarClose(new DateTime()))
+    expect(Some(1)) { indicator() }
+    expect(Some(1)) { indicator.history.last }
+  }
+
+  test("truncateHistory") {
+    class DemoIndicator(rh: Int) extends MutableIndicator[Int] {
+      def name = ""
+      def dependencies = Empty
       override def requiredHistory = rh
     }
-    val i1 = new Dummy(0) with History
-    val i2 = new Dummy(1) with History
-    val i3 = new Dummy(3) with History
+    val i1 = new DemoIndicator(0) with History
+    val i2 = new DemoIndicator(1) with History
+    val i3 = new DemoIndicator(3) with History
     val l = new IndicatorList(i1, i2, i3)
     i1.set(11)
     i2.set(21)
@@ -336,23 +356,22 @@ class IndicatorListTest  extends FunSuite {
   }
 
   test("truncateHistory - all indicators without history") {
-    class Dummy(rh: Int) extends Indicator[Int] {
-      def name = "D"
+    class DemoIndicator(rh: Int) extends MutableIndicator[Int] {
+      def name = ""
       def dependencies = Empty
-      def receive = Empty
       override def requiredHistory = rh
     }
     // Indicators without history
-    val l = new IndicatorList(new Dummy(0), new Dummy(3), new Dummy(1))
+    val l = new IndicatorList(new DemoIndicator(0), new DemoIndicator(3), new DemoIndicator(1))
     l.truncateHistory(5)
   }
 
   test("indicator creation message") {
-    class LastMessage extends Indicator[Message] {
-      def name = "LastMessage"
+    class LastMessage extends ListenerIndicator[Message] {
+      def name = ""
       def dependencies = Empty
       def receive = {
-        case d => set(d)
+        case m => set(m)
       }
     }
     val target1 = new LastMessage
@@ -362,5 +381,5 @@ class IndicatorListTest  extends FunSuite {
     expect(Some(IndicatorCreated)) { target1() }
     expect(Some(IndicatorCreated)) { target2() }
     expect(None) { target3() }
-  }*/
+  }
 }

@@ -26,13 +26,16 @@ class IndicatorList(indicators: Indicator[_]*) extends Listener {
   /** `IndicatorList` updates contained indicators by itself. Therefore there is no need to
     * depend on them. */
   def dependencies = Empty
+
   /** Root dependant to hold all indicators of this list. */
   private val root = new Dependant[Indicator[_]] { def dependencies = indicators.toSet }
+
   /** Shallow contents of the list. Includes only indicators, explicitly added to the list via
     * constructor, excluding any dependencies. Duplicate entries are filtered out. For complete
     * (deep) list of indicators use `deep`. */
   lazy val shallow: List[Indicator[_]] =
-    indicators.toList.distinct.filter { root.shallowDependencies contains }
+    indicators.toList.distinct.filter(root.shallowDependencies.contains)
+
   /** Contents of the list including dependencies in full depth. */
   lazy val deep: List[Indicator[_]] = root.deepDependencies
 
@@ -61,6 +64,7 @@ class IndicatorList(indicators: Indicator[_]*) extends Listener {
 
   /** Finds largest required history of all indicators. */
   def maxRequiredHistory: Int = (0 :: deep.map(_.requiredHistory)).max
+
   /** Truncates history of all indicators to the amount specified by `leave` or the result of
     * `maxRequiredHistory`, whichever is bigger. */
   def truncateHistory(leave: Int) {
@@ -68,9 +72,8 @@ class IndicatorList(indicators: Indicator[_]*) extends Listener {
   }
 
   // Send IndicatorCreated message to all indicators on creation of the list.
-  dispatchMessage(IndicatorList.IndicatorCreated)
+  dispatchMessage(IndicatorCreated)
 }
 
-object IndicatorList {
-  case object IndicatorCreated extends Message
-}
+/** Message sent after creation of indicator list. */
+case object IndicatorCreated extends Message
