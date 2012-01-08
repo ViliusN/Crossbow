@@ -35,7 +35,6 @@ trait BasicListener {
       throw Warning("Receivers should always return Unit")
     }
   }
-  //final def send(message: Message) { if(this supports message) receive(message) }
 
   /** Checks if the specified message is supported by this listener without actually sending the
     * message. */
