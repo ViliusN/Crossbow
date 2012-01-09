@@ -18,19 +18,17 @@
 package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
+import ImplicitValueConverter._
 
 /** Calculates division between two indicators of `Double` type. If the value of `indicator2` is 0,
   * `Divide` results in `None` value.
   * {{{Divide = I1 / I2}}} */
-class Divide(indicator1: Indicator[Double], indicator2: Indicator[Double])
-    extends FunctionalIndicator[Double] {
-  def this(indicator: Indicator[Double], constant: Double) =
-    this(indicator, new Variable(constant) { override def name = constant.toString })
-
-  def name = indicator1.name+" / "+indicator2.name
-  def dependencies = Set(indicator1, indicator2)
-  def calculate = (indicator1(), indicator2()) match {
-    case (Some(t1), Some(t2)) if(t2 != 0) => t1 / t2
-    case _ => None
-  }
+class Divide(target1: Indicator[Double], target2: Indicator[Double])
+    extends Transformation2(target1, target2)({
+  case (Some(t1), Some(t2)) if(t2 != 0) => t1 / t2
+  case _ => None
+}) {
+  def this(target: Indicator[Double], constant: Double) =
+    this(target, new Variable(constant) { override def name = constant.toString })
+  override def name = target1.name+" / "+target2.name
 }

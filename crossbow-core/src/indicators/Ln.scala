@@ -18,13 +18,12 @@
 package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
+import ImplicitValueConverter._
 
 /** Calculates natural logarithm of the specified target indicator. */
-class Ln(target: Indicator[Double]) extends FunctionalIndicator[Double] {
-  def name = "Ln("+target.name+")"
-  def dependencies = Set(target)
-  def calculate = target() match {
-    case Some(t) if(t > 0) => math.log(t)
-    case _ => None
-  }
+class Ln(target: Indicator[Double]) extends Transformation(target)({
+  case Some(t) if(t > 0) => math.log(t)
+  case _ => None
+}) {
+  override def name = "Ln("+target.name+")"
 }

@@ -15,20 +15,9 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.indicators
+package lt.norma.crossbow.core
 
-import lt.norma.crossbow.core._
-import ImplicitValueConverter._
-
-/** Calculates normalized value of the indicator. If the first value of the target indicator is 0,
-  * `Normalized` will always result to `NaN` or `Infinity` values.
-  * {{{ Normalize = (Target[i] / Target[0] - 1) * 100 }}} */
-class Normalize(target: Indicator[Double]) extends FunctionalIndicator[Double] {
-  def name = "Normalize("+target.name+")"
-  private val target0 = new FirstValue(target)
-  def dependencies = Set(target, target0)
-  def calculate = (target(), target0()) match {
-    case (Some(t), Some(t0)) => (t / t0 - 1) * 100
-    case _ => None
-  }
+object ImplicitValueConverter {
+  /** Implicitly convert specified `Value` to `Option[value]` */
+  implicit def valueToOption[Value](v: Value): Option[Value] = Some(v)
 }

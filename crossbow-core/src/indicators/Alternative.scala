@@ -22,8 +22,6 @@ import lt.norma.crossbow.core._
 /** Gets value of the target indicator if it is not `None`. Otherwise the gets value of the
   * alternative indicator. */
 class Alternative[Value](target: Indicator[Value], val alternative: Indicator[Value])
-    extends FunctionalIndicator[Value] {
-  def name = target.name+" or alternative "+alternative.name
-  def dependencies = Set(target, alternative)
-  def calculate = target().orElse(alternative())
+    extends Transformation2(target, alternative)({ _ orElse _ }) {
+  override def name = target.name+" or alternative "+alternative.name
 }

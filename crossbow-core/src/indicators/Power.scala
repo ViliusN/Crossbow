@@ -18,6 +18,7 @@
 package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
+import ImplicitValueConverter._
 
 /** Raises the specified target indicator to the specified power. */
 class Power(target: Indicator[Double], power: Indicator[Double])

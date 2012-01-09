@@ -20,8 +20,6 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 
 /** Ask price of the last quote. */
-class Ask(quote: LastQuote) extends FunctionalIndicator[Double] {
-  def name = "Ask Price"
-  def dependencies = Set(quote)
-  def calculate = quote().map(_.askPrice.doubleValue)
+class Ask(quote: LastQuote) extends Transformation(quote)(_.map(_.askPrice.doubleValue)) {
+  override def name = "Ask Price"
 }
