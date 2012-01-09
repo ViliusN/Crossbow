@@ -26,39 +26,90 @@ class TimeToExpirationTest extends FunSuite {
     val tte = new TimeToExpiration(new InstrumentWrapper)
     expect("TimeToExpiration") { tte.name }
   }
+
   test("dependencies") {
     val d = new InstrumentWrapper
     val tte = new TimeToExpiration(d)
-    expect(Set(d)) { tte.dependencies }
+    expect(2) { tte.dependencies.size }
   }
+
   test("calculation") {
-    val di = new Derivative {
+    val derivativeInstrument = new Derivative {
       def expiration = new DateMidnight(2011, 12, 26)
       def underlying = new Instrument { def exchange = Nyse; def currency = "" }
       def exchange = Nyse
       def currency = ""
     }
-    val d = new InstrumentWrapper(di)
-    val tte = new TimeToExpiration(d)
-    expect(None) { tte() }
-    tte.send(SessionOpen(new DateTime(2011, 12, 25, 0, 0, 0)))
+    val derivative = new InstrumentWrapper(derivativeInstrument)
+    val tte = new TimeToExpiration(derivative)
+    val list = new IndicatorList(tte)
+    list.send(SessionOpen(new DateTime(2011, 12, 25, 0, 0, 0)))
     expect(Some(Days.ONE.toStandardDuration)) { tte() }
-    tte.send(SessionOpen(new DateTime(2011, 12, 25, 23, 0, 0)))
+    list.send(SessionOpen(new DateTime(2011, 12, 25, 23, 0, 0)))
     expect(Some(Days.ONE.toStandardDuration)) { tte() }
-    tte.send(EmptyMessage)
+    list.send(EmptyMessage)
     expect(Some(Days.ONE.toStandardDuration)) { tte() }
-    tte.send(SessionOpen(new DateTime(2011, 12, 23, 0, 0, 0)))
+    list.send(SessionOpen(new DateTime(2011, 12, 23, 0, 0, 0)))
     expect(Some(Days.THREE.toStandardDuration)) { tte() }
-    tte.send(SessionOpen(new DateTime(2011, 12, 26, 0, 0, 0)))
+    list.send(SessionOpen(new DateTime(2011, 12, 26, 0, 0, 0)))
     expect(Some(new Duration(0))) { tte() }
-    tte.send(SessionOpen(new DateTime(2011, 12, 26, 23, 0, 0)))
+    list.send(SessionOpen(new DateTime(2011, 12, 26, 23, 0, 0)))
     expect(Some(new Duration(0))) { tte() }
-    tte.send(SessionOpen(new DateTime(2011, 12, 30, 0, 0, 0)))
+    list.send(SessionOpen(new DateTime(2011, 12, 30, 0, 0, 0)))
     expect(Some(new Duration(0))) { tte() }
-    d.unset()
-    tte.send(SessionOpen(new DateTime(2011, 12, 23, 0, 0, 0)))
+    derivative.unset()
+    list.send(SessionOpen(new DateTime(2011, 12, 23, 0, 0, 0)))
     expect(None) { tte() }
   }
+
+  test("calculation - instrument is not set") {
+    val derivative = new InstrumentWrapper()
+    val tte = new TimeToExpiration(derivative)
+    val list = new IndicatorList(tte)
+    list.send(SessionOpen(new DateTime(2011, 12, 23, 0, 0, 0)))
+    expect(None) { tte() }
+  }
+
+  test("calculation - initial value") {
+    val derivativeInstrument = new Derivative {
+      def expiration = new DateMidnight(2011, 12, 26)
+      def underlying = new Instrument { def exchange = Nyse; def currency = "" }
+      def exchange = Nyse
+      def currency = ""
+    }
+    val derivative = new InstrumentWrapper(derivativeInstrument)
+    val tte = new TimeToExpiration(derivative)
+    val list = new IndicatorList(tte)
+    expect(None) { tte() }
+  }
+
+  test("calculation - non-data messages") {
+    val derivativeInstrument = new Derivative {
+      def expiration = new DateMidnight(2011, 12, 26)
+      def underlying = new Instrument { def exchange = Nyse; def currency = "" }
+      def exchange = Nyse
+      def currency = ""
+    }
+    val derivative = new InstrumentWrapper(derivativeInstrument)
+    val tte = new TimeToExpiration(derivative)
+    val list = new IndicatorList(tte)
+    list.send(EmptyMessage)
+    list.send(new Message { def marketTime = new DateTime(123) })
+    expect(None) { tte() }
+  }
+
+  test("calculation - non-derivative instrument") {
+    val nonDerivativeInstrument = new Instrument {
+      def exchange = Nyse
+      def currency = ""
+    }
+    val derivative = new InstrumentWrapper(nonDerivativeInstrument)
+    val tte = new TimeToExpiration(derivative)
+    val list = new IndicatorList(tte)
+    list.send(SessionOpen(new DateTime(2011, 12, 25, 0, 0, 0)))
+    expect(None) { tte() }
+  }
+
   test("alternative constructor") {
     val di = new Derivative {
       def expiration = new DateMidnight(0)
