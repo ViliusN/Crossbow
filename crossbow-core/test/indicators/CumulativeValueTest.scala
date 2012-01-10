@@ -22,40 +22,39 @@ import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 class CumulativeValueTest extends FunSuite {
-  class I(n: String) extends MutableIndicator[Double] {
-    def name = n
-    def dependencies = Empty
+  test("name") {
+    val target = new MutableIndicator[Double] { def name = "T"; def dependencies = Empty }
+    val cumulative = new CumulativeValue(target)
+    expect("Cumulative(T)") { cumulative.name }
   }
 
-  test("CumulativeValue indicator") {
-    val i1 = new I("A")
-    val i = new CumulativeValue(i1)
-    val l = new IndicatorList(i)
+  test("dependencies") {
+    val target = new MutableIndicator[Double] { def name = "T"; def dependencies = Empty }
+    val cumulative = new CumulativeValue(target)
+    expect(1) { cumulative.dependencies.size }
+  }
 
-    expect("Cumulative(A)") { i.name }
-    expect(1) { i.dependencies.size }
-    expect(None) { i() }
+  test("initial value") {
+    val target = new MutableIndicator[Double] { def name = "T"; def dependencies = Empty }
+    val cumulative = new CumulativeValue(target)
+    expect(0) { cumulative.value }
+  }
 
-    l.send(BarClose(new DateTime))
-    expect(None) { i() }
-
-    i1.set(1)
-    l.send(BarClose(new DateTime))
-    expect(1) { i.value }
-
-    l.send(BarClose(new DateTime))
-    expect(2) { i.value }
-
-    i1.set(0.001)
-    l.send(BarClose(new DateTime))
-    expect(2.001) { i.value }
-
-    i1.unset()
-    l.send(BarClose(new DateTime))
-    expect(None) { i() }
-
-    i1.set(100)
-    l.send(BarClose(new DateTime))
-    expect(102.001) { i.value }
+  test("calculation") {
+    val target = new MutableIndicator[Double] { def name = "T"; def dependencies = Empty }
+    val cumulative = new CumulativeValue(target)
+    target.set(12)
+    expect(0) { cumulative.value }
+    cumulative.send(BarClose(new DateTime))
+    expect(12) { cumulative.value }
+    cumulative.send(BarClose(new DateTime))
+    expect(24) { cumulative.value }
+    target.set(-1)
+    cumulative.send(BarClose(new DateTime))
+    cumulative.send(BarClose(new DateTime))
+    expect(22) { cumulative.value }
+    target.unset()
+    cumulative.send(BarClose(new DateTime))
+    expect(22) { cumulative.value }
   }
 }

@@ -20,8 +20,8 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 
 /** Calculates square root of the specified target indicator. */
-class Sqrt(target: Indicator[Double]) extends Power(target, 0.5) {
+class Sqrt(target: Indicator[Double]) extends Transformation(target)(
+  _.map(math.sqrt).filter(v => !v.isNaN && !v.isInfinity)
+) {
   override def name = "Sqrt("+target.name+")"
 }
-
-// TODO use Math.sqrt

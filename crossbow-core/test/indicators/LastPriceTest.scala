@@ -22,33 +22,33 @@ import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 class LastPriceTest extends FunSuite {
-  test("Last Price indicator") {
-    val s = new Stock("AA", Nasdaq, "USD")
-    val lt = new LastTrade(s)
-    val i = new LastPrice(lt)
-    expect("Last Price") { i.name }
-    expect(Set(lt)) { i.dependencies }
-    expect(None) { i() }
+  test("name") {
+    val lastTrade = new LastTrade(new Stock("AA", Nasdaq, "USD"))
+    val lastPrice = new LastPrice(lastTrade)
+    expect("Last Price") { lastPrice.name }
+  }
 
-    val t1 = Trade(s, 5, 100, new DateTime)
-    lt.send(t1)
-    //i.send(t1)
-    expect(5) { i.value }
+  test("dependencies") {
+    val lastTrade = new LastTrade(new Stock("AA", Nasdaq, "USD"))
+    val lastPrice = new LastPrice(lastTrade)
+    expect(Set(lastTrade)) { lastPrice.dependencies }
+  }
 
-    val t2 = Trade(s, 6.5, 100, new DateTime)
-    lt.send(t2)
-    //i.send(t2)
-    expect(6.5) { i.value }
+  test("initial value") {
+    val lastTrade = new LastTrade(new Stock("AA", Nasdaq, "USD"))
+    val lastPrice = new LastPrice(lastTrade)
+    expect(None) { lastPrice() }
+  }
 
-    lt.unset()
-    //i.send(EmptyMessage)
-    expect(None) { i() }
-
-    val t3 = Trade(s, 8, 100, new DateTime)
-    lt.send(t3)
-    //i.send(t3)
-    expect(8) { i.value }
+  test("calculation") {
+    val stock = new Stock("AA", Nasdaq, "USD")
+    val lastTrade = new LastTrade(stock)
+    val lastPrice = new LastPrice(lastTrade)
+    lastTrade.set(Trade(stock, 5, 100, new DateTime))
+    expect(Some(5)) { lastPrice() }
+    lastTrade.set(Trade(stock, 0.5, 100, new DateTime))
+    expect(Some(0.5)) { lastPrice() }
+    lastTrade.unset()
+    expect(None) { lastPrice() }
   }
 }
-
-// TODO update

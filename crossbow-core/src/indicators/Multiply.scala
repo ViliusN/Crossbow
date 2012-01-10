@@ -36,5 +36,3 @@ class Multiply(indicators: Indicator[Double]*) extends FunctionalIndicator[Doubl
     }
   }
 }
-
-// TODO MultiplySet

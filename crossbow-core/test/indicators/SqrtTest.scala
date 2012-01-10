@@ -33,7 +33,7 @@ class SqrtTest extends FunSuite {
   test("dependencies") {
     val target = new Variable(5.0)
     val indicator = new Sqrt(target)
-    expect(2) { indicator.dependencies.size }
+    expect(Set(target)) { indicator.dependencies }
   }
 
   test("calculation") {
