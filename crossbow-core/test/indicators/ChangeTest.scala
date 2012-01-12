@@ -42,46 +42,28 @@ class ChangeTest extends FunSuite {
   test("calculation") {
     val target = new I("A") with History
     val change = new Change(3, target)
-    val list = new IndicatorList(change)
-
     expect(None) { change() }
-
     target.set(1)
-    list.send(EmptyMessage)
     expect(None) { change() }
-
     target.history.update()
     target.set(2)
     target.history.update()
-    list.send(EmptyMessage)
     expect(None) { change() }
-
     target.set(3)
     target.history.update()
-    list.send(EmptyMessage)
     expect(Some(2)) { change() }
-
     target.set(4)
-    list.send(EmptyMessage)
     expect(Some(3)) { change() }
-
     target.history.update()
-    list.send(EmptyMessage)
     expect(Some(2)) { change() }
-
     target.unset()
-    list.send(EmptyMessage)
     expect(None) { change() }
-
     target.history.update()
     target.set(8)
-    list.send(EmptyMessage)
     expect(Some(5)) { change() }
     target.history.update()
-    list.send(EmptyMessage)
     expect(Some(4)) { change() }
     target.history.update()
-    list.send(EmptyMessage)
     expect(None) { change() }
   }
 
@@ -93,28 +75,16 @@ class ChangeTest extends FunSuite {
   test("Change test - last bar") {
     val target = new I("A") with History
     val change = new Change(1, target)
-    val list = new IndicatorList(change)
-
     expect(None) { change() }
-
     target.set(1)
-    list.send(EmptyMessage)
     expect(None) { change() }
-
     target.history.update()
-    list.send(EmptyMessage)
     expect(Some(0)) { change() }
-
     target.set(3)
-    list.send(EmptyMessage)
     expect(Some(2)) { change() }
-
     target.history.update()
-    list.send(EmptyMessage)
     expect(Some(0)) { change() }
-
     target.set(6)
-    list.send(EmptyMessage)
     expect(Some(3)) { change() }
   }
 }

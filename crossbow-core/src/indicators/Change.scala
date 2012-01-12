@@ -24,15 +24,11 @@ import lt.norma.crossbow.core._
   *
   * `period` cannot be less than 1. */
 class Change(period: Int, target: Indicator[Double] with History)
-    extends FunctionalIndicator[Double] {
-  def name = "Change("+period+"; "+target.name+")"
-  private val historicalValue = new HistoryAt(period - 1, target)
-  def dependencies = Set(target, historicalValue)
-
-  def calculate = (target(), historicalValue()) match {
+  extends Transformation2(target, new HistoryAt(period - 1, target))({
     case (Some(v), Some(hv)) => Some(v - hv)
     case _ => None
-  }
-
+  }) {
+  override def name = "Change("+period+"; "+target.name+")"
+  // Check for invalid period values
   if(period < 1) throw Exception("Period of "+name+" indicator cannot be less than 1")
 }

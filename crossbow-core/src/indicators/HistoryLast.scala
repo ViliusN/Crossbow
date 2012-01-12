@@ -20,7 +20,6 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 
 /** Stores the most recent historical value of the specified target indicator. */
-class HistoryLast[Value](target: Indicator[Value] with History)
-    extends HistoryAt[Value](0, target) {
+class HistoryLast[Value](target: Indicator[Value] with History) extends HistoryAt(0, target) {
   override def name = "HistoryLast("+target.name+")"
 }

@@ -30,9 +30,8 @@ class TransformationN[TargetValue, Value]
 /** Apply specified transformation function to the target indicator. */
 class Transformation[TargetValue, Value](target: Indicator[TargetValue])
     (transformation: Option[TargetValue] => Option[Value])
-    extends TransformationN[TargetValue, Value](target)({
-      case Seq(v) => transformation(v)
-    })
+    extends TransformationN[TargetValue, Value](target)({ case Seq(v) => transformation(v) }) {
+}
 
 /** Apply specified transformation function to two target indicators. */
 class Transformation2[TargetValue1, TargetValue2, Value]
