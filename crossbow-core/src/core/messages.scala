@@ -47,5 +47,5 @@ trait Response extends Message { def request: Request }
 case class FailedRequest(request: Request, exception: java.lang.Exception)
     extends Response with ErrorMessage
 
-/** Empty message. Should be used for testing purposes only. */
+/** Empty message. Useful for testing. */
 case object EmptyMessage extends Message

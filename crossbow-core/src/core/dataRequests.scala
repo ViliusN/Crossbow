@@ -23,6 +23,10 @@ package lt.norma.crossbow.core
 case object Connect extends Request
 /** Request for the provider to drop connection from it's data source. */
 case object Disconnect extends Request
+/** Response to connection request. */
+case object Connected extends Response { def request = Connect }
+/** Response to disconnection request. */
+case object Disconnected extends Response { def request = Disconnect }
 
 /** Stock look-up request by the specified symbol. */
 case class StockLookupRequest(symbol: String) extends Request
