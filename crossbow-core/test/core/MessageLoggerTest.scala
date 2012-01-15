@@ -18,6 +18,7 @@
 package lt.norma.crossbow.core
 
 import java.io.StringWriter
+import lt.norma.crossbow.core.messages._
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
@@ -39,6 +40,7 @@ class MessageLoggerTest extends FunSuite {
     logger.send(mockErrorMessage)
     expect("mockMessage\nmockData\nmockErrorMessage\n") { out.toString }
   }
+
   test("LogLevel.ExceptData") {
     val out = new StringWriter()
     val logger = new MessageLogger(ExceptData, out)
@@ -47,6 +49,7 @@ class MessageLoggerTest extends FunSuite {
     logger.send(mockErrorMessage)
     expect("mockMessage\nmockErrorMessage\n") { out.toString }
   }
+
   test("LogLevel.ErrorsOnly") {
     val out = new StringWriter()
     val logger = new MessageLogger(ErrorsOnly, out)

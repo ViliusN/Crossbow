@@ -17,6 +17,7 @@
 
 package lt.norma.crossbow.core
 
+import Exchange._
 import org.scalatest.FunSuite
 import org.joda.time.DateTimeZone
 

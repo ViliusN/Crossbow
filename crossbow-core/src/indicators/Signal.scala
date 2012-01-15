@@ -15,7 +15,9 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
+
+import lt.norma.crossbow.core.Direction
 
 /** Extend this trait to create trading signals. */
 trait Signal extends Indicator[Direction] {

@@ -15,7 +15,7 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.messages
 
 import org.joda.time.DateTime
 
@@ -34,7 +34,7 @@ trait Data extends Message {
 
 /** Represents error message. Should be used to inform listeners about any abnormal conditions which
   * are not serious enough to be thrown as exceptions. */
-trait ErrorMessage extends Message { def exception: java.lang.Exception }
+trait ErrorMessage extends Message { def exception: Exception }
 
 /** Represents request message. Every data node should document all supported requests and responses
   * to them. */
@@ -44,7 +44,7 @@ trait Request extends Message
 trait Response extends Message { def request: Request }
 
 /** Response to a request which could not be fulfilled. */
-case class FailedRequest(request: Request, exception: java.lang.Exception)
+case class FailedRequest(request: Request, exception: Exception)
     extends Response with ErrorMessage
 
 /** Empty message. Useful for testing. */

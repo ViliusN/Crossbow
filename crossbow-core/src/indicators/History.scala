@@ -15,7 +15,7 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
 
 /** Mixin this trait at declaration or creation of concrete indicators to enable collection of
   * historical values.

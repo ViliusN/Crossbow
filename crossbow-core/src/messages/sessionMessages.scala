@@ -15,16 +15,23 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.messages
 
 import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormatter
 
-/** Holds information about a trade.
-  *
-  * @param instrument  financial instrument
-  * @param price       price of the trade
-  * @param size        number of contracts traded (volume)
-  * @param marketTime  time of the trade */
-case class Trade(instrument: Instrument, price: BigDecimal, size: Long, marketTime: DateTime)
-    extends Data
+/** Session opening data message. */
+case class SessionOpen(marketTime: DateTime) extends Data
+/** Session closing data message. */
+case class SessionClose(marketTime: DateTime) extends Data
+
+/** Bar opening data message. */
+case class BarOpen(marketTime: DateTime) extends Data
+/** Bar closing data message. */
+case class BarClose(marketTime: DateTime) extends Data
+
+/** Message sent during loading of the system. Usually this is the first message the provider sends
+  * after starting up. */
+case object Load extends Message
+/** Message send before closing the system. Usually this is the last message the provider sends
+  * before shutting down. */
+case object Unload extends Message

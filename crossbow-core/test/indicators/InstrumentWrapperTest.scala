@@ -15,14 +15,14 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.indicators
+package lt.norma.crossbow.core.indicators
 
 import lt.norma.crossbow.core._
 import org.scalatest.FunSuite
 
 class InstrumentWrapperTest extends FunSuite {
-  val s1 = new Stock("S1", Nasdaq, "USD")
-  val s2 = new Stock("S2", Nyse, "USD")
+  val s1 = new Stock("S1", Exchange.Nasdaq, "USD")
+  val s2 = new Stock("S2", Exchange.Nyse, "USD")
 
   test("constructor with optional instrument - Some") {
     val i = new InstrumentWrapper(Some(s1))

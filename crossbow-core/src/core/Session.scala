@@ -15,6 +15,8 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.core
+
 import org.joda.time.LocalTime
 
 /** Represents trading session. */

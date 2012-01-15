@@ -15,9 +15,10 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.indicators
+package lt.norma.crossbow.core.indicators
 
 import lt.norma.crossbow.core._
+import lt.norma.crossbow.core.messages._
 
 /** Requests options chain at the opening of trading session. */
 class OptionsChain(underlying: Instrument, dataProvider: DataNode)

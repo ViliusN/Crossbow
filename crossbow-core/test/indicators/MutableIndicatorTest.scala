@@ -15,7 +15,7 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
 
 import org.joda.time.DateTime
 import org.scalatest.FunSuite

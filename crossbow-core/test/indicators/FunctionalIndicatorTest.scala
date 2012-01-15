@@ -15,23 +15,27 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
 
 import org.joda.time.DateTime
+import org.scalatest.FunSuite
 
-/** Session opening data message. */
-case class SessionOpen(marketTime: DateTime) extends Data
-/** Session closing data message. */
-case class SessionClose(marketTime: DateTime) extends Data
+class FunctionalIndicatorTest extends FunSuite {
+  test("defined") {
+    val indicator = new FunctionalIndicator[String] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      def calculate = Some("ABC")
+    }
+    expect(Some("ABC")) { indicator() }
+  }
 
-/** Bar opening data message. */
-case class BarOpen(marketTime: DateTime) extends Data
-/** Bar closing data message. */
-case class BarClose(marketTime: DateTime) extends Data
-
-/** Message sent during loading of the system. Usually this is the first message the provider sends
-  * after starting up. */
-case class Load() extends Message
-/** Message send before closing the system. Usually this is the last message the provider sends
-  * before shutting down. */
-case class Unload() extends Message
+  test("undefined") {
+    val indicator = new FunctionalIndicator[String] {
+      val name = ""
+      val dependencies = Set[Indicator[_]]()
+      def calculate = None
+    }
+    expect(None) { indicator() }
+  }
+}

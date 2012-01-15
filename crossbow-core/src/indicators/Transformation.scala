@@ -15,7 +15,7 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
 
 /** Apply specified transformation function to multiple target indicators of the same type. */
 class TransformationN[TargetValue, Value]

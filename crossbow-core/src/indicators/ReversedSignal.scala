@@ -15,7 +15,7 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
 
 /** Holds value, opposite to that of the specified signal. */
 class ReversedSignal(target: Signal) extends FunctionalSignal {

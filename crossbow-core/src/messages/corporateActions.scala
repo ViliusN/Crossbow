@@ -15,21 +15,20 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.messages
 
-/** Indicator, whose value can be set and unset from the outside. */
-trait MutableIndicator[Value] extends Indicator[Value] {
-  private var _value: Option[Value] = None
+import lt.norma.crossbow.core.Instrument
+import org.joda.time.DateMidnight
 
-  final def optionalValue: Option[Value] =
-    try { _value.orElse(Some(default)) } catch { case _: Indicator.ValueNotSet => None }
+/** Stock dividend corporate event. */
+case class Dividend(instrument: Instrument, amount: BigDecimal, exDividendDate: DateMidnight,
+    paymentDate: DateMidnight) extends Message
 
-  /** Sets current value of the indicator. */
-  final def set(newValue: Option[Value]) { _value = newValue }
-
-  /** Sets current value of the indicator. */
-  final def set(newValue: Value) { _value = Some(newValue) }
-
-  /** Unsets current value of the indicator. */
-  final def unset() { _value = None }
-}
+/** Stock split corporate event.
+  *
+  * Example:
+  * {{{
+  * StockSplit(stock, 2, 1, date)  // Represents a 2 to 1 split
+  * }}} */
+case class StockSplit(instrument: Instrument, ratioAfter: Int, ratioBefore: Int, date: DateMidnight)
+    extends Message

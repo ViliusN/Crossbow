@@ -15,7 +15,9 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
+
+import lt.norma.crossbow.core.{ Dependant, Exception }
 
 /** Base trait for any indicator. Most custom indicators extend `MutableIndicator`,
   * `FunctionalIndicator`, or `ListenerIndicator`, instead of directly extending `Indicator`. */
@@ -71,5 +73,5 @@ trait Indicator[Value] extends Dependant[Indicator[_]] {
 
 object Indicator {
   /** Exception used when requested indicator's value is not defined. */
-  case class ValueNotSet() extends java.lang.Exception("Indicator's value has not been set")
+  case class ValueNotSet() extends Exception("Indicator's value has not been set")
 }

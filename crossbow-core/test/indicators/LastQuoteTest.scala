@@ -15,16 +15,17 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.indicators
+package lt.norma.crossbow.core.indicators
 
 import lt.norma.crossbow.core._
+import lt.norma.crossbow.core.messages._
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 class LastQuoteTest extends FunSuite {
   test("LastQuote") {
-    val s = new Stock("AA", Nasdaq, "USD")
-    val sOther = new Stock("AA", Nyse, "USD")
+    val s = new Stock("AA", Exchange.Nasdaq, "USD")
+    val sOther = new Stock("AA", Exchange.Nyse, "USD")
     val i = new LastQuote(s)
     expect("Last Quote") { i.name }
     expect(1) { i.dependencies.size }
@@ -57,7 +58,7 @@ class LastQuoteTest extends FunSuite {
     expect(q5) { i.value }
   }
   test("empty instrument") {
-    val s = new Stock("AA", Nasdaq, "USD")
+    val s = new Stock("AA", Exchange.Nasdaq, "USD")
     val i = new LastQuote()
     expect(None) { i() }
     expect(None) { i.instrument() }
@@ -73,7 +74,7 @@ class LastQuoteTest extends FunSuite {
     expect(None) { i() }
   }
   test("constructors") {
-    val s = new Stock("AA", Nasdaq, "USD")
+    val s = new Stock("AA", Exchange.Nasdaq, "USD")
     expect(Some(s)) {
       val i = new LastQuote(new InstrumentWrapper(s))
       i.instrument()

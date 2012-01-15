@@ -17,6 +17,8 @@
 
 package lt.norma.crossbow.core
 
+import lt.norma.crossbow.core.messages._
+
 /** Manages list of data listeners and dispatches data messages to them. Guarantees that
   * dependencies receive messages before the listener depending on them. Otherwise the order in
   * which the listeners get updated is undefined and should not be relied on. */

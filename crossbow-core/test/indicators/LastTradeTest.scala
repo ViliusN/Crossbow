@@ -15,16 +15,17 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.indicators
+package lt.norma.crossbow.core.indicators
 
 import lt.norma.crossbow.core._
+import lt.norma.crossbow.core.messages._
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
 class LastTradeTest extends FunSuite {
   test("LastTrade") {
-    val s = new Stock("AA", Nasdaq, "USD")
-    val sOther = new Stock("AA", Nyse, "USD")
+    val s = new Stock("AA", Exchange.Nasdaq, "USD")
+    val sOther = new Stock("AA", Exchange.Nyse, "USD")
     val i = new LastTrade(s)
 
     expect("Last Trade") { i.name }
@@ -58,7 +59,7 @@ class LastTradeTest extends FunSuite {
     expect(t5) { i.value }
   }
   test("empty instrument") {
-    val s = new Stock("AA", Nasdaq, "USD")
+    val s = new Stock("AA", Exchange.Nasdaq, "USD")
     val i = new LastTrade()
     expect(None) { i() }
     expect(None) { i.instrument() }
@@ -74,7 +75,7 @@ class LastTradeTest extends FunSuite {
     expect(None) { i() }
   }
   test("constructors") {
-    val s = new Stock("AA", Nasdaq, "USD")
+    val s = new Stock("AA", Exchange.Nasdaq, "USD")
     expect(Some(s)) {
       val i = new LastTrade(new InstrumentWrapper(s))
       i.instrument()

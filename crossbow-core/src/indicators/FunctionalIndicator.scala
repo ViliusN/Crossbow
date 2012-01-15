@@ -15,7 +15,7 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
 
 /** Functional indicators are useful to wrap one function as an indicator. Value of this indicator
   * is recalculated every time it's accessed. There are no methods to set or unset functional

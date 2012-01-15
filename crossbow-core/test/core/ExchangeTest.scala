@@ -21,14 +21,18 @@ import org.scalatest.FunSuite
 import org.joda.time.DateTimeZone
 
 class ExchangeTest extends FunSuite {
+  import Exchange._
+
   test("nasdaq") {
     expect("NASDAQ") { Nasdaq.name }
     expect(DateTimeZone.forID("America/New_York")) { Nasdaq.timeZone }
   }
+
   test("nyse") {
     expect("NYSE") { Nyse.name }
     expect(DateTimeZone.forID("America/New_York")) { Nyse.timeZone }
   }
+
   test("cboe") {
     expect("CBOE") { Cboe.name }
     expect(DateTimeZone.forID("America/Chicago")) { Cboe.timeZone }

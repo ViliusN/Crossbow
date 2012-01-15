@@ -15,27 +15,18 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.messages
 
+import lt.norma.crossbow.core.Instrument
 import org.joda.time.DateTime
-import org.scalatest.FunSuite
 
-class FunctionalIndicatorTest extends FunSuite {
-  test("defined") {
-    val indicator = new FunctionalIndicator[String] {
-      val name = ""
-      val dependencies = Set[Indicator[_]]()
-      def calculate = Some("ABC")
-    }
-    expect(Some("ABC")) { indicator() }
-  }
-
-  test("undefined") {
-    val indicator = new FunctionalIndicator[String] {
-      val name = ""
-      val dependencies = Set[Indicator[_]]()
-      def calculate = None
-    }
-    expect(None) { indicator() }
-  }
-}
+/** Holds information about a quote.
+  *
+  * @param instrument  financial instrument
+  * @param askPrice    ask price of the quote
+  * @param askSize     number of contracts offered at ask price
+  * @param bidPrice    bid price of the quote
+  * @param bidSize     number of contracts at bid price
+  * @param marketTime  time of the quote */
+case class Quote(instrument: Instrument, askPrice: BigDecimal, askSize: Long, bidPrice: BigDecimal,
+    bidSize: Long, marketTime: DateTime) extends Data

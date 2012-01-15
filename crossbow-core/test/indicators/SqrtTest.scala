@@ -15,10 +15,11 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.indicators
+package lt.norma.crossbow.core.indicators
 
-import lt.norma.crossbow.core._
-import lt.norma.crossbow.testutils._
+import lt.norma.crossbow.core.IndicatorList
+import lt.norma.crossbow.core.messages.EmptyMessage
+import lt.norma.crossbow.testutils.approx
 import org.scalatest.FunSuite
 
 class SqrtTest extends FunSuite {

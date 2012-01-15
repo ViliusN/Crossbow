@@ -15,9 +15,10 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.indicators
+package lt.norma.crossbow.core.indicators
 
 import lt.norma.crossbow.core._
+import lt.norma.crossbow.core.messages._
 import org.joda.time.DateTime
 
 /** Records market time of the most recent data message. */

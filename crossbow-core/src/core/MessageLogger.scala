@@ -18,6 +18,7 @@
 package lt.norma.crossbow.core
 
 import java.io.Writer
+import lt.norma.crossbow.core.messages.{ Data, ErrorMessage, Message }
 
 /** Writes received messages to the `out` stream depending on the specified `logLevel`. Useful for
   * testing and debugging. The output stream is flushed following every data message, but is never

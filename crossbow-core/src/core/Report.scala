@@ -17,7 +17,8 @@
 
 package lt.norma.crossbow.core
 
-import java.io._
+import lt.norma.crossbow.core.indicators.{ Indicator, History }
+import java.io.{ BufferedWriter, FileWriter }
 
 /** Extend this trait to create custom report generators. */
 trait Report {

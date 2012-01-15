@@ -15,18 +15,21 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
 
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormatter
+/** Indicator, whose value can be set and unset from the outside. */
+trait MutableIndicator[Value] extends Indicator[Value] {
+  private var _value: Option[Value] = None
 
-/** Holds information about a quote.
-  *
-  * @param instrument  financial instrument
-  * @param askPrice    ask price of the quote
-  * @param askSize     number of contracts offered at ask price
-  * @param bidPrice    bid price of the quote
-  * @param bidSize     number of contracts at bid price
-  * @param marketTime  time of the quote */
-case class Quote(instrument: Instrument, askPrice: BigDecimal, askSize: Long, bidPrice: BigDecimal,
-    bidSize: Long, marketTime: DateTime) extends Data
+  final def optionalValue: Option[Value] =
+    try { _value.orElse(Some(default)) } catch { case _: Indicator.ValueNotSet => None }
+
+  /** Sets current value of the indicator. */
+  final def set(newValue: Option[Value]) { _value = newValue }
+
+  /** Sets current value of the indicator. */
+  final def set(newValue: Value) { _value = Some(newValue) }
+
+  /** Unsets current value of the indicator. */
+  final def unset() { _value = None }
+}

@@ -17,6 +17,9 @@
 
 package lt.norma.crossbow.core
 
+import lt.norma.crossbow.core.messages.{ BarClose, Message }
+import lt.norma.crossbow.core.indicators.{ Indicator, History }
+
 /** Stores list of indicators and their dependencies. Only top level items have to be provided,
   * their dependencies in full depth will be automatically added to the deep list.
   *
@@ -72,8 +75,10 @@ class IndicatorList(indicators: Indicator[_]*) extends Listener {
   }
 
   // Send IndicatorCreated message to all indicators on creation of the list.
-  dispatchMessage(IndicatorCreated)
+  dispatchMessage(IndicatorList.IndicatorCreated)
 }
 
-/** Message sent after creation of indicator list. */
-case object IndicatorCreated extends Message
+object IndicatorList {
+  /** Message sent after creation of indicator list. */
+  case object IndicatorCreated extends Message
+}

@@ -17,12 +17,17 @@
 
 package lt.norma.crossbow.core
 
-/** Represents general exception with specified message and optional cause. */
-case class Exception(message: String, cause: Throwable = null)
-    extends java.lang.Exception(message, cause)
+object Exception {
+  /** Factory method to create exceptions. */
+  def apply(message: String, cause: Throwable = null) = new Exception(message, cause)
 
-case class Warning(message: String, cause: Throwable = null)
-    extends java.lang.Exception(message, cause)
+  /** Exception thrown when some requested features are not supported. */
+  case class NotSupported(message: String) extends Exception(message)
+}
 
-/** Exception thrown when some requested features are not supported. */
-case class NotSupported(message: String) extends java.lang.Exception(message)
+trait Warning
+
+object Warning {
+  /** Factory method to create warning exceptions. */
+  def apply(message: String, cause: Throwable = null) = new Exception(message, cause) with Warning
+}

@@ -15,9 +15,10 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.indicators
+package lt.norma.crossbow.core.indicators
 
-import lt.norma.crossbow.core._
+import lt.norma.crossbow.core.IndicatorList
+import lt.norma.crossbow.core.messages.{ BarClose, BarOpen, EmptyMessage }
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
 

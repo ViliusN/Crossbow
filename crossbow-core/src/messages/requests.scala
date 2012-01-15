@@ -15,16 +15,16 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.messages
 
-/* This file contains data requests which should be supported by most data providers. */
+import lt.norma.crossbow.core.Instrument
 
 /** Request for the provider to establish connection to it's data source. */
 case object Connect extends Request
-/** Request for the provider to drop connection from it's data source. */
-case object Disconnect extends Request
 /** Response to connection request. */
 case object Connected extends Response { def request = Connect }
+/** Request for the provider to drop connection from it's data source. */
+case object Disconnect extends Request
 /** Response to disconnection request. */
 case object Disconnected extends Response { def request = Disconnect }
 

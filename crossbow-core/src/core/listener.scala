@@ -17,6 +17,8 @@
 
 package lt.norma.crossbow.core
 
+import lt.norma.crossbow.core.messages._
+
 /** Receives messages. Instances of `BasicListener` cannot receive data messages directly from data
   * providers. Therefore this trait should be implemented only to create data listeners which need
   * some special data handling. For example, `Indicator`s implement `BasicListener` because they

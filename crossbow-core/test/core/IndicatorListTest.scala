@@ -17,6 +17,8 @@
 
 package lt.norma.crossbow.core
 
+import lt.norma.crossbow.core.indicators._
+import lt.norma.crossbow.core.messages._
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
@@ -378,8 +380,8 @@ class IndicatorListTest  extends FunSuite {
     val target2 = new LastMessage
     val target3 = new LastMessage
     val list = new IndicatorList(target1, target2)
-    expect(Some(IndicatorCreated)) { target1() }
-    expect(Some(IndicatorCreated)) { target2() }
+    expect(Some(IndicatorList.IndicatorCreated)) { target1() }
+    expect(Some(IndicatorList.IndicatorCreated)) { target2() }
     expect(None) { target3() }
   }
 }

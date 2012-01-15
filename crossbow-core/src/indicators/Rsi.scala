@@ -15,9 +15,9 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.indicators
+package lt.norma.crossbow.core.indicators
 
-import lt.norma.crossbow.core._
+import lt.norma.crossbow.core.messages.BarClose
 
 /** Calculates Relative Strength Index of the specified indicator. Indicator's value is not set
   * until there are at least `period` bars collected.

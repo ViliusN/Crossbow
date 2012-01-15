@@ -15,10 +15,11 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
 
-import org.scalatest.FunSuite
+import lt.norma.crossbow.core.Empty
 import ImplicitValueConverter._
+import org.scalatest.FunSuite
 
 class TransformationTest extends FunSuite {
   test("TransformationN - name") {

@@ -15,19 +15,13 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow
 
-import org.joda.time.DateMidnight
+import org.scalatest.TestFailedException
 
-/** Stock dividend corporate event. */
-case class Dividend(instrument: Instrument, amount: BigDecimal, exDividendDate: DateMidnight,
-    paymentDate: DateMidnight) extends Message
-
-/** Stock split corporate event.
-  *
-  * Example:
-  * {{{
-  * StockSplit(stock, 2, 1, date)  // Represents a 2 to 1 split
-  * }}} */
-case class StockSplit(instrument: Instrument, ratioAfter: Int, ratioBefore: Int, date: DateMidnight)
-    extends Message
+package object testutils {
+  def approx(expected: Double, e: Double)(value: => Double) {
+    if(value < expected - e || value > expected + e) throw new TestFailedException(
+      "Expected "+expected+" ±"+e+", but got "+value, 0)
+  }
+}

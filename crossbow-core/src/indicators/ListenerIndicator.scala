@@ -15,9 +15,10 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
 
-object ImplicitValueConverter {
-  /** Implicitly convert specified `Value` to `Option[value]` */
-  implicit def valueToOption[Value](v: Value): Option[Value] = Some(v)
-}
+import lt.norma.crossbow.core.BasicListener
+
+/** Indicator, which listens to data messages and sets it's own value based on the received data.
+  * `ListenerIndicator`'s value can also be set and unset from the outside. */
+trait ListenerIndicator[Value] extends MutableIndicator[Value] with BasicListener

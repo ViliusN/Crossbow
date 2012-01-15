@@ -15,7 +15,9 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
+
+import lt.norma.crossbow.core.Direction._
 
 /** Holds `Direction.Long` if the amount of long signals is greater than the amount of short
   * and flat signals combined. Holds `Direction.Short` if the amount of short signals is greater
@@ -28,9 +30,9 @@ class MostSignals(signals: Signal*) extends FunctionalSignal {
     val shortCount = signals.count(_.isShort)
     val total = signals.size
     if(longCount > total - longCount) {
-      Some(Direction.Long)
+      Some(Long)
     } else if(shortCount > total - shortCount) {
-      Some(Direction.Short)
+      Some(Short)
     } else {
       None
     }

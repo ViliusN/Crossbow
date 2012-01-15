@@ -21,6 +21,8 @@ import org.joda.time.{ DateMidnight, Days, Duration }
 import org.scalatest.FunSuite
 
 class DerivativeTest extends FunSuite {
+  import Exchange._
+
   test("isExpired") {
     val instrument = new Instrument { val currency = "USD"; val exchange = Nasdaq }
     val derivative = new Derivative {

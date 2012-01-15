@@ -15,8 +15,9 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.core
+package lt.norma.crossbow.core.indicators
 
+import lt.norma.crossbow.core.Direction._
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
@@ -25,7 +26,7 @@ class SignalTest extends FunSuite {
     val signal = new Signal {
       def name = ""
       def dependencies = Set[Indicator[_]]()
-      def optionalValue = Some(Direction.Long)
+      def optionalValue = Some(Long)
     }
     assert(signal.isLong)
   }
@@ -34,7 +35,7 @@ class SignalTest extends FunSuite {
     val signal = new Signal {
       def name = ""
       def dependencies = Set[Indicator[_]]()
-      def optionalValue = Some(Direction.Short)
+      def optionalValue = Some(Short)
     }
     assert(!signal.isLong)
   }
@@ -52,7 +53,7 @@ class SignalTest extends FunSuite {
     val signal = new Signal {
       def name = ""
       def dependencies = Set[Indicator[_]]()
-      def optionalValue = Some(Direction.Long)
+      def optionalValue = Some(Long)
     }
     assert(!signal.isShort)
   }
@@ -61,7 +62,7 @@ class SignalTest extends FunSuite {
     val signal = new Signal {
       def name = ""
       def dependencies = Set[Indicator[_]]()
-      def optionalValue = Some(Direction.Short)
+      def optionalValue = Some(Short)
     }
     assert(signal.isShort)
   }
@@ -79,7 +80,7 @@ class SignalTest extends FunSuite {
     val signal = new Signal {
       def name = ""
       def dependencies = Set[Indicator[_]]()
-      def optionalValue = Some(Direction.Long)
+      def optionalValue = Some(Long)
     }
     assert(!signal.isFlat)
   }
@@ -88,7 +89,7 @@ class SignalTest extends FunSuite {
     val signal = new Signal {
       def name = ""
       def dependencies = Set[Indicator[_]]()
-      def optionalValue = Some(Direction.Short)
+      def optionalValue = Some(Short)
     }
     assert(!signal.isFlat)
   }

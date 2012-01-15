@@ -15,10 +15,11 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.indicators
+package lt.norma.crossbow.core.indicators
 
-import lt.norma.crossbow.core._
-import lt.norma.crossbow.testutils._
+import lt.norma.crossbow.core.{ IndicatorList, Exchange, Stock }
+import lt.norma.crossbow.core.messages.{ Quote, EmptyMessage }
+import lt.norma.crossbow.testutils.approx
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
 
@@ -26,7 +27,7 @@ class SpreadTest extends FunSuite {
   val e = 0.000001
 
   test("Spread test") {
-    val s = new Stock("AA", Nasdaq, "USD")
+    val s = new Stock("AA", Exchange.Nasdaq, "USD")
     val lq = new LastQuote(s)
     val ask = new Ask(lq)
     val bid = new Bid(lq)

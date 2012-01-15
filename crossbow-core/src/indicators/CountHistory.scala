@@ -15,9 +15,10 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.indicators
+package lt.norma.crossbow.core.indicators
 
 import lt.norma.crossbow.core._
+import lt.norma.crossbow.core.messages._
 
 /** Counts number of bars where the specified indicator was set to a value. */
 class CountHistory(indicator: Indicator[_]) extends ListenerIndicator[Int] {

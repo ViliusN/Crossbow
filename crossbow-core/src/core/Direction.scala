@@ -20,6 +20,7 @@ package lt.norma.crossbow.core
 sealed trait Direction {
   def reversed: Direction
 }
+
 object Direction {
   case object Long extends Direction { def reversed = Short }
   case object Short extends Direction { def reversed = Long }

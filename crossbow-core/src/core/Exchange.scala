@@ -27,15 +27,17 @@ trait Exchange {
   def timeZone: DateTimeZone
 }
 
-case object Nasdaq extends Exchange {
-  def name = "NASDAQ"
-  def timeZone = DateTimeZone.forID("America/New_York")
-}
-case object Nyse extends Exchange {
-  def name = "NYSE"
-  def timeZone = DateTimeZone.forID("America/New_York")
-}
-case object Cboe extends Exchange {
-  def name = "CBOE"
-  def timeZone = DateTimeZone.forID("America/Chicago")
+object Exchange {
+  case object Nasdaq extends Exchange {
+    def name = "NASDAQ"
+    def timeZone = DateTimeZone.forID("America/New_York")
+  }
+  case object Nyse extends Exchange {
+    def name = "NYSE"
+    def timeZone = DateTimeZone.forID("America/New_York")
+  }
+  case object Cboe extends Exchange {
+    def name = "CBOE"
+    def timeZone = DateTimeZone.forID("America/Chicago")
+  }
 }

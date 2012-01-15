@@ -17,6 +17,7 @@
 
 package lt.norma.crossbow.core
 
+import lt.norma.crossbow.core.messages._
 import scala.actors.Actor
 import scala.actors.Actor._
 
