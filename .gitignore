@@ -1,6 +1,6 @@
-target/
-lib/
-project/
+out/
 .git/
 crossbow-core-*.jar
 .geany
+.idea/
+*.iml
