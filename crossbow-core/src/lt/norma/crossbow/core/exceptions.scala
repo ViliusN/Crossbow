@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,18 +15,19 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.core
+
 object Exception {
-  /**Factory method to create exceptions. */
+  /** Factory method to create exceptions. */
   def apply(message: String, cause: Throwable = null) = new Exception(message, cause)
 
-  /**Exception thrown when some requested features are not supported. */
+  /** Exception thrown when some requested features are not supported. */
   case class NotSupported(message: String) extends Exception(message)
-
 }
 
 trait Warning
 
 object Warning {
-  /**Factory method to create warning exceptions. */
+  /** Factory method to create warning exceptions. */
   def apply(message: String, cause: Throwable = null) = new Exception(message, cause) with Warning
 }

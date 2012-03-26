@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,5 +15,7 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
-/**Extend this trait to create custom data nodes. */
+package lt.norma.crossbow.core
+
+/** Extend this trait to create custom data nodes. */
 trait DataNode extends DataProvider with Listener

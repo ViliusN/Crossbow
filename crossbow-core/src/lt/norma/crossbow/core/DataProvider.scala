@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,12 +15,13 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
-import lt.norma.crossbow.messages._
+package lt.norma.crossbow.core
+
 import lt.norma.crossbow.messages.Message
 
-/**Manages list of data listeners and dispatches data messages to them. Guarantees that
- * dependencies receive messages before the listener depending on them. Otherwise the order in
- * which the listeners get updated is undefined and should not be relied on. */
+/** Manages list of data listeners and dispatches data messages to them. Guarantees that
+  * dependencies receive messages before the listener depending on them. Otherwise the order in
+  * which the listeners get updated is undefined and should not be relied on. */
 trait DataProvider {
 
   class RootListener(deps: Listener*) extends Dependant[Listener] {
@@ -31,23 +30,23 @@ trait DataProvider {
 
   private var root = new RootListener
 
-  /**Deep list of data listeners served by this provider. */
+  /** Deep list of data listeners served by this provider. */
   def listeners = root.deepDependencies
 
-  /**Sends out data messages to the listeners. */
+  /** Sends out data messages to the listeners. */
   def dispatch(message: Message) {
     listeners foreach {
       _ send message
     }
   }
 
-  /**Adds the specified listeners. */
+  /** Adds the specified listeners. */
   def add(listeners: Listener*) {
     root = new RootListener((listeners.toList ::: root.shallowDependencies): _*)
   }
 
-  /**Removes the specified listeners. Listeners will still remain in deep list if other listeners
-   * depend on them. */
+  /** Removes the specified listeners. Listeners will still remain in deep list if other listeners
+    * depend on them. */
   def remove(listeners: Listener*) {
     root = new RootListener((root.shallowDependencies.filterNot(l => listeners.contains(l))): _*)
   }

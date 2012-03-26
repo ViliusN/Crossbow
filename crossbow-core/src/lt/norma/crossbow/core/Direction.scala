@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,18 +15,13 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.core
+
 sealed trait Direction {
   def reversed: Direction
 }
 
 object Direction {
-
-  case object Long extends Direction {
-    def reversed = Short
-  }
-
-  case object Short extends Direction {
-    def reversed = Long
-  }
-
+  case object Long extends Direction { def reversed = Short }
+  case object Short extends Direction { def reversed = Long }
 }

@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,5 +15,7 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
-/**Stock financial instrument. */
+package lt.norma.crossbow.core
+
+/** Stock financial instrument. */
 case class Stock(symbol: String, exchange: Exchange, currency: String) extends Instrument

@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,17 +15,17 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
-import org.joda.time.format.DateTimeFormatter
+package lt.norma.crossbow.core
 
-/**A trait for all options. Extend this trait to create custom option instruments. */
+/** A trait for all options. Extend this trait to create custom option instruments. */
 trait OptionInstrument extends Derivative {
-  /**Right (call/put) of the option instrument. */
+  /** Right (call/put) of the option instrument. */
   def right: OptionRight
 
-  /**Strike price of the option instrument.*/
+  /** Strike price of the option instrument.*/
   def strike: BigDecimal
 
-  /**Returns an option with the same parameters, but inverted right of the option (`Call` is
-   * changed to `Put` and vice versa). */
+  /** Returns an option with the same parameters, but inverted right of the option (`Call` is
+    * changed to `Put` and vice versa). */
   def invert: OptionInstrument
 }

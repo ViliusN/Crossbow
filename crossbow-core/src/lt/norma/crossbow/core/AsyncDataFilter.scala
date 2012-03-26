@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,14 +15,14 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
-import lt.norma.crossbow.messages._
+package lt.norma.crossbow.core
+
 import scala.actors.Actor
-import scala.actors.Actor._
 import lt.norma.crossbow.messages.Message
 
-/**Receives messages from multiple threads and forwards all messages to it's own listeners in
- * single thread. The main use of this filter is to ensure that only one thread provides messages
- * to all listeners. */
+/** Receives messages from multiple threads and forwards all messages to it's own listeners in
+  * single thread. The main use of this filter is to ensure that only one thread provides messages
+  * to all listeners. */
 class AsyncDataFilter(listeners: Listener*) extends DataNode with Actor {
   def dependencies = Empty
 

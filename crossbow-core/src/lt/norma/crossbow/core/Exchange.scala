@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,19 +15,20 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.core
+
 import org.joda.time.DateTimeZone
 
-/**Represents exchange. */
+/** Represents exchange. */
 trait Exchange {
-  /**Name of the exchange. */
+  /** Name of the exchange. */
   def name: String
 
-  /**Time zone at the exchange. */
+  /** Time zone at the exchange. */
   def timeZone: DateTimeZone
 }
 
 object Exchange {
-
   case object Nasdaq extends Exchange {
     def name = "NASDAQ"
 
@@ -47,5 +46,4 @@ object Exchange {
 
     def timeZone = DateTimeZone.forID("America/Chicago")
   }
-
 }

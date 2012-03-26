@@ -17,17 +17,17 @@
 
 package lt.norma.crossbow.core
 
-/**Represents logging levels. */
+/** Represents logging levels. */
 trait LogLevel
 
 object LogLevel {
-  /**Any message will be logged. */
+  /** Any message will be logged. */
   case object Everything extends LogLevel
 
-  /**Any non-data message will be logged. */
+  /** Any non-data message will be logged. */
   case object ExceptData extends LogLevel
 
-  /**Only error messages will be logged. */
+  /** Only error messages will be logged. */
   case object ErrorsOnly extends LogLevel
 
 }

@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,11 +15,13 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
-/**A trait for all financial instruments. Extend this trait to create custom instruments. */
+package lt.norma.crossbow.core
+
+/** A trait for all financial instruments. Extend this trait to create custom instruments. */
 trait Instrument {
-  /**Exchange where the instrument is traded. */
+  /** Exchange where the instrument is traded. */
   def exchange: Exchange
 
-  /**Base currency of the instrument. */
+  /** Base currency of the instrument. */
   def currency: String
 }

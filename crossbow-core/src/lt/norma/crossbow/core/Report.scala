@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,11 +15,12 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
-import lt.norma.crossbow.indicators.{History, Indicator}
-import lt.norma.crossbow.indicators.{Indicator, History}
-import java.io.{BufferedWriter, FileWriter}
+package lt.norma.crossbow.core
 
-/**Extend this trait to create custom report generators. */
+import lt.norma.crossbow.indicators.{ Indicator, History }
+import java.io.{ BufferedWriter, FileWriter }
+
+/** Extend this trait to create custom report generators. */
 trait Report {
   def generate(writer: BufferedWriter, indicators: Indicator[_]*)
 
@@ -30,7 +29,7 @@ trait Report {
   }
 }
 
-/**Extend this trait to create custom history report generators. */
+/** Extend this trait to create custom history report generators. */
 trait HistoryReport {
   def generate(writer: BufferedWriter, indicators: Indicator[_] with History*)
 
@@ -42,7 +41,7 @@ trait HistoryReport {
 object CsvReport {
   val delimiter = ","
 
-  /**Writes values of the specified indicators to the specified buffer. */
+  /** Writes values of the specified indicators to the specified buffer. */
   object Values extends Report {
     def generate(writer: BufferedWriter, indicators: Indicator[_]*) {
       try {
@@ -53,9 +52,9 @@ object CsvReport {
     }
   }
 
-  /**Writes historical values of the specified indicators to the specified buffer. Only indicators
-   * marked by `History` trait will be included into report. If indicators' history sizes do not
-   * match an exception is thrown. */
+  /** Writes historical values of the specified indicators to the specified buffer. Only indicators
+    * marked by `History` trait will be included into report. If indicators' history sizes do not
+    * match an exception is thrown. */
   object History extends HistoryReport {
     def generate(writer: BufferedWriter, indicators: Indicator[_] with History*) {
       if (indicators.size > 0) {
@@ -75,5 +74,4 @@ object CsvReport {
       }
     }
   }
-
 }

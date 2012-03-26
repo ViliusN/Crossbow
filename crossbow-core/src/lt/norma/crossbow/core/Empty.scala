@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,9 +15,11 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
-/**Type of the `Empty` object. */
+package lt.norma.crossbow.core
+
+/** Type of the `Empty` object. */
 trait Empty
 
-/**This object is used as a placeholder for absent data. Usually it is implicitly converted to the
- * desired type. */
+/** This object is used as a placeholder for absent data. Usually it is implicitly converted to the
+  * desired type. */
 object Empty extends Empty

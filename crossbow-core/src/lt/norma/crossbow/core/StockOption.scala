@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,11 +15,13 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.core
+
 import org.joda.time.DateMidnight
 
-/**Stock option financial instrument. */
+/** Stock option financial instrument. */
 case class StockOption(underlying: Stock, right: OptionRight, strike: BigDecimal,
-                       expiration: DateMidnight, exchange: Exchange, currency: String) extends OptionInstrument {
+    expiration: DateMidnight, exchange: Exchange, currency: String) extends OptionInstrument {
   def invert: StockOption =
     StockOption(underlying, right.invert, strike, expiration, exchange, currency)
 }

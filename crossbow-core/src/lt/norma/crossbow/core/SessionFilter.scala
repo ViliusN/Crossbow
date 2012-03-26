@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,10 +15,11 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
-import lt.norma.crossbow.messages.{SessionOpen, SessionClose}
-import lt.norma.crossbow.messages.{SessionClose, SessionOpen}
+package lt.norma.crossbow.core
 
-/**Filters out any data between `SessionClose` and `SessionOpen` messages. */
+import lt.norma.crossbow.messages.{ SessionClose, SessionOpen }
+
+/** Filters out any data between `SessionClose` and `SessionOpen` messages. */
 class SessionFilter extends DataNode {
   def dependencies = Empty
 
@@ -38,4 +37,4 @@ class SessionFilter extends DataNode {
   }
 }
 
-// TODO should use session openning and closing times, instead of relying on session events
+// TODO should use session opening and closing times, instead of relying on session events
