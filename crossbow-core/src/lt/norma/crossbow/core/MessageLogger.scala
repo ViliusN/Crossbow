@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,17 +15,16 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.core
+
 import java.io.Writer
 import lt.norma.crossbow.messages.{Message, Data, ErrorMessage}
 import lt.norma.crossbow.messages.{Data, ErrorMessage, Message}
 
-/**Writes received messages to the `out` stream depending on the specified `logLevel`. Useful for
- * testing and debugging. The output stream is flushed following every data message, but is never
- * closed. */
+/** Writes received messages to the `out` stream depending on the specified `logLevel`. Useful for
+  * testing and debugging. The output stream is flushed following every data message, but is never
+  * closed. */
 class MessageLogger(logLevel: LogLevel, out: Writer) extends Listener {
-
-  import LogLevel._
-
   def dependencies = Empty
 
   def receive = {
@@ -35,6 +32,7 @@ class MessageLogger(logLevel: LogLevel, out: Writer) extends Listener {
   }
 
   def write(message: Message) {
+    import LogLevel._
     (logLevel, message) match {
       case (Everything, m: Message) => writeMessage(m)
       case (ExceptData, _: Data) => // Ignore

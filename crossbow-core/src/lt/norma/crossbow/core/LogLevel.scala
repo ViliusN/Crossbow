@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,11 +15,12 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.core
+
 /**Represents logging levels. */
 trait LogLevel
 
 object LogLevel {
-
   /**Any message will be logged. */
   case object Everything extends LogLevel
 
