@@ -15,31 +15,16 @@
  * see <http://www.gnu.org/licenses/>.
  */
 
-package lt.norma.crossbow.indicators
+package lt.norma.crossbow.core
 
-import lt.norma.crossbow.core.Direction._
+import org.joda.time.DateTimeConstants.{ MONDAY, SUNDAY }
 
-/** Holds `Direction.Long` value if all of the target signals are long. Holds `Direction.Short`
-  * value if all of the target signals are short. Otherwise the values is `None`. */
-class AllSignals(signals: Signal*) extends FunctionalSignal {
-  def name = "AllSignals(" + (signals map {
-    _.name
-  } mkString ("; ")) + ")"
-
-  def dependencies = signals.toSet
-
-  def calculate = {
-    if (signals.size == 0) {
-      None
-    }
-    else if (signals.forall(_.isLong)) {
-      Some(Long)
-    }
-    else if (signals.forall(_.isShort)) {
-      Some(Short)
-    }
-    else {
-      None
-    }
+case class TradingWeek(sessions: Map[Int, List[Session]]) {
+  def isTradingDay(weekDay: Int) = sessions.get(weekDay) match {
+    case Some(l) if(l.nonEmpty) => true
+    case _ => false
   }
+
+  if(sessions.keys.exists(d => d < MONDAY || d > SUNDAY))
+    throw Exception("TradingWeek has invalid days of week")
 }

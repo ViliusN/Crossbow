@@ -18,22 +18,6 @@
 package lt.norma.crossbow.core
 
 import org.joda.time.{ DateMidnight, LocalTime }
-import org.joda.time.DateTimeConstants.{ MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY,
-  SUNDAY }
-
-
-
-/*case class TradingWeek (sessions: Map[Int, List[Session]]) {
-  def mondaySessions: List[Session] = sessions(MONDAY)
-  def tuesdaySessions: List[Session] = sessions(TUESDAY)
-  def wednesdaySessions: List[Session] = sessions(WEDNESDAY)
-  def thursdaySessions: List[Session] = sessions(THURSDAY)
-  def fridaySessions: List[Session] = sessions(FRIDAY)
-  def saturdaySessions: List[Session] = sessions(SATURDAY)
-  def sundaySessions: List[Session] = sessions(SUNDAY)
-
-  if()
-}*/
 
 case class TradingSchedule(validFrom: DateMidnight, validTil: DateMidnight) {
   import TradingSchedule._
