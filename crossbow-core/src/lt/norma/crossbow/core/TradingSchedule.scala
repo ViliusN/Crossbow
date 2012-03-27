@@ -46,9 +46,12 @@ case class TradingSchedule(validFrom: DateMidnight, validTil: DateMidnight) {
 
 object TradingSchedule {
   implicit def foreverToDateTime(forever: Forever): DateMidnight = new DateMidnight(0)
-  implicit def PresentToDateTime(forever: Forever): DateMidnight = new DateMidnight(Long.MaxValue)
-  class Forever
+  implicit def presentToDateTime(forever: Forever): DateMidnight = new DateMidnight(Long.MaxValue)
+  trait Forever
   object Forever extends Forever
-  class Present
+  trait Present
   object Present extends Present
 }
+
+
+// TODO uzbaigti

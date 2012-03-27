@@ -1,5 +1,3 @@
-package lt.norma.crossbow.core
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,11 +15,12 @@ package lt.norma.crossbow.core
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.core
+
 import org.joda.time.{DateTime, Duration}
 import org.scalatest.FunSuite
-import lt.norma.crossbow.core.testutils
-import lt.norma.crossbow.testutils._
 import TimeoutProvider._
+import lt.norma.crossbow.core.testutils._
 
 class TimeoutProviderTest extends FunSuite {
   test("dependencies") {
@@ -33,47 +32,35 @@ class TimeoutProviderTest extends FunSuite {
 
   test("timeout") {
     val provider = new TimeoutProvider()
-    val start = Start(DateTime.now.plusSeconds(1))
+    val start = Start(DateTime.now.plusMillis(100))
     var received = false;
     val listener = Listener {
       case Timeout(sr) =>
-        approx(DateTime.now.getMillis, 100) {
-          start.endTime.getMillis
-        }
-        assert {
-          sr eq start
-        }
+        approx(DateTime.now.getMillis, 10) { start.endTime.getMillis }
+        assert { sr eq start }
         received = true;
       case _ =>
-        fail
+        fail()
     }
     provider.add(listener)
     provider.send(start)
-    assert {
-      !received
-    }
-    Thread.sleep(1500)
-    assert {
-      received
-    }
+    assert { !received }
+    Thread.sleep(300)
+    assert { received }
   }
 
   test("timeout - two requests") {
     val provider = new TimeoutProvider()
-    val start1 = Start(DateTime.now.plusSeconds(1))
-    val start2 = Start(DateTime.now.plusSeconds(2))
+    val start1 = Start(DateTime.now.plusMillis(100))
+    val start2 = Start(DateTime.now.plusMillis(200))
     var received1 = false;
     var received2 = false;
     val listener = Listener {
       case Timeout(`start1`) =>
-        approx(DateTime.now.getMillis, 100) {
-          start1.endTime.getMillis
-        }
+        approx(DateTime.now.getMillis, 10) { start1.endTime.getMillis }
         received1 = true;
       case Timeout(`start2`) =>
-        approx(DateTime.now.getMillis, 100) {
-          start2.endTime.getMillis
-        }
+        approx(DateTime.now.getMillis, 10) { start2.endTime.getMillis }
         received2 = true;
       case _ =>
         fail
@@ -81,26 +68,14 @@ class TimeoutProviderTest extends FunSuite {
     provider.add(listener)
     provider.send(start1)
     provider.send(start2)
-    assert {
-      !received1
-    }
-    assert {
-      !received2
-    }
-    Thread.sleep(1200)
-    assert {
-      received1
-    }
-    assert {
-      !received2
-    }
-    Thread.sleep(1200)
-    assert {
-      received1
-    }
-    assert {
-      received2
-    }
+    assert { !received1 }
+    assert { !received2 }
+    Thread.sleep(120)
+    assert { received1 }
+    assert { !received2 }
+    Thread.sleep(120)
+    assert { received1 }
+    assert { received2 }
   }
 
   test("timeout - cancel request") {
