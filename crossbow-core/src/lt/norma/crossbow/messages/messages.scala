@@ -1,5 +1,3 @@
-package lt.norma.crossbow.messages
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,39 +15,41 @@ package lt.norma.crossbow.messages
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.messages
+
 import org.joda.time.DateTime
 
-/**Represent any message sent through data nodes. */
+/** Represent any message sent through data nodes. */
 trait Message {
-  /**Message creation time. */
+  /** Message creation time. */
   val timeStamp = DateTime.now
 }
 
-/**Represent data message. */
+/** Represent data message. */
 trait Data extends Message {
-  /**Time of market event. Not to be confused with `timeStamp` field of `Message` trait, because in
-   * case of back-tests, message creation times will differ from times of simulated market data. */
+  /** Time of market event. Not to be confused with `timeStamp` field of `Message` trait, because in
+    * case of back-tests, message creation times will differ from times of simulated market data. */
   def marketTime: DateTime
 }
 
-/**Represents error message. Should be used to inform listeners about any abnormal conditions which
- * are not serious enough to be thrown as exceptions. */
+/** Represents error message. Should be used to inform listeners about any abnormal conditions which
+  * are not serious enough to be thrown as exceptions. */
 trait ErrorMessage extends Message {
   def exception: Exception
 }
 
-/**Represents request message. Every data node should document all supported requests and responses
- * to them. */
+/** Represents request message. Every data node should document all supported requests and responses
+  * to them. */
 trait Request extends Message
 
-/**Represents response to a request. */
+/** Represents response to a request. */
 trait Response extends Message {
   def request: Request
 }
 
-/**Response to a request which could not be fulfilled. */
+/** Response to a request which could not be fulfilled. */
 case class FailedRequest(request: Request, exception: Exception)
   extends Response with ErrorMessage
 
-/**Empty message. Useful for testing. */
+/** Empty message. Useful for testing. */
 case object EmptyMessage extends Message

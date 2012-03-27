@@ -1,5 +1,3 @@
-package lt.norma.crossbow.messages
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,16 +15,18 @@ package lt.norma.crossbow.messages
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.messages
+
 import lt.norma.crossbow.core.Instrument
 import org.joda.time.DateTime
 
-/**Holds information about a quote.
- *
- * @param instrument  financial instrument
- * @param askPrice    ask price of the quote
- * @param askSize     number of contracts offered at ask price
- * @param bidPrice    bid price of the quote
- * @param bidSize     number of contracts at bid price
- * @param marketTime  time of the quote */
+/** Holds information about a quote.
+  *
+  * @param instrument  financial instrument
+  * @param askPrice    ask price of the quote
+  * @param askSize     number of contracts offered at ask price
+  * @param bidPrice    bid price of the quote
+  * @param bidSize     number of contracts at bid price
+  * @param marketTime  time of the quote */
 case class Quote(instrument: Instrument, askPrice: BigDecimal, askSize: Long, bidPrice: BigDecimal,
-                 bidSize: Long, marketTime: DateTime) extends Data
+    bidSize: Long, marketTime: DateTime) extends Data

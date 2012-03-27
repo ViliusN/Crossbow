@@ -1,5 +1,3 @@
-package lt.norma.crossbow.messages
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,24 +15,26 @@ package lt.norma.crossbow.messages
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.messages
+
 import org.joda.time.DateTime
 
-/**Session opening data message. */
+/** Session opening data message. */
 case class SessionOpen(marketTime: DateTime) extends Data
 
-/**Session closing data message. */
+/** Session closing data message. */
 case class SessionClose(marketTime: DateTime) extends Data
 
-/**Bar opening data message. */
+/** Bar opening data message. */
 case class BarOpen(marketTime: DateTime) extends Data
 
-/**Bar closing data message. */
+/** Bar closing data message. */
 case class BarClose(marketTime: DateTime) extends Data
 
-/**Message sent during loading of the system. Usually this is the first message the provider sends
- * after starting up. */
+/** Message sent during loading of the system. Usually this is the first message the provider sends
+  * after starting up. */
 case object Load extends Message
 
-/**Message send before closing the system. Usually this is the last message the provider sends
- * before shutting down. */
+/** Message send before closing the system. Usually this is the last message the provider sends
+  * before shutting down. */
 case object Unload extends Message

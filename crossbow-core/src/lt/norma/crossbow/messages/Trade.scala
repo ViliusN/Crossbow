@@ -1,5 +1,3 @@
-package lt.norma.crossbow.messages
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,14 +15,16 @@ package lt.norma.crossbow.messages
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.messages
+
 import lt.norma.crossbow.core.Instrument
 import org.joda.time.DateTime
 
-/**Holds information about a trade.
- *
- * @param instrument  financial instrument
- * @param price       price of the trade
- * @param size        number of contracts traded (volume)
- * @param marketTime  time of the trade */
+/** Holds information about a trade.
+  *
+  * @param instrument  financial instrument
+  * @param price       price of the trade
+  * @param size        number of contracts traded (volume)
+  * @param marketTime  time of the trade */
 case class Trade(instrument: Instrument, price: BigDecimal, size: Long, marketTime: DateTime)
-  extends Data
+    extends Data

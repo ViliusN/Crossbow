@@ -1,5 +1,3 @@
-package lt.norma.crossbow.messages
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,18 +15,20 @@ package lt.norma.crossbow.messages
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.messages
+
 import lt.norma.crossbow.core.Instrument
 import org.joda.time.DateMidnight
 
-/**Stock dividend corporate event. */
+/** Stock dividend corporate event. */
 case class Dividend(instrument: Instrument, amount: BigDecimal, exDividendDate: DateMidnight,
-                    paymentDate: DateMidnight) extends Message
+    paymentDate: DateMidnight) extends Message
 
-/**Stock split corporate event.
- *
- * Example:
- * {{{
- * StockSplit(stock, 2, 1, date)  // Represents a 2 to 1 split
- * }}}*/
+/** Stock split corporate event.
+  *
+  * Example:
+  * {{{
+  * StockSplit(stock, 2, 1, date)  // Represents a 2 to 1 split
+  * }}} */
 case class StockSplit(instrument: Instrument, ratioAfter: Int, ratioBefore: Int, date: DateMidnight)
-  extends Message
+    extends Message

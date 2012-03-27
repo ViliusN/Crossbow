@@ -1,5 +1,3 @@
-package lt.norma.crossbow.messages
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -17,35 +15,37 @@ package lt.norma.crossbow.messages
  * see <http://www.gnu.org/licenses/>.
  */
 
+package lt.norma.crossbow.messages
+
 import lt.norma.crossbow.core.Instrument
 
-/**Request for the provider to establish connection to it's data source. */
+/** Request for the provider to establish connection to it's data source. */
 case object Connect extends Request
 
-/**Response to connection request. */
+/** Response to connection request. */
 case object Connected extends Response {
   def request = Connect
 }
 
-/**Request for the provider to drop connection from it's data source. */
+/** Request for the provider to drop connection from it's data source. */
 case object Disconnect extends Request
 
-/**Response to disconnection request. */
+/** Response to disconnection request. */
 case object Disconnected extends Response {
   def request = Disconnect
 }
 
-/**Stock look-up request by the specified symbol. */
+/** Stock look-up request by the specified symbol. */
 case class StockLookupRequest(symbol: String) extends Request
 
-/**Options look-up request by the specified underlying instrument. */
+/** Options look-up request by the specified underlying instrument. */
 case class OptionsLookupRequest(underlying: Instrument) extends Request
 
-/**Futures look-up request by the specified underlying instrument. */
+/** Futures look-up request by the specified underlying instrument. */
 case class FuturesLookupRequest(underlying: Instrument) extends Request
 
-/**Response to instrument look-up requests. */
+/** Response to instrument look-up requests. */
 case class LookupResult(request: Request, instruments: List[Instrument]) extends Response
 
-/**Market data request. */
+/** Market data request. */
 case class MarketDataRequest(instrument: Instrument) extends Request
