@@ -17,25 +17,12 @@
 
 package lt.norma.crossbow.core
 
-import org.joda.time.{ DateMidnight, LocalTime }
+import org.joda.time.DateMidnight
 
-case class TradingSchedule(validFrom: DateMidnight, validTil: DateMidnight) {
-  import TradingSchedule._
+case class TradingSchedule(validFrom: DateMidnight, validTil: DateMidnight,
+    regularHours: TradingWeek)
 
+case class ScheduleException(date: DateMidnight, sessions: List[Session])
 
-
-  /*case class Schedule(scheduleStart: DateMidnight, scheduleEnd: DateMidnight, tradingHours)
-  val schedules = Map[(DateMidnight, DateMidnight), Session]()*/
-}
-
-object TradingSchedule {
-  implicit def foreverToDateTime(forever: Forever): DateMidnight = new DateMidnight(0)
-  implicit def presentToDateTime(forever: Forever): DateMidnight = new DateMidnight(Long.MaxValue)
-  trait Forever
-  object Forever extends Forever
-  trait Present
-  object Present extends Present
-}
-
-
-// TODO uzbaigti
+case class TradingCalendar(regularSchedules: List[TradingSchedule],
+  specialSessions: List[ScheduleException])

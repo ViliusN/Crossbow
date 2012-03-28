@@ -20,10 +20,7 @@ package lt.norma.crossbow.core
 import org.joda.time.DateTimeConstants.{ MONDAY, SUNDAY }
 
 case class TradingWeek(sessions: Map[Int, List[Session]]) {
-  def isTradingDay(weekDay: Int) = sessions.get(weekDay) match {
-    case Some(l) if(l.nonEmpty) => true
-    case _ => false
-  }
+  def isTradingDay(weekDay: Int) = sessions.get(weekDay).flatten != Nil
 
   if(sessions.keys.exists(d => d < MONDAY || d > SUNDAY))
     throw Exception("TradingWeek has invalid days of week")

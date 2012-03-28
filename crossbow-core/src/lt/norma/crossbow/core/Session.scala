@@ -21,14 +21,40 @@ import org.joda.time.LocalTime
 
 /** Represents trading session. Use `LocalTime.MIDNIGHT` for start or end times to represent open
   * ended sessions.*/
-case class Session(name: String, startTime: LocalTime, endTime: LocalTime) {
+case class Session(name: String, startTime: LocalTime, startInclusive: Boolean,
+    endTime: LocalTime, endInclusive: Boolean) {
   def isOpenAt(time: LocalTime) = {
+    import Session.{ after, before }
     if (endTime == LocalTime.MIDNIGHT) {
-      !time.isBefore(startTime) || time.equals(LocalTime.MIDNIGHT)
+      after(time, startTime, startInclusive) || endInclusive && time.equals(LocalTime.MIDNIGHT)
     } else if (endTime.isAfter(startTime)) {
-      !(time.isBefore(startTime) || time.isAfter(endTime))
+      after(time, startTime, startInclusive) && before(time, endTime, endInclusive)
     } else {
-      !(time.isBefore(startTime) && time.isAfter(endTime))
+      after(time, startTime, startInclusive) || before(time, endTime, endInclusive)
     }
+  }
+}
+
+object Session {
+  /** Creates an unnamed trading session. */
+  def apply(startTime: LocalTime, startInclusive: Boolean, endTime: LocalTime,
+      endInclusive: Boolean): Session =
+    Session("", startTime, startInclusive, endTime, endInclusive)
+
+  /** Creates a trading session with inclusive opening time and non-inclusive closing time. */
+  def apply(name: String, startTime: LocalTime, endTime: LocalTime): Session =
+    Session(name, startTime, true, endTime, false)
+
+  /** Creates an unnamed trading session with inclusive opening time and non-inclusive closing
+    * time. */
+  def apply(startTime: LocalTime, endTime: LocalTime): Session =
+    Session(startTime, true, endTime, false)
+
+  private def after(time: LocalTime, limitTime: LocalTime, inclusive: Boolean): Boolean = {
+    time.isAfter(limitTime) || inclusive && time == limitTime
+  }
+
+  private def before(time: LocalTime, limitTime: LocalTime, inclusive: Boolean): Boolean = {
+    time.isBefore(limitTime) || inclusive && time == limitTime
   }
 }
