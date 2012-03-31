@@ -17,13 +17,12 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core.{Derivative, IndicatorList, Instrument}
 import lt.norma.crossbow.core.Exchange.Nyse
-import lt.norma.crossbow.messages.{Message, EmptyMessage, SessionOpen}
-import lt.norma.crossbow.messages.{EmptyMessage, Message, SessionOpen}
+import lt.norma.crossbow.core.{ Derivative, IndicatorList, Instrument }
+import lt.norma.crossbow.messages.{ EmptyMessage, Message, SessionOpen }
+import lt.norma.crossbow.messages.{ Message, EmptyMessage, SessionOpen }
+import org.joda.time.{ DateMidnight, DateTime, Days, Duration }
 import org.scalatest.FunSuite
-import org.joda.time.{DateMidnight, DateTime, Days, Duration}
-import lt.norma.crossbow.indicators.{InstrumentWrapper, TimeToExpiration}
 
 class TimeToExpirationTest extends FunSuite {
   test("name") {

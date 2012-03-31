@@ -17,9 +17,9 @@
 
 package lt.norma.crossbow.indicators
 
+import ImplicitValueConverter._
 import lt.norma.crossbow.core.Empty
 import lt.norma.crossbow.indicators._
-import ImplicitValueConverter._
 import org.scalatest.FunSuite
 
 class TransformationTest extends FunSuite {

@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{Change, History, MutableIndicator}
 
 class ChangeTest extends FunSuite {
 

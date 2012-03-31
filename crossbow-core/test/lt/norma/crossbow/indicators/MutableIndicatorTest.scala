@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{Indicator, MutableIndicator}
 
 class MutableIndicatorTest extends FunSuite {
   test("initial value") {

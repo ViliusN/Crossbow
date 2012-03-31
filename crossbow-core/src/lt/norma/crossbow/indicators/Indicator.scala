@@ -17,7 +17,7 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core.{Dependant, Exception}
+import lt.norma.crossbow.core.{ Dependant, Exception }
 
 /**Base trait for any indicator. Most custom indicators extend `MutableIndicator`,
  * `FunctionalIndicator`, or `ListenerIndicator`, instead of directly extending `Indicator`. */

@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.InstrumentWrapper
 
 class InstrumentWrapperTest extends FunSuite {
   val s1 = new Stock("S1", Exchange.Nasdaq, "USD")

@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{Default, Variable}
 
 class DefaultTest extends FunSuite {
   test("Default") {

@@ -18,10 +18,10 @@
 package lt.norma.crossbow.core
 
 import lt.norma.crossbow.messages._
+import lt.norma.crossbow.messages.{ Message, Request, Response }
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 import org.scalatest.FunSuite
-import lt.norma.crossbow.messages.{Message, Request, Response}
 
 class TwoWayCommunicationTest extends FunSuite {
   test("TwoWayCommunicationTest") {

@@ -17,7 +17,7 @@
 
 package lt.norma.crossbow.core
 
-import org.joda.time.{DateMidnight, Days, Duration}
+import org.joda.time.{ DateMidnight, Days, Duration }
 import org.scalatest.FunSuite
 
 class DerivativeTest extends FunSuite {

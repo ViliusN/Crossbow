@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{FunctionalIndicator, Indicator}
 
 class FunctionalIndicatorTest extends FunSuite {
   test("defined") {

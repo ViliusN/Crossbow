@@ -20,7 +20,6 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{History, Indicator}
 
 class IndicatorTest extends FunSuite {
   test("value - defined") {

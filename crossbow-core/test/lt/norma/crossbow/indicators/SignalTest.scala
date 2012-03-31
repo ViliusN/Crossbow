@@ -20,7 +20,6 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core.Direction._
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{Indicator, Signal}
 
 class SignalTest extends FunSuite {
   test("isLong - long") {

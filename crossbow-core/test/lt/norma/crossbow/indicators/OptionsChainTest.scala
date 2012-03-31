@@ -17,13 +17,12 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
 import lt.norma.crossbow.core.Exchange._
-import lt.norma.crossbow.messages._
-import org.scalatest.FunSuite
-import org.joda.time.{DateMidnight, DateTime}
-import lt.norma.crossbow.indicators.OptionsChain
+import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages.SessionOpen
+import lt.norma.crossbow.messages._
+import org.joda.time.{ DateMidnight, DateTime }
+import org.scalatest.FunSuite
 
 class OptionsChainTest extends FunSuite {
   test("name") {

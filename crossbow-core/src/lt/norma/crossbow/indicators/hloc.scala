@@ -17,8 +17,8 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.messages.{BarOpen, BarClose}
-import lt.norma.crossbow.messages.{BarClose, BarOpen}
+import lt.norma.crossbow.messages.{ BarClose, BarOpen }
+import lt.norma.crossbow.messages.{ BarOpen, BarClose }
 
 /**Highest value of the indicator since the opening of the current bar. */
 class HighSoFar(indicator: Indicator[Double]) extends ListenerIndicator[Double] {

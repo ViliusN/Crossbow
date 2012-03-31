@@ -18,11 +18,11 @@
 package lt.norma.crossbow.core
 
 import lt.norma.crossbow.indicators._
+import lt.norma.crossbow.indicators._
 import lt.norma.crossbow.messages._
+import lt.norma.crossbow.messages.{ Message, Data, EmptyMessage, BarClose }
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators._
-import lt.norma.crossbow.messages.{Message, Data, EmptyMessage, BarClose}
 
 class IndicatorListTest extends FunSuite {
   test("dependencies") {

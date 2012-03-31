@@ -21,7 +21,6 @@ import lt.norma.crossbow.core.IndicatorList
 import lt.norma.crossbow.messages.EmptyMessage
 import lt.norma.crossbow.messages.EmptyMessage
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{SumSet, Variable}
 
 class SumSetTest extends FunSuite {
   test("SumSet indicator") {

@@ -17,8 +17,8 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
 import ImplicitValueConverter._
+import lt.norma.crossbow.core._
 
 /**Calculates normalized value of the indicator. If the first value of the target indicator is 0,
  * `Normalized` will always result to `NaN` or `Infinity` values.

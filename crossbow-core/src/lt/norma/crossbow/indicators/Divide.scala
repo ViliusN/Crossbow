@@ -17,8 +17,8 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
 import ImplicitValueConverter._
+import lt.norma.crossbow.core._
 
 /**Calculates division between two indicators of `Double` type. If the value of `indicator2` is 0,
  * `Divide` results in `None` value.

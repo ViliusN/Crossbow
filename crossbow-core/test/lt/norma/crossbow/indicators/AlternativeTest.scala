@@ -20,7 +20,6 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages._
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{Alternative, Variable}
 
 class AlternativeTest extends FunSuite {
   test("indicator test") {

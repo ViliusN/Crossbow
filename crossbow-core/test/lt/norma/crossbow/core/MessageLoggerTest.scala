@@ -19,9 +19,9 @@ package lt.norma.crossbow.core
 
 import java.io.StringWriter
 import lt.norma.crossbow.messages._
+import lt.norma.crossbow.messages.{ Message, Data, ErrorMessage }
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
-import lt.norma.crossbow.messages.{Message, Data, ErrorMessage}
 
 class MessageLoggerTest extends FunSuite {
 

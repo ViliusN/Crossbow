@@ -18,7 +18,6 @@
 package lt.norma.crossbow.indicators
 
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.HistoricalValues
 
 class HistoricalValuesTest extends FunSuite {
   test("initial values should be empty") {

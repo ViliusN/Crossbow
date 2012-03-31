@@ -17,12 +17,11 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.messages._
 import lt.norma.crossbow.core._
+import lt.norma.crossbow.messages.EmptyMessage
+import lt.norma.crossbow.messages._
 import lt.norma.crossbow.testutils._
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{AverageSet, Variable}
-import lt.norma.crossbow.messages.EmptyMessage
 
 class AverageSetTest extends FunSuite {
   test("name") {

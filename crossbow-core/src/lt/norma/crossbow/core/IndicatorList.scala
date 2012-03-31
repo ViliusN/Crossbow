@@ -17,8 +17,8 @@
 
 package lt.norma.crossbow.core
 
-import lt.norma.crossbow.messages.{ BarClose, Message }
 import lt.norma.crossbow.indicators.{ Indicator, History }
+import lt.norma.crossbow.messages.{ BarClose, Message }
 
 /** Stores list of indicators and their dependencies. Only top level items have to be provided,
   * their dependencies in full depth will be automatically added to the deep list.

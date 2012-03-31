@@ -19,10 +19,9 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core.IndicatorList
 import lt.norma.crossbow.messages._
-import lt.norma.crossbow.messages.{BarClose, EmptyMessage, SessionClose, SessionOpen}
+import lt.norma.crossbow.messages.{ BarClose, EmptyMessage, SessionClose, SessionOpen }
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.SessionBarCount
 
 class SessionBarCountTest extends FunSuite {
   test("name") {

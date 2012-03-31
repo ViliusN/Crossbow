@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{History, Variable, WithHistory}
 
 class WithHistoryTest extends FunSuite {
   test("is History trait extended") {

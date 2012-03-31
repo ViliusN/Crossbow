@@ -17,10 +17,10 @@
 
 package lt.norma.crossbow.core
 
-import org.joda.time.{DateTime, Duration}
-import org.scalatest.FunSuite
 import TimeoutProvider._
 import lt.norma.crossbow.core.testutils._
+import org.joda.time.{ DateTime, Duration }
+import org.scalatest.FunSuite
 
 class TimeoutProviderTest extends FunSuite {
   test("dependencies") {

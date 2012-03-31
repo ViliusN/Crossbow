@@ -17,9 +17,9 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-import org.joda.time.{Duration}
 import ImplicitValueConverter._
+import lt.norma.crossbow.core._
+import org.joda.time.{ Duration }
 
 /**Calculates time to expiration of the specified derivative instrument. */
 class TimeToExpiration(val derivative: InstrumentWrapper) extends FunctionalIndicator[Duration] {

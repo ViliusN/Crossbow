@@ -21,7 +21,6 @@ import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages._
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{Bid, LastQuote}
 
 class BidTest extends FunSuite {
   test("Bid test") {

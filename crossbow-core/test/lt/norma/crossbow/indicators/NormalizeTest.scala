@@ -17,12 +17,11 @@
 
 package lt.norma.crossbow.indicators
 
+import lt.norma.crossbow.core.{ testutils, IndicatorList }
 import lt.norma.crossbow.messages.EmptyMessage
 import lt.norma.crossbow.messages.EmptyMessage
-import org.scalatest.FunSuite
-import lt.norma.crossbow.core.{testutils, IndicatorList}
 import lt.norma.crossbow.testutils._
-import lt.norma.crossbow.indicators.{Normalize, Variable}
+import org.scalatest.FunSuite
 
 class NormalizeTest extends FunSuite {
   val e = 0.00005

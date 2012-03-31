@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.VariableSignal
 
 class VariableSignalTest extends FunSuite {
   test("Variable signal") {

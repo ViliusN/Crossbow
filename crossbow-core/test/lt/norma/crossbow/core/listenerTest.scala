@@ -18,8 +18,8 @@
 package lt.norma.crossbow.core
 
 import lt.norma.crossbow.messages._
+import lt.norma.crossbow.messages.{ Message, EmptyMessage }
 import org.scalatest.FunSuite
-import lt.norma.crossbow.messages.{Message, EmptyMessage}
 
 class ListenerTest extends FunSuite {
 

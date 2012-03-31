@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{History, HistoryLast, MutableIndicator}
 
 class HistoryLastTest extends FunSuite {
   test("name") {

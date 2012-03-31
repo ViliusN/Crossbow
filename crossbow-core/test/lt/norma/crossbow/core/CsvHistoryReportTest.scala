@@ -17,10 +17,10 @@
 
 package lt.norma.crossbow.core
 
+import java.io.{ BufferedWriter, StringWriter }
 import lt.norma.crossbow.indicators._
+import lt.norma.crossbow.indicators.{ History, MutableIndicator }
 import org.scalatest.FunSuite
-import java.io.{BufferedWriter, StringWriter}
-import lt.norma.crossbow.indicators.{History, MutableIndicator}
 
 class CsvHistoryReportTest extends FunSuite {
   test("Generate report") {

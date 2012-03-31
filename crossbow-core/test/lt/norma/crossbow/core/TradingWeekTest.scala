@@ -17,8 +17,9 @@
 
 package lt.norma.crossbow.core
 
-import org.scalatest.FunSuite
 import org.joda.time.DateTimeConstants.{ MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY,
+import org.scalatest.FunSuite
+
   SUNDAY }
 import org.joda.time.LocalTime
 

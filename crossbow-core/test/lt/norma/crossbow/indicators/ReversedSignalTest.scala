@@ -17,11 +17,10 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core.{Direction, Empty, IndicatorList}
+import lt.norma.crossbow.core.{ Direction, Empty, IndicatorList }
 import lt.norma.crossbow.messages.EmptyMessage
 import lt.norma.crossbow.messages.EmptyMessage
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{ReversedSignal, MutableSignal}
 
 class ReversedSignalTest extends FunSuite {
 

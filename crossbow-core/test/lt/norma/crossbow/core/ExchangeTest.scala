@@ -17,8 +17,8 @@
 
 package lt.norma.crossbow.core
 
-import org.scalatest.FunSuite
 import org.joda.time.DateTimeZone
+import org.scalatest.FunSuite
 
 class ExchangeTest extends FunSuite {
 

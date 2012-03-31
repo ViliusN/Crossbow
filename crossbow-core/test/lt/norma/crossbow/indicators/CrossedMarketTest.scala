@@ -18,11 +18,10 @@
 package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
+import lt.norma.crossbow.messages.Quote
 import lt.norma.crossbow.messages._
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{Ask, Bid, CrossedMarket, LastQuote}
-import lt.norma.crossbow.messages.Quote
 
 class CrossedMarketTest extends FunSuite {
   test("CrossedMarket test") {

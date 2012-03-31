@@ -19,10 +19,9 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages._
+import lt.norma.crossbow.messages.{ Message, Data, EmptyMessage }
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.MarketTime
-import lt.norma.crossbow.messages.{Message, Data, EmptyMessage}
 
 class MarketTimeTest extends FunSuite {
   test("name") {

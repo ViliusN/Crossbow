@@ -17,13 +17,12 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.messages._
 import lt.norma.crossbow.core._
+import lt.norma.crossbow.messages.BarClose
+import lt.norma.crossbow.messages._
 import lt.norma.crossbow.testutils._
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{Ema, MutableIndicator}
-import lt.norma.crossbow.messages.BarClose
 
 class EmaTest extends FunSuite {
 

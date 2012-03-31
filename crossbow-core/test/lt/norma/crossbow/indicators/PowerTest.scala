@@ -17,12 +17,11 @@
 
 package lt.norma.crossbow.indicators
 
+import lt.norma.crossbow.core.{ testutils, IndicatorList }
 import lt.norma.crossbow.messages.EmptyMessage
 import lt.norma.crossbow.messages.EmptyMessage
-import lt.norma.crossbow.core.{testutils, IndicatorList}
 import lt.norma.crossbow.testutils.approx
 import org.scalatest.FunSuite
-import lt.norma.crossbow.indicators.{Power, Variable}
 
 class PowerTest extends FunSuite {
   val e = 0.00005
