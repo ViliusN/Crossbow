@@ -18,9 +18,8 @@
 package lt.norma.crossbow.indicators
 
 import ImplicitValueConverter._
-import lt.norma.crossbow.core._
 
-/**Calculates natural logarithm of the specified target indicator. */
+/** Calculates natural logarithm of the specified target indicator. */
 class Ln(target: Indicator[Double]) extends Transformation(target)({
   case Some(t) if (t > 0) => math.log(t)
   case _ => None

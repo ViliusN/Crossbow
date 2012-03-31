@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core.{ IndicatorList, Empty }
 import lt.norma.crossbow.messages.EmptyMessage
-import lt.norma.crossbow.messages.EmptyMessage
 import org.scalatest.FunSuite
 
 class MultiplyTest extends FunSuite {

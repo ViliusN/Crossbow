@@ -17,25 +17,24 @@
 
 package lt.norma.crossbow.indicators
 
-import ImplicitValueConverter._
 import lt.norma.crossbow.core.Empty
-import lt.norma.crossbow.indicators._
+import lt.norma.crossbow.indicators.ImplicitValueConverter._
 import org.scalatest.FunSuite
 
 class TransformationTest extends FunSuite {
   test("TransformationN - name") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
+      def name = "T1"
 
       def dependencies = Empty
     }
     val target2 = new MutableIndicator[Int] {
-      def name = "T2";
+      def name = "T2"
 
       def dependencies = Empty
     }
     val target3 = new MutableIndicator[Int] {
-      def name = "T3";
+      def name = "T3"
 
       def dependencies = Empty
     }
@@ -47,17 +46,17 @@ class TransformationTest extends FunSuite {
 
   test("TransformationN - dependencies") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
+      def name = "T1"
 
       def dependencies = Empty
     }
     val target2 = new MutableIndicator[Int] {
-      def name = "T2";
+      def name = "T2"
 
       def dependencies = Empty
     }
     val target3 = new MutableIndicator[Int] {
-      def name = "T3";
+      def name = "T3"
 
       def dependencies = Empty
     }
@@ -69,17 +68,17 @@ class TransformationTest extends FunSuite {
 
   test("TransformationN - calculation - initial value") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
+      def name = "T1"
 
       def dependencies = Empty
     }
     val target2 = new MutableIndicator[Int] {
-      def name = "T2";
+      def name = "T2"
 
       def dependencies = Empty
     }
     val target3 = new MutableIndicator[Int] {
-      def name = "T3";
+      def name = "T3"
 
       def dependencies = Empty
     }
@@ -91,17 +90,17 @@ class TransformationTest extends FunSuite {
 
   test("TransformationN - calculation") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
+      def name = "T1"
 
       def dependencies = Empty
     }
     val target2 = new MutableIndicator[Int] {
-      def name = "T2";
+      def name = "T2"
 
       def dependencies = Empty
     }
     val target3 = new MutableIndicator[Int] {
-      def name = "T3";
+      def name = "T3"
 
       def dependencies = Empty
     }
@@ -112,14 +111,12 @@ class TransformationTest extends FunSuite {
     target1.set(9)
     target2.set(10)
     target3.set(11)
-    expect(Some(30)) {
-      transformed()
-    }
+    expect(Some(30)) { transformed() }
   }
 
   test("TransformationN - calculation - one target") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
+      def name = "T1"
 
       def dependencies = Empty
     }
@@ -135,7 +132,7 @@ class TransformationTest extends FunSuite {
 
   test("Transformation - name") {
     val target = new MutableIndicator[Int] {
-      def name = "T";
+      def name = "T"
 
       def dependencies = Empty
     }
@@ -147,7 +144,7 @@ class TransformationTest extends FunSuite {
 
   test("Transformation - dependencies") {
     val target = new MutableIndicator[Int] {
-      def name = "T";
+      def name = "T"
 
       def dependencies = Empty
     }
@@ -159,7 +156,7 @@ class TransformationTest extends FunSuite {
 
   test("Transformation - calculation - initial value") {
     val target = new MutableIndicator[Int] {
-      def name = "T";
+      def name = "T"
 
       def dependencies = Empty
     }
@@ -174,7 +171,7 @@ class TransformationTest extends FunSuite {
 
   test("Transformation - calculation") {
     val target = new MutableIndicator[Int] {
-      def name = "T";
+      def name = "T"
 
       def dependencies = Empty
     }
@@ -190,12 +187,12 @@ class TransformationTest extends FunSuite {
 
   test("Transformation2 - name") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
+      def name = "T1"
 
       def dependencies = Empty
     }
     val target2 = new MutableIndicator[String] {
-      def name = "T2";
+      def name = "T2"
 
       def dependencies = Empty
     }
@@ -207,13 +204,11 @@ class TransformationTest extends FunSuite {
 
   test("Transformation2 - dependencies") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
-
+      def name = "T1"
       def dependencies = Empty
     }
     val target2 = new MutableIndicator[String] {
-      def name = "T2";
-
+      def name = "T2"
       def dependencies = Empty
     }
     val transformed = new Transformation2(target1, target2)((_, _) => None)
@@ -224,12 +219,12 @@ class TransformationTest extends FunSuite {
 
   test("Transformation2 - calculation - initial value") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
+      def name = "T1"
 
       def dependencies = Empty
     }
     val target2 = new MutableIndicator[String] {
-      def name = "T2";
+      def name = "T2"
 
       def dependencies = Empty
     }
@@ -241,12 +236,12 @@ class TransformationTest extends FunSuite {
 
   test("Transformation2 - calculation") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
+      def name = "T1"
 
       def dependencies = Empty
     }
     val target2 = new MutableIndicator[String] {
-      def name = "T2";
+      def name = "T2"
 
       def dependencies = Empty
     }
@@ -263,17 +258,17 @@ class TransformationTest extends FunSuite {
 
   test("Transformation3 - name") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
+      def name = "T1"
 
       def dependencies = Empty
     }
     val target2 = new MutableIndicator[String] {
-      def name = "T2";
+      def name = "T2"
 
       def dependencies = Empty
     }
     val target3 = new MutableIndicator[Double] {
-      def name = "T3";
+      def name = "T3"
 
       def dependencies = Empty
     }
@@ -285,17 +280,17 @@ class TransformationTest extends FunSuite {
 
   test("Transformation3 - dependencies") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
+      def name = "T1"
 
       def dependencies = Empty
     }
     val target2 = new MutableIndicator[String] {
-      def name = "T2";
+      def name = "T2"
 
       def dependencies = Empty
     }
     val target3 = new MutableIndicator[Double] {
-      def name = "T3";
+      def name = "T3"
 
       def dependencies = Empty
     }
@@ -307,17 +302,17 @@ class TransformationTest extends FunSuite {
 
   test("Transformation3 - calculation - initial value") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
+      def name = "T1"
 
       def dependencies = Empty
     }
     val target2 = new MutableIndicator[String] {
-      def name = "T2";
+      def name = "T2"
 
       def dependencies = Empty
     }
     val target3 = new MutableIndicator[Double] {
-      def name = "T3";
+      def name = "T3"
 
       def dependencies = Empty
     }
@@ -329,17 +324,17 @@ class TransformationTest extends FunSuite {
 
   test("Transformation3 - calculation") {
     val target1 = new MutableIndicator[Int] {
-      def name = "T1";
+      def name = "T1"
 
       def dependencies = Empty
     }
     val target2 = new MutableIndicator[String] {
-      def name = "T2";
+      def name = "T2"
 
       def dependencies = Empty
     }
     val target3 = new MutableIndicator[Double] {
-      def name = "T3";
+      def name = "T3"
 
       def dependencies = Empty
     }

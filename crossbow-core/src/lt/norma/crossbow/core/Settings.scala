@@ -19,7 +19,6 @@ package lt.norma.crossbow.core
 
 import java.math.MathContext
 import java.math.RoundingMode
-import org.joda.time.DateMidnight
 import org.joda.time.DateTimeZone
 import org.joda.time.format.DateTimeFormat
 
@@ -42,5 +41,5 @@ object Settings {
   lazy val dateTimeFormatter = DateTimeFormat.forPattern(dateTimeFormat).withZone(timeZone)
   /**Math context for BigDecimal price calculations. Precision is set to 15 decimal places and
    *  rounding mode to "half up". */
-  lazy val priceMathContext = new MathContext(15, RoundingMode.HALF_UP);
+  lazy val priceMathContext = new MathContext(15, RoundingMode.HALF_UP)
 }

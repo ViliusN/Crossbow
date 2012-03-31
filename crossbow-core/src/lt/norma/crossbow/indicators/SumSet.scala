@@ -17,11 +17,9 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
-/**Calculates sum of the specified indicators of `Double` type. Empty indicators are ignored.
- * `SumSet` results in `None` if all of the target indicators are empty.
- * {{{SumSet = I1 + I2 + ... + In}}}*/
+/** Calculates sum of the specified indicators of `Double` type. Empty indicators are ignored.
+  * `SumSet` results in `None` if all of the target indicators are empty.
+  * {{{SumSet = I1 + I2 + ... + In}}} */
 class SumSet(indicators: Indicator[Double]*) extends FunctionalIndicator[Double] {
   def name = "SumSet(" + (indicators map {
     _.name

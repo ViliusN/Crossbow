@@ -18,8 +18,7 @@
 package lt.norma.crossbow.core
 
 import Exchange._
-import org.joda.time.format.DateTimeFormat
-import org.joda.time.{ DateMidnight, DateTimeZone }
+import org.joda.time.DateMidnight
 import org.scalatest.FunSuite
 
 class StockOptionTest extends FunSuite {

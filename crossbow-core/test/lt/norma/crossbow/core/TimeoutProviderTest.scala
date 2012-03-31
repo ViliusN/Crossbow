@@ -18,7 +18,7 @@
 package lt.norma.crossbow.core
 
 import TimeoutProvider._
-import lt.norma.crossbow.core.testutils._
+import lt.norma.crossbow.core.testutils.approx
 import org.joda.time.{ DateTime, Duration }
 import org.scalatest.FunSuite
 
@@ -33,12 +33,12 @@ class TimeoutProviderTest extends FunSuite {
   test("timeout") {
     val provider = new TimeoutProvider()
     val start = Start(DateTime.now.plusMillis(100))
-    var received = false;
+    var received = false
     val listener = Listener {
       case Timeout(sr) =>
         approx(DateTime.now.getMillis, 10) { start.endTime.getMillis }
         assert { sr eq start }
-        received = true;
+        received = true
       case _ =>
         fail()
     }
@@ -53,15 +53,15 @@ class TimeoutProviderTest extends FunSuite {
     val provider = new TimeoutProvider()
     val start1 = Start(DateTime.now.plusMillis(100))
     val start2 = Start(DateTime.now.plusMillis(200))
-    var received1 = false;
-    var received2 = false;
+    var received1 = false
+    var received2 = false
     val listener = Listener {
       case Timeout(`start1`) =>
         approx(DateTime.now.getMillis, 10) { start1.endTime.getMillis }
-        received1 = true;
+        received1 = true
       case Timeout(`start2`) =>
         approx(DateTime.now.getMillis, 10) { start2.endTime.getMillis }
-        received2 = true;
+        received2 = true
       case _ =>
         fail
     }

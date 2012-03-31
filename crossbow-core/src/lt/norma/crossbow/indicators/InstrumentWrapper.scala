@@ -18,11 +18,10 @@
 package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
-import org.joda.time.DateTime
 
-/**Wraps an instrument inside indicator. It is recommended to add `InstrumentWrapper` to
- * indicator's dependencies when mutable instrument is needed, instead of using `var instrument`
- * field. */
+/** Wraps an instrument inside indicator. It is recommended to add `InstrumentWrapper` to
+  * indicator's dependencies when mutable instrument is needed, instead of using `var instrument`
+  * field. */
 class InstrumentWrapper(optionalInstrument: Option[Instrument]) extends Variable[Instrument] {
   def this() = this(None)
 

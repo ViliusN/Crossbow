@@ -18,7 +18,6 @@
 package lt.norma.crossbow.core
 
 import java.io.StringWriter
-import lt.norma.crossbow.messages._
 import lt.norma.crossbow.messages.{ Message, Data, ErrorMessage }
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
@@ -31,7 +30,7 @@ class MessageLoggerTest extends FunSuite {
     override def toString = "mockMessage"
   }
   val mockData = new Data {
-    override def toString = "mockData";
+    override def toString = "mockData"
 
     def marketTime = DateTime.now
   }

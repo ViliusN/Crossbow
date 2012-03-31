@@ -19,6 +19,6 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core.BasicListener
 
-/**Indicator, which listens to data messages and sets it's own value based on the received data.
- * `ListenerIndicator`'s value can also be set and unset from the outside. */
+/** Indicator, which listens to data messages and sets it's own value based on the received data.
+  * `ListenerIndicator`'s value can also be set and unset from the outside. */
 trait ListenerIndicator[Value] extends MutableIndicator[Value] with BasicListener

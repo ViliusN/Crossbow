@@ -25,7 +25,7 @@ import org.scalatest.FunSuite
 class CumulativeValueTest extends FunSuite {
   test("name") {
     val target = new MutableIndicator[Double] {
-      def name = "T";
+      def name = "T"
 
       def dependencies = Empty
     }
@@ -37,7 +37,7 @@ class CumulativeValueTest extends FunSuite {
 
   test("dependencies") {
     val target = new MutableIndicator[Double] {
-      def name = "T";
+      def name = "T"
 
       def dependencies = Empty
     }
@@ -49,7 +49,7 @@ class CumulativeValueTest extends FunSuite {
 
   test("initial value") {
     val target = new MutableIndicator[Double] {
-      def name = "T";
+      def name = "T"
 
       def dependencies = Empty
     }
@@ -61,7 +61,7 @@ class CumulativeValueTest extends FunSuite {
 
   test("calculation") {
     val target = new MutableIndicator[Double] {
-      def name = "T";
+      def name = "T"
 
       def dependencies = Empty
     }

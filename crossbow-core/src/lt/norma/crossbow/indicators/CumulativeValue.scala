@@ -17,10 +17,9 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages._
 
-/**Calculates cumulative value of the specified target indicator. */
+/** Calculates cumulative value of the specified target indicator. */
 class CumulativeValue(target: Indicator[Double]) extends ListenerIndicator[Double] {
   def name = "Cumulative(" + target.name + ")"
 

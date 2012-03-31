@@ -17,9 +17,7 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
-/**Price of the last trade. */
+/** Price of the last trade. */
 class LastPrice(trade: LastTrade) extends Transformation(trade)(_.map(_.price.doubleValue)) {
   override def name = "Last Price"
 }

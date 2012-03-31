@@ -18,7 +18,6 @@
 package lt.norma.crossbow.core
 
 import Exchange._
-import org.joda.time.DateTimeZone
 import org.scalatest.FunSuite
 
 class StockTest extends FunSuite {

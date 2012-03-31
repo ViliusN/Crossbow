@@ -17,8 +17,6 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
 /**Calculates average of the values of the specified indicators of `Double` type. Empty indicators
  * are ignored.`AverageSet` results in `None` if all of the target indicators are empty.
  * {{{AverageSet = (I1 + I2 + ... + In) / n}}}*/

@@ -17,9 +17,7 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
-/**Holds value of the specified indicator if `condition` results in `true` value. */
+/** Holds value of the specified indicator if `condition` results in `true` value. */
 class Conditional[Value](indicator: Indicator[Value])(condition: Value => Boolean)
   extends FunctionalIndicator[Value] {
   def name = "Conditional " + indicator.name

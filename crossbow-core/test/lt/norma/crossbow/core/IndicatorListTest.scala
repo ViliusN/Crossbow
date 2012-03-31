@@ -17,9 +17,8 @@
 
 package lt.norma.crossbow.core
 
+import lt.norma.crossbow.core._
 import lt.norma.crossbow.indicators._
-import lt.norma.crossbow.indicators._
-import lt.norma.crossbow.messages._
 import lt.norma.crossbow.messages.{ Message, Data, EmptyMessage, BarClose }
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
@@ -295,7 +294,7 @@ class IndicatorListTest extends FunSuite {
   }
 
   test("collecting history") {
-    case class DummyData(val value: Int) extends Data {
+    case class DummyData(value: Int) extends Data {
       def marketTime = DateTime.now
     }
     val li = new ListenerIndicator[Int] with History {
@@ -499,7 +498,7 @@ class IndicatorListTest extends FunSuite {
       i3.history.values
     }
 
-    // Trop exactly as maxRequiredHistory
+    // Drop exactly as maxRequiredHistory
     l.truncateHistory(3)
     expect(List(Some(14), Some(15), Some(16))) {
       i1.history.values

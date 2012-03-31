@@ -17,28 +17,27 @@
 
 package lt.norma.crossbow.indicators
 
-/**Mixin this trait at declaration or creation of concrete indicators to enable collection of
- * historical values.
- *
- * === Examples ===
- *
- * Normally, trait `History` is mixed in at creation of particular indicator:
- * {{{
- *   val i = new MyIndicator with History
- *   assert(i.hasHistory)
- * }}}
- * If the indicator uses historical values internally, `History` can be mixed in at the declaration
- * of indicator's class:
- * {{{
- *   class MyIndicator extends Indicator[Double] with History { ... }
- *   i = new MyIndicator
- *   assert(i.hasHistory)
- * }}}
- * Indicators without `History` trait either at declaration or at creation do not collect
- * historical values:
- * {{{
- *   val i = new MyIndicator
- *   assert(i.hasHistory == false)
- * }}}
- */
+/** Mixin this trait at declaration or creation of concrete indicators to enable collection of
+  * historical values.
+  *
+  * === Examples ===
+  *
+  * Normally, trait `History` is mixed in at creation of particular indicator:
+  * {{{
+  *   val i = new MyIndicator with History
+  *   assert(i.hasHistory)
+  * }}}
+  * If the indicator uses historical values internally, `History` can be mixed in at the declaration
+  * of indicator's class:
+  * {{{
+  *   class MyIndicator extends Indicator[Double] with History { ... }
+  *   i = new MyIndicator
+  *   assert(i.hasHistory)
+  * }}}
+  * Indicators without `History` trait either at declaration or at creation do not collect
+  * historical values:
+  * {{{
+  *   val i = new MyIndicator
+  *   assert(i.hasHistory == false)
+  * }}} */
 trait History

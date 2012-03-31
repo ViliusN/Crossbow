@@ -17,10 +17,9 @@
 
 package lt.norma.crossbow.core
 
-import lt.norma.crossbow.messages._
-import lt.norma.crossbow.messages.{ Message, EmptyMessage }
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
+import lt.norma.crossbow.messages.{ Message, EmptyMessage, SessionOpen, SessionClose }
 
 class SessionFilterTest extends FunSuite {
   test("SessionFilter") {

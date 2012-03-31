@@ -18,9 +18,8 @@
 package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.messages.{ BarClose, BarOpen }
-import lt.norma.crossbow.messages.{ BarOpen, BarClose }
 
-/**Highest value of the indicator since the opening of the current bar. */
+/** Highest value of the indicator since the opening of the current bar. */
 class HighSoFar(indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   def name = "HighSoFar(" + indicator.name + ")"
 
@@ -36,8 +35,8 @@ class HighSoFar(indicator: Indicator[Double]) extends ListenerIndicator[Double] 
   }
 }
 
-/**Highest value of the indicator during the current bar. Indicator's value is set only at the
- * moment of bar closing. */
+/** Highest value of the indicator during the current bar. Indicator's value is set only at the
+  * moment of bar closing. */
 class High(indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   def name = "High(" + indicator.name + ")"
 
@@ -51,7 +50,7 @@ class High(indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   }
 }
 
-/**Lowest value of the indicator since the opening of the current bar. */
+/** Lowest value of the indicator since the opening of the current bar. */
 class LowSoFar(indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   def name = "LowSoFar(" + indicator.name + ")"
 
@@ -67,8 +66,8 @@ class LowSoFar(indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   }
 }
 
-/**Lowest value of the indicator during the current bar. Indicator's value is set only at the
- * moment of bar closing. */
+/** Lowest value of the indicator during the current bar. Indicator's value is set only at the
+  * moment of bar closing. */
 class Low(indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   def name = "Low(" + indicator.name + ")"
 
@@ -82,7 +81,7 @@ class Low(indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   }
 }
 
-/**First value of the indicator after opening of the current bar. */
+/** First value of the indicator after opening of the current bar. */
 class Open(indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   def name = "Open(" + indicator.name + ")"
 
@@ -94,8 +93,8 @@ class Open(indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   }
 }
 
-/**Last value of the indicator before the end of the current bar. Indicator's value is set only at
- * the moment of bar closing. */
+/** Last value of the indicator before the end of the current bar. Indicator's value is set only at
+  * the moment of bar closing. */
 class Close(indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   def name = "Close(" + indicator.name + ")"
 

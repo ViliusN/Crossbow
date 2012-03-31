@@ -20,7 +20,6 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core.Exchange.Nyse
 import lt.norma.crossbow.core.{ Derivative, IndicatorList, Instrument }
 import lt.norma.crossbow.messages.{ EmptyMessage, Message, SessionOpen }
-import lt.norma.crossbow.messages.{ Message, EmptyMessage, SessionOpen }
 import org.joda.time.{ DateMidnight, DateTime, Days, Duration }
 import org.scalatest.FunSuite
 
@@ -45,7 +44,7 @@ class TimeToExpirationTest extends FunSuite {
       def expiration = new DateMidnight(2011, 12, 26)
 
       def underlying = new Instrument {
-        def exchange = Nyse;
+        def exchange = Nyse
 
         def currency = ""
       }
@@ -107,7 +106,7 @@ class TimeToExpirationTest extends FunSuite {
       def expiration = new DateMidnight(2011, 12, 26)
 
       def underlying = new Instrument {
-        def exchange = Nyse;
+        def exchange = Nyse
 
         def currency = ""
       }
@@ -129,7 +128,7 @@ class TimeToExpirationTest extends FunSuite {
       def expiration = new DateMidnight(2011, 12, 26)
 
       def underlying = new Instrument {
-        def exchange = Nyse;
+        def exchange = Nyse
 
         def currency = ""
       }
@@ -170,7 +169,7 @@ class TimeToExpirationTest extends FunSuite {
       def expiration = new DateMidnight(0)
 
       def underlying = new Instrument {
-        def exchange = Nyse;
+        def exchange = Nyse
 
         def currency = ""
       }

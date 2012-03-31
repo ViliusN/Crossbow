@@ -19,7 +19,7 @@ package lt.norma.crossbow.core
 
 import org.scalatest.TestFailedException
 
-package object testutils {
+object testutils {
   def approx(expected: Double, e: Double)(value: => Double) {
     if (value < expected - e || value > expected + e) throw new TestFailedException(
       "Expected " + expected + " ±" + e + ", but got " + value, 0)

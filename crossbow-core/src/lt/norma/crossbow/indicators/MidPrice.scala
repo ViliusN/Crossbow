@@ -17,10 +17,8 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
-/**Calculates mid-price of the specified ask and bid.
- * {{{MidPrice = (Ask + Bid) / 2}}}*/
+/** Calculates mid-price of the specified ask and bid.
+  * {{{MidPrice = (Ask + Bid) / 2}}} */
 class MidPrice(ask: Ask, bid: Bid) extends Average(ask, bid) {
   override def name = "Mid-price"
 }

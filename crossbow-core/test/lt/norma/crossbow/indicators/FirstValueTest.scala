@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages.EmptyMessage
-import lt.norma.crossbow.messages._
 import org.scalatest.FunSuite
 
 class FirstValueTest extends FunSuite {

@@ -19,22 +19,21 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages.EmptyMessage
-import lt.norma.crossbow.messages._
-import lt.norma.crossbow.testutils._
+import lt.norma.crossbow.core.testutils.approx
 import org.scalatest.FunSuite
 
 class AverageSetTest extends FunSuite {
   test("name") {
-    val tartget1 = new Variable[Double] {
+    val target1 = new Variable[Double] {
       override def name = "A"
     }
-    val tartget2 = new Variable[Double] {
+    val target2 = new Variable[Double] {
       override def name = "B"
     }
-    val tartget3 = new Variable[Double] {
+    val target3 = new Variable[Double] {
       override def name = "C"
     }
-    val indicator = new AverageSet(tartget1, tartget2, tartget3)
+    val indicator = new AverageSet(target1, target2, target3)
     expect("AverageSet(A; B; C)") {
       indicator.name
     }

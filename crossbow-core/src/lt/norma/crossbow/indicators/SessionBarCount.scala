@@ -18,10 +18,9 @@
 package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
-import lt.norma.crossbow.messages._
-import lt.norma.crossbow.messages.{ SessionOpen, BarClose }
+import lt.norma.crossbow.messages.{ BarClose, SessionOpen }
 
-/**Number of complete bars during current session. */
+/** Number of complete bars during current session. */
 class SessionBarCount extends ListenerIndicator[Int] {
   def name = "Session Bar Count"
 

@@ -20,7 +20,6 @@ package lt.norma.crossbow.core
 import TimeoutProvider._
 import java.util.{ Timer, TimerTask }
 import lt.norma.crossbow.messages.{ Request, Response }
-import lt.norma.crossbow.messages.{ Request, Response }
 import org.joda.time.{ DateTime, Duration }
 import scala.actors.Actor._
 

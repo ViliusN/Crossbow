@@ -17,9 +17,7 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
-/**Stores historical value of the specified target indicator, at the specified index. */
+/** Stores historical value of the specified target indicator, at the specified index. */
 class HistoryAt[Value](index: Int, target: Indicator[Value] with History)
   extends FunctionalIndicator[Value] {
   def name = "HistoryAt(" + index + "; " + target.name + ")"

@@ -28,14 +28,15 @@ trait BasicListener {
   /** Implicitly converts object `Empty` to an empty receiver. */
   implicit def emptyToReceiver(empty: Empty) = new PartialFunction[Message, Any] {
     def isDefinedAt(x: Message) = false
-
     def apply(v1: Message) {}
   }
 
   /** Send data to this listener. */
-  final def send(message: Message) = if (supports(message)) {
-    if (!receive(message).isInstanceOf[Unit]) {
-      throw Warning("Receivers should always return Unit")
+  final def send(message: Message) {
+    if (supports(message)) {
+      if (!receive(message).isInstanceOf[Unit]) {
+        throw Warning("Receivers should always return Unit")
+      }
     }
   }
 

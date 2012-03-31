@@ -17,7 +17,7 @@
 
 package lt.norma.crossbow.indicators
 
-/**Indicator, whose value can be set and unset from the outside. */
+/** Indicator, whose value can be set and unset from the outside. */
 trait MutableIndicator[Value] extends Indicator[Value] {
   private var _value: Option[Value] = None
 
@@ -28,17 +28,17 @@ trait MutableIndicator[Value] extends Indicator[Value] {
       case _: Indicator.ValueNotSet => None
     }
 
-  /**Sets current value of the indicator. */
+  /** Sets current value of the indicator. */
   final def set(newValue: Option[Value]) {
     _value = newValue
   }
 
-  /**Sets current value of the indicator. */
+  /** Sets current value of the indicator. */
   final def set(newValue: Value) {
     _value = Some(newValue)
   }
 
-  /**Unsets current value of the indicator. */
+  /** Un-sets current value of the indicator. */
   final def unset() {
     _value = None
   }

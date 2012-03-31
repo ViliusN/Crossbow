@@ -17,7 +17,7 @@
 
 package lt.norma.crossbow.indicators
 
-/**Holds value, opposite to that of the specified signal. */
+/** Holds value, opposite to that of the specified signal. */
 class ReversedSignal(target: Signal) extends FunctionalSignal {
   def name = "Reversed(" + target.name + ")"
 

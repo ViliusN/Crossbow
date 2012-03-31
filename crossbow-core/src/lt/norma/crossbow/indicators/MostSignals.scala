@@ -19,9 +19,9 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core.Direction._
 
-/**Holds `Direction.Long` if the amount of long signals is greater than the amount of short
- * and flat signals combined. Holds `Direction.Short` if the amount of short signals is greater
- * than the amount of long and flat signals combined. Otherwise holds `None` value. */
+/** Holds `Direction.Long` if the amount of long signals is greater than the amount of short
+  * and flat signals combined. Holds `Direction.Short` if the amount of short signals is greater
+  * than the amount of long and flat signals combined. Otherwise holds `None` value. */
 class MostSignals(signals: Signal*) extends FunctionalSignal {
   def name = "MostSignals(" + (signals map {
     _.name

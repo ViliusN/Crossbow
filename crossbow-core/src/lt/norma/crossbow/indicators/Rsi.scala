@@ -18,14 +18,13 @@
 package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.messages.BarClose
-import lt.norma.crossbow.messages.BarClose
 
-/**Calculates Relative Strength Index of the specified indicator. Indicator's value is not set
- * until there are at least `period` bars collected.
- * {{{
- * RS = EMA(Period, UpValues) / EMA(Period, DownValues)
- * RSI = 100 - 100 / (1 + RS)
- * }}}*/
+/** Calculates Relative Strength Index of the specified indicator. Indicator's value is not set
+  * until there are at least `period` bars collected.
+  * {{{
+  * RS = EMA(Period, UpValues) / EMA(Period, DownValues)
+  * RSI = 100 - 100 / (1 + RS)
+  * }}} */
 class Rsi(period: Int, indicator: Indicator[Double] with History)
   extends ListenerIndicator[Double] {
   def name = "RSI(" + period + "; " + indicator.name + ")"

@@ -17,12 +17,11 @@
 
 package lt.norma.crossbow.indicators
 
-import ImplicitValueConverter._
-import lt.norma.crossbow.core._
+import lt.norma.crossbow.indicators.ImplicitValueConverter._
 
-/**Calculates division between two indicators of `Double` type. If the value of `indicator2` is 0,
- * `Divide` results in `None` value.
- * {{{Divide = I1 / I2}}}*/
+/** Calculates division between two indicators of `Double` type. If the value of `indicator2` is 0,
+  * `Divide` results in `None` value.
+  * {{{Divide = I1 / I2}}} */
 class Divide(target1: Indicator[Double], target2: Indicator[Double])
   extends Transformation2(target1, target2)({
     case (Some(t1), Some(t2)) if (t2 != 0) => t1 / t2

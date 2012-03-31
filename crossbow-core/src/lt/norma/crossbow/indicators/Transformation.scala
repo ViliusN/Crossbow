@@ -17,7 +17,7 @@
 
 package lt.norma.crossbow.indicators
 
-/**Apply specified transformation function to multiple target indicators of the same type. */
+/** Apply specified transformation function to multiple target indicators of the same type. */
 class TransformationN[TargetValue, Value]
 (targets: Indicator[TargetValue]*)
 (transformation: (Option[TargetValue] *) => Option[Value])
@@ -29,7 +29,7 @@ class TransformationN[TargetValue, Value]
   def calculate = transformation(targets.map(_()): _*)
 }
 
-/**Apply specified transformation function to the target indicator. */
+/** Apply specified transformation function to the target indicator. */
 class Transformation[TargetValue, Value](target: Indicator[TargetValue])
                                         (transformation: Option[TargetValue] => Option[Value])
   extends TransformationN[TargetValue, Value](target)({
@@ -37,7 +37,7 @@ class Transformation[TargetValue, Value](target: Indicator[TargetValue])
   }) {
 }
 
-/**Apply specified transformation function to two target indicators. */
+/** Apply specified transformation function to two target indicators. */
 class Transformation2[TargetValue1, TargetValue2, Value]
 (target1: Indicator[TargetValue1], target2: Indicator[TargetValue2])
 (transformation: (Option[TargetValue1], Option[TargetValue2]) => Option[Value])
@@ -49,7 +49,7 @@ class Transformation2[TargetValue1, TargetValue2, Value]
   def calculate = transformation(target1(), target2())
 }
 
-/**Apply specified transformation function to three target indicators. */
+/** Apply specified transformation function to three target indicators. */
 class Transformation3[TargetValue1, TargetValue2, TargetValue3, Value]
 (target1: Indicator[TargetValue1], target2: Indicator[TargetValue2],
  target3: Indicator[TargetValue3])

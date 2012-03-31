@@ -17,8 +17,6 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
 /**Gets value of the target indicator if it is not `None`. Otherwise the gets value of the
  * alternative indicator. */
 class Alternative[Value](target: Indicator[Value], val alternative: Indicator[Value])

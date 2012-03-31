@@ -322,9 +322,7 @@ class DependantTest extends FunSuite {
       def dependencies = Set(this)
     }
 
-    intercept[Exception] {
-      new SelfDep deepDependencies
-    }
+    intercept[Exception] { (new SelfDep).deepDependencies }
   }
 
   test("Empty dependencies") {
@@ -385,25 +383,13 @@ class DependantTest extends FunSuite {
     assert {
       !((new DepOk) hasCycles())
     }
-    intercept[Exception] {
-      new Dep1 deepDependencies
-    }
-    intercept[Exception] {
-      new Dep2 deepDependencies
-    }
-    intercept[Exception] {
-      new Dep3 deepDependencies
-    }
-    intercept[Exception] {
-      new Dep4 deepDependencies
-    }
-    intercept[Exception] {
-      new Dep5 deepDependencies
-    }
-    intercept[Exception] {
-      new Dep6 deepDependencies
-    }
-    new DepOk deepDependencies match {
+    intercept[Exception] { (new Dep1).deepDependencies }
+    intercept[Exception] { (new Dep2).deepDependencies }
+    intercept[Exception] { (new Dep3).deepDependencies }
+    intercept[Exception] { (new Dep4).deepDependencies }
+    intercept[Exception] { (new Dep5).deepDependencies }
+    intercept[Exception] { (new Dep6).deepDependencies }
+    (new DepOk).deepDependencies match {
       case List(_: Dep, _: Dep, _: Dep) => // Ok
       case _ => fail
     }

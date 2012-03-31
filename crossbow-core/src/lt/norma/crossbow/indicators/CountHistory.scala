@@ -17,10 +17,9 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages._
 
-/**Counts number of bars where the specified indicator was set to a value. */
+/** Counts number of bars where the specified indicator was set to a value. */
 class CountHistory(indicator: Indicator[_]) extends ListenerIndicator[Int] {
   def name = "Count History(" + indicator.name + ")"
 

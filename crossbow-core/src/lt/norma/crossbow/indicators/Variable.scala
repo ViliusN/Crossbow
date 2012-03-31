@@ -19,7 +19,7 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 
-/**Wraps a variable value as indicator. The value can be set only externally via `set` method. */
+/** Wraps a variable value as indicator. The value can be set only externally via `set` method. */
 class Variable[Value] extends MutableIndicator[Value] {
   def this(initialValue: Value) = {
     this(); set(initialValue)

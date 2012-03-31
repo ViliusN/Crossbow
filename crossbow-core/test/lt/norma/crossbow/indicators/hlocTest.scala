@@ -18,8 +18,6 @@
 package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core.IndicatorList
-import lt.norma.crossbow.indicators._
-import lt.norma.crossbow.messages.{ BarClose, BarOpen, EmptyMessage }
 import lt.norma.crossbow.messages.{ EmptyMessage, BarOpen, BarClose }
 import org.joda.time.DateTime
 import org.scalatest.FunSuite

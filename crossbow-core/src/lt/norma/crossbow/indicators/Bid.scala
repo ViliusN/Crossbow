@@ -17,8 +17,6 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
 /**Bid price of the last quote. */
 class Bid(quote: LastQuote) extends FunctionalIndicator[Double] {
   def name = "Bid Price"

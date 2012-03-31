@@ -19,8 +19,7 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core.Exchange._
 import lt.norma.crossbow.core._
-import lt.norma.crossbow.messages.SessionOpen
-import lt.norma.crossbow.messages._
+import lt.norma.crossbow.messages.{ LookupResult, OptionsLookupRequest, SessionOpen }
 import org.joda.time.{ DateMidnight, DateTime }
 import org.scalatest.FunSuite
 
@@ -109,7 +108,7 @@ class OptionsChainTest extends FunSuite {
   }
   test("options look-up requests should be supported by the provider") {
     val underlying = new Instrument {
-      def currency = "A";
+      def currency = "A"
 
       def exchange = Nasdaq
     }

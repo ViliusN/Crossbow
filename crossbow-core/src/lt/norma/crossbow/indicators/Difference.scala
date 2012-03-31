@@ -17,10 +17,8 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
-/**Calculates difference between two indicators of `Double` type.
- * {{{Difference = I1 - I2}}}*/
+/** Calculates difference between two indicators of `Double` type.
+  * {{{Difference = I1 - I2}}}*/
 class Difference(indicator1: Indicator[Double], indicator2: Indicator[Double])
   extends FunctionalIndicator[Double] {
   def this(indicator: Indicator[Double], constant: Double) =

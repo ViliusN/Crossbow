@@ -17,7 +17,7 @@
 
 package lt.norma.crossbow.core
 
-import org.joda.time.{ DateMidnight, Days, Duration }
+import org.joda.time.{ DateMidnight, Days }
 import org.scalatest.FunSuite
 
 class DerivativeTest extends FunSuite {
@@ -26,7 +26,7 @@ class DerivativeTest extends FunSuite {
 
   test("isExpired") {
     val instrument = new Instrument {
-      val currency = "USD";
+      val currency = "USD"
       val exchange = Nasdaq
     }
     val derivative = new Derivative {
@@ -54,7 +54,7 @@ class DerivativeTest extends FunSuite {
 
   test("timeToExpiration") {
     val instrument = new Instrument {
-      val currency = "USD";
+      val currency = "USD"
       val exchange = Nasdaq
     }
     val derivative = new Derivative {
@@ -63,19 +63,19 @@ class DerivativeTest extends FunSuite {
       val underlying = instrument
       val expiration = new DateMidnight(2011, 11, 30)
     }
-    expect(Days.ZERO.toStandardDuration()) {
+    expect(Days.ZERO.toStandardDuration) {
       derivative.timeToExpiration(new DateMidnight(2011, 11, 30))
     }
-    expect(Days.ONE.toStandardDuration()) {
+    expect(Days.ONE.toStandardDuration) {
       derivative.timeToExpiration(new DateMidnight(2011, 11, 29))
     }
-    expect(Days.days(10).toStandardDuration()) {
+    expect(Days.days(10).toStandardDuration) {
       derivative.timeToExpiration(new DateMidnight(2011, 11, 20))
     }
-    expect(Days.days(3652).toStandardDuration()) {
+    expect(Days.days(3652).toStandardDuration) {
       derivative.timeToExpiration(new DateMidnight(2001, 11, 30))
     }
-    expect(Days.ZERO.toStandardDuration()) {
+    expect(Days.ZERO.toStandardDuration) {
       derivative.timeToExpiration(new DateMidnight(2012, 11, 30))
     }
   }

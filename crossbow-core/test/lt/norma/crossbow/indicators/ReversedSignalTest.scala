@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core.{ Direction, Empty, IndicatorList }
 import lt.norma.crossbow.messages.EmptyMessage
-import lt.norma.crossbow.messages.EmptyMessage
 import org.scalatest.FunSuite
 
 class ReversedSignalTest extends FunSuite {
@@ -28,7 +27,7 @@ class ReversedSignalTest extends FunSuite {
 
   test("ReversedSignal") {
     val s1 = new MutableSignal {
-      def name = "S1";
+      def name = "S1"
 
       def dependencies = Empty
     }

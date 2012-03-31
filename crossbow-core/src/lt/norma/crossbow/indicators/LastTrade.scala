@@ -19,10 +19,8 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages.Trade
-import lt.norma.crossbow.messages._
-import org.joda.time.DateTime
 
-/**Records last trade received for the specified instrument. */
+/** Records last trade received for the specified instrument. */
 class LastTrade(val instrument: InstrumentWrapper = new InstrumentWrapper())
   extends ListenerIndicator[Trade] {
   def this(_instrument: Instrument) = this(new InstrumentWrapper(_instrument))

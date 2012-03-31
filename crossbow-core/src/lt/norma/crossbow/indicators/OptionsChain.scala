@@ -20,7 +20,7 @@ package lt.norma.crossbow.indicators
 import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages._
 
-/**Requests options chain at the opening of trading session. */
+/** Requests options chain at the opening of trading session. */
 class OptionsChain(underlying: Instrument, dataProvider: DataNode)
   extends ListenerIndicator[List[OptionInstrument]] {
   def name = "Options chain for " + underlying

@@ -17,9 +17,7 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
-/**Calculates square root of the specified target indicator. */
+/** Calculates square root of the specified target indicator. */
 class Sqrt(target: Indicator[Double]) extends Transformation(target)(
   _.map(math.sqrt).filter(v => !v.isNaN && !v.isInfinity)
 ) {

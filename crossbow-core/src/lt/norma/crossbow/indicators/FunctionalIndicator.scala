@@ -17,14 +17,14 @@
 
 package lt.norma.crossbow.indicators
 
-/**Functional indicators are useful to wrap one function as an indicator. Value of this indicator
- * is recalculated every time it's accessed. There are no methods to set or unset functional
- * indicator's value from outside.
- *
- * Care must be taken, when accessing value of functional indicator multiple times, as every call
- * to `calculate` method will repeat the calculation with potentially different result (and
- * performance penalty). Therefore a situation is possible were for example `true` result of
- * `isSet` method is immediately followed by `None` result of `optionalValue`. */
+/** Functional indicators are useful to wrap one function as an indicator. Value of this indicator
+  * is recalculated every time it's accessed. There are no methods to set or unset functional
+  * indicator's value from outside.
+  *
+  * Care must be taken, when accessing value of functional indicator multiple times, as every call
+  * to `calculate` method will repeat the calculation with potentially different result (and
+  * performance penalty). Therefore a situation is possible were for example `true` result of
+  * `isSet` method is immediately followed by `None` result of `optionalValue`. */
 trait FunctionalIndicator[Value] extends Indicator[Value] {
   final def optionalValue: Option[Value] =
     try {
@@ -33,6 +33,6 @@ trait FunctionalIndicator[Value] extends Indicator[Value] {
       case _: Indicator.ValueNotSet => None
     }
 
-  /**Override this method to create custom behaviour of your indicator. */
+  /** Override this method to create custom behaviour of your indicator. */
   def calculate: Option[Value]
 }

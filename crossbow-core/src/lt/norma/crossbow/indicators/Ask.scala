@@ -17,8 +17,6 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
 /**Ask price of the last quote. */
 class Ask(quote: LastQuote) extends Transformation(quote)(_.map(_.askPrice.doubleValue)) {
   override def name = "Ask Price"

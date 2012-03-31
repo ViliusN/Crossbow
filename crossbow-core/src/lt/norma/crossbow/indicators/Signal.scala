@@ -19,19 +19,19 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core.Direction
 
-/**Extend this trait to create trading signals. */
+/** Extend this trait to create trading signals. */
 trait Signal extends Indicator[Direction] {
-  /**Returns true if signal's value is set to `Long`. */
+  /** Returns true if signal's value is set to `Long`. */
   final def isLong = optionalValue exists {
     _ == Direction.Long
   }
 
-  /**Returns true if signal's value is set to `Short`. */
+  /** Returns true if signal's value is set to `Short`. */
   final def isShort = optionalValue exists {
     _ == Direction.Short
   }
 
-  /**Returns true if signal's value is not set. */
+  /** Returns true if signal's value is not set. */
   final def isFlat = !isSet
 
   override def valueNotSetString = "Flat"

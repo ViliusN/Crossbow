@@ -17,11 +17,9 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
-/**Calculates spread between the specified ask and bid. Value may be negative in case of crossed
- * market.
- * {{{Apread = Ask - Bid}}}*/
+/** Calculates spread between the specified ask and bid. Value may be negative in case of crossed
+  * market.
+  * {{{Spread = Ask - Bid}}} */
 class Spread(ask: Ask, bid: Bid) extends Difference(ask, bid) {
   override def name = "Spread"
 }

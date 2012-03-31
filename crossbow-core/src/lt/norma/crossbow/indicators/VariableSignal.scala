@@ -19,7 +19,7 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 
-/**Variable signal, whose value can be set only from outside. */
+/** Variable signal, whose value can be set only from outside. */
 class VariableSignal extends MutableSignal {
   def this(initialValue: Direction) = {
     this(); set(initialValue)

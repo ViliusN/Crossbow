@@ -17,11 +17,10 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages._
 
-/**Calculates exponential moving average of the specified indicator. In case indicator's value is
- * unset, `EmaContinuous` retains the last value. */
+/** Calculates exponential moving average of the specified indicator. In case indicator's value is
+  * unset, `EmaContinuous` retains the last value. */
 class EmaContinuous(period: Int, indicator: Indicator[Double]) extends ListenerIndicator[Double] {
   def name = "EMA_C(" + period + "; " + indicator.name + ")"
 

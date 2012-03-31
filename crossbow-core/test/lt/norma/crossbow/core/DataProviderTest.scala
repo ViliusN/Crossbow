@@ -17,7 +17,6 @@
 
 package lt.norma.crossbow.core
 
-import lt.norma.crossbow.messages._
 import lt.norma.crossbow.messages.{ Message, Data }
 import org.joda.time.DateTime
 import org.scalatest.FunSuite

@@ -18,6 +18,6 @@
 package lt.norma.crossbow.indicators
 
 object ImplicitValueConverter {
-  /**Implicitly convert specified `Value` to `Option[value]`*/
+  /** Implicitly convert specified `Value` to `Option[value]`*/
   implicit def valueToOption[Value](v: Value): Option[Value] = Some(v)
 }

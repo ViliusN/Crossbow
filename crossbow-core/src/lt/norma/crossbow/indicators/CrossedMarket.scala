@@ -17,10 +17,8 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
-/**Checks if bid and ask prices are crossed.
- * {{{CrossedMarket = Ask < Bid }}}*/
+/** Checks if bid and ask prices are crossed.
+  * {{{CrossedMarket = Ask < Bid }}} */
 class CrossedMarket(ask: Ask, bid: Bid) extends FunctionalIndicator[Boolean] {
   def name = "Crossed Market"
 

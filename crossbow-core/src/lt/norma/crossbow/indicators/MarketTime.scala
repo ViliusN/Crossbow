@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages.Data
-import lt.norma.crossbow.messages._
 import org.joda.time.DateTime
 
 /**Records market time of the most recent data message. */

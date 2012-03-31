@@ -18,11 +18,10 @@
 package lt.norma.crossbow.indicators
 
 import ImplicitValueConverter._
-import lt.norma.crossbow.core._
 
-/**Calculates normalized value of the indicator. If the first value of the target indicator is 0,
- * `Normalized` will always result to `NaN` or `Infinity` values.
- * {{{ Normalize = (Target[i] / Target[0] - 1) * 100 }}}*/
+/** Calculates normalized value of the indicator. If the first value of the target indicator is 0,
+  * `Normalized` will always result to `NaN` or `Infinity` values.
+  * {{{ Normalize = (Target[i] / Target[0] - 1) * 100 }}}*/
 class Normalize(target: Indicator[Double]) extends FunctionalIndicator[Double] {
   def name = "Normalize(" + target.name + ")"
 

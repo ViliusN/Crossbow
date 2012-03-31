@@ -17,7 +17,6 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
 import org.scalatest.FunSuite
 
 class VariableTest extends FunSuite {

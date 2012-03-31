@@ -17,8 +17,7 @@
 
 package lt.norma.crossbow.core
 
-import lt.norma.crossbow.messages._
-import lt.norma.crossbow.messages.{ Message, EmptyMessage }
+import lt.norma.crossbow.messages.{ EmptyMessage, Message }
 import org.scalatest.FunSuite
 
 class ListenerTest extends FunSuite {
@@ -94,13 +93,13 @@ class ListenerTest extends FunSuite {
 
   test("creation of listeners") {
     val bl = new BasicListener {
-      def dependencies = Empty;
+      def dependencies = Empty
 
       def receive = Empty
     }
     assert(!(bl.isInstanceOf[Dependant[_]]), "BasicListener should not extend Dependant")
     val l = new Listener {
-      def dependencies = Empty;
+      def dependencies = Empty
 
       def receive = Empty
     }

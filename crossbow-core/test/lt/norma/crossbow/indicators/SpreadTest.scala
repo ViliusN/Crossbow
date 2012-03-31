@@ -17,10 +17,9 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core.{ testutils, IndicatorList, Exchange, Stock }
-import lt.norma.crossbow.messages.{ EmptyMessage, Quote }
+import lt.norma.crossbow.core.{ IndicatorList, Exchange, Stock }
 import lt.norma.crossbow.messages.{ Quote, EmptyMessage }
-import lt.norma.crossbow.testutils.approx
+import lt.norma.crossbow.core.testutils.approx
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
 

@@ -19,7 +19,6 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core._
 import lt.norma.crossbow.messages.EmptyMessage
-import lt.norma.crossbow.messages._
 import org.scalatest.FunSuite
 
 class MostSignalsTest extends FunSuite {
@@ -28,22 +27,22 @@ class MostSignalsTest extends FunSuite {
 
   test("MostSignals") {
     val s1 = new MutableSignal {
-      def name = "S1";
+      def name = "S1"
 
       def dependencies = Empty
     }
     val s2 = new MutableSignal {
-      def name = "S2";
+      def name = "S2"
 
       def dependencies = Empty
     }
     val s3 = new MutableSignal {
-      def name = "S3";
+      def name = "S3"
 
       def dependencies = Empty
     }
     val s4 = new MutableSignal {
-      def name = "S4";
+      def name = "S4"
 
       def dependencies = Empty
     }
@@ -101,7 +100,7 @@ class MostSignalsTest extends FunSuite {
   }
   test("one signal") {
     val s1 = new MutableSignal {
-      def name = "S1";
+      def name = "S1"
 
       def dependencies = Empty
     }

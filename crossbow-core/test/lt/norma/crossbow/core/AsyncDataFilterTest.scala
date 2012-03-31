@@ -17,7 +17,6 @@
 
 package lt.norma.crossbow.core
 
-import lt.norma.crossbow.messages._
 import lt.norma.crossbow.messages.{ Message, Data }
 import org.joda.time.DateTime
 import org.scalatest.FunSuite
@@ -86,7 +85,7 @@ class AsyncDataFilterTest extends FunSuite {
 
       def receive = {
         case d =>
-          Thread.sleep(100);
+          Thread.sleep(100)
           lastData = Some(d)
           order = counter
           counter += 1

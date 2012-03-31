@@ -17,11 +17,9 @@
 
 package lt.norma.crossbow.indicators
 
-import lt.norma.crossbow.core._
-
-/**Calculates multiplication of the specified indicators of `Double` type. If at least one of the
- * target indicators is empty, the `Multiply` will result in `None` value.
- * {{{Multiply = I1 * I2 * ... * In}}}*/
+/** Calculates multiplication of the specified indicators of `Double` type. If at least one of the
+  * target indicators is empty, the `Multiply` will result in `None` value.
+  * {{{Multiply = I1 * I2 * ... * In}}}*/
 class Multiply(indicators: Indicator[Double]*) extends FunctionalIndicator[Double] {
   def this(indicator: Indicator[Double], constant: Double) =
     this(indicator, new Variable(constant) {

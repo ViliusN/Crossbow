@@ -19,10 +19,8 @@ package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.core.Instrument
 import lt.norma.crossbow.messages.Quote
-import lt.norma.crossbow.messages.Quote
-import org.joda.time.DateTime
 
-/**Records last quote received for the specified instrument. */
+/** Records last quote received for the specified instrument. */
 class LastQuote(val instrument: InstrumentWrapper = new InstrumentWrapper())
   extends ListenerIndicator[Quote] {
   def this(_instrument: Instrument) = this(new InstrumentWrapper(_instrument))
