@@ -1,5 +1,3 @@
-package lt.norma.crossbow.indicators
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -16,6 +14,8 @@ package lt.norma.crossbow.indicators
  * You should have received a copy of the GNU General Public License along with Crossbow.  If not,
  * see <http://www.gnu.org/licenses/>.
  */
+
+package lt.norma.crossbow.indicators
 
 /**Functional indicators are useful to wrap one function as an indicator. Value of this indicator
  * is recalculated every time it's accessed. There are no methods to set or unset functional

@@ -1,5 +1,3 @@
-package lt.norma.crossbow.indicators
-
 /*
  * Copyright 2010-2011 Vilius Normantas <code@norma.lt>
  *
@@ -16,6 +14,8 @@ package lt.norma.crossbow.indicators
  * You should have received a copy of the GNU General Public License along with Crossbow.  If not,
  * see <http://www.gnu.org/licenses/>.
  */
+
+package lt.norma.crossbow.indicators
 
 import lt.norma.crossbow.messages.{EmptyMessage, Quote}
 import lt.norma.crossbow.messages.{Quote, EmptyMessage}
